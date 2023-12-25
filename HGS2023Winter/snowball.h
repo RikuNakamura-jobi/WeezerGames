@@ -34,10 +34,10 @@ public:			// 誰でもアクセスできる
 	void Update(void);		// 更新処理
 	void Draw(void);		// 描画処理
 
-	void SetData(const D3DXVECTOR3& pos);				// 情報の設定処理
+	void SetData(const D3DXVECTOR3& pos, const D3DXVECTOR3& move);				// 情報の設定処理
 
 	// 静的メンバ関数
-	static CSnowBall* Create(const D3DXVECTOR3& pos);	// 生成処理
+	static CSnowBall* Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& move);	// 生成処理
 
 private:		// 自分だけアクセスできる
 

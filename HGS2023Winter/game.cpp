@@ -25,6 +25,7 @@
 #include "snowball.h"
 #include "castle.h"
 #include "flag.h"
+#include "off_respawn.h"
 
 //--------------------------------------------
 // マクロ定義
@@ -36,6 +37,8 @@
 // 静的メンバ変数宣言
 //--------------------------------------------
 CFlag* CGame::m_pFlag = nullptr;							// 旗の情報
+COffRespawn* CGame::m_pRespawn = nullptr;					// 攻撃側の復活地点の情報
+CCastle* CGame::m_pCastle = nullptr;						// 城の情報
 CGame::STATE CGame::m_GameState = CGame::STATE_START;		// ゲームの進行状態
 int CGame::m_nFinishCount = 0;								// 終了カウント
 
@@ -88,14 +91,14 @@ HRESULT CGame::Init(void)
 	CSoldier::Create(NONE_D3DXVECTOR3, CSoldier::TYPE::TYPE_PLAYER, CSoldier::BATTLE_OFF);
 	CSoldier::Create(D3DXVECTOR3(400.0f, 0.0f, 0.0f), CSoldier::TYPE::TYPE_AI, CSoldier::BATTLE_OFF);
 
-	// 雪玉を生成する
-	CSnowBall::Create(D3DXVECTOR3(300.0f, 0.0f, 0.0f));
-
 	// 旗を生成する
 	m_pFlag = CFlag::Create(D3DXVECTOR3(0.0f, 0.0f, 400.0f));
 
 	// 城を生成する
-	CCastle::Create(D3DXVECTOR3(0.0f, 0.0f, 500.0f),NONE_D3DXVECTOR3);
+	m_pCastle = CCastle::Create(D3DXVECTOR3(0.0f, 0.0f, 500.0f),NONE_D3DXVECTOR3);
+
+	// 攻撃側の復活地点を生成する
+	m_pRespawn = COffRespawn::Create(D3DXVECTOR3(0.0f, 0.0f, -300.0f));
 
 	// 情報の初期化
 	m_nFinishCount = 0;				// 終了カウント
@@ -151,18 +154,6 @@ void CGame::Update(void)
 		assert(false);
 
 		break;
-	}
-
-	if (CManager::Get()->GetInputKeyboard()->GetTrigger(DIK_RETURN) == true ||
-		CManager::Get()->GetInputGamePad()->GetTrigger(CInputGamePad::JOYKEY_START, 0) == true ||
-		CManager::Get()->GetInputGamePad()->GetTrigger(CInputGamePad::JOYKEY_A, 0) == true)
-	{ // ENTERキーを押した場合
-
-		// チュートリアルに遷移する
-		CManager::Get()->GetFade()->SetFade(CScene::MODE_RESULT);
-
-		// この先の処理を行わない
-		return;
 	}
 
 	if (CManager::Get()->GetRenderer() != nullptr)

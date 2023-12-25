@@ -66,6 +66,8 @@ public:			// 誰でもアクセスできる
 	void SetRotDest(const D3DXVECTOR3& rot);	// 目標の向きの設定処理
 	D3DXVECTOR3 GetRotDest(void) const;			// 目標の向きの取得処理
 
+	TYPE GetType(void) const;					// 種類の取得処理
+
 	void SetLife(const int nLife);				// 体力の設定処理
 	int GetLife(void) const;					// 体力の取得処理
 
@@ -90,6 +92,7 @@ protected:		// 自分と派生クラスだけアクセスできる
 	// メンバ関数
 	void Move(void);				// 移動処理
 	void Jump(void);				// ジャンプ処理
+	void Throw(void);				// 投げる処理
 	void ElevationCollision(void);	// 起伏地面の当たり判定処理
 
 private:		// 自分だけアクセスできる

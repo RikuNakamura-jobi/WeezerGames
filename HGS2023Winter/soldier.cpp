@@ -16,10 +16,9 @@
 #include "useful.h"
 
 #include "motion.h"
-#include "objectX.h"
 #include "elevation_manager.h"
 #include "objectElevation.h"
-#include "input.h"
+#include "snowball.h"
 
 #include "soldier_manager.h"
 #include "soldier_player.h"
@@ -30,12 +29,15 @@
 //--------------------------------------------
 namespace
 {
-	const int MAX_LIFE = 5;				// 体力の最大数
-	const int NUM_MODEL = 15;			// モデルの総数
-	const float ADD_GRAVITY = -50.0f;	// 着地時の追加の重力
-	const float SPEED = 8.0f;			// 移動量
-	const float GRAVITY = 0.5f;			// 重力
-	const float JUMP = 10.0f;			// ジャンプの高さ
+	const int MAX_LIFE = 5;					// 体力の最大数
+	const int NUM_MODEL = 15;				// モデルの総数
+	const float ADD_GRAVITY = -50.0f;		// 着地時の追加の重力
+	const float SPEED = 8.0f;				// 移動量
+	const float GRAVITY = 0.5f;				// 重力
+	const float JUMP = 10.0f;				// ジャンプの高さ
+	const float SNOWBALL_SPEED = 16.0f;		// 雪玉の速度
+	const float SNOWBALL_HEIGHT = 20.0f;	// 雪玉の高さ
+	const float ROT_CORRECT = 0.1f;			// 向きの補正係数
 }
 
 //=========================================
@@ -421,6 +423,15 @@ D3DXVECTOR3 CSoldier::GetRotDest(void) const
 }
 
 //=======================================
+// 種類の取得処理
+//=======================================
+CSoldier::TYPE CSoldier::GetType(void) const
+{
+	// 種類を返す
+	return m_type;
+}
+
+//=======================================
 // 体力の設定処理
 //=======================================
 void CSoldier::SetLife(const int nLife)
@@ -533,7 +544,7 @@ void CSoldier::Move(void)
 	useful::Gravity(&m_move.y, pos, GRAVITY);
 
 	// 向きの正規化処理
-	useful::RotCorrect(m_rotDest.y, &rot.y, 0.5f);
+	useful::RotCorrect(m_rotDest.y, &rot.y, ROT_CORRECT);
 
 	// 位置と向きを設定する
 	SetPos(pos);
@@ -550,6 +561,22 @@ void CSoldier::Jump(void)
 
 	// ジャンプ状況を true にする
 	m_bJump = true;
+}
+
+//=======================================
+// 投げる処理
+//=======================================
+void CSoldier::Throw(void)
+{
+	// 移動量を宣言
+	D3DXVECTOR3 move = NONE_D3DXVECTOR3;
+
+	// 移動量を設定する
+	move.x = sinf(GetRot().y) * SNOWBALL_SPEED;
+	move.z = cosf(GetRot().y) * SNOWBALL_SPEED;
+
+	// 雪玉を生成する
+	CSnowBall::Create(D3DXVECTOR3(GetPos().x, GetPos().y + SNOWBALL_HEIGHT, GetPos().z), move);
 }
 
 //=======================================

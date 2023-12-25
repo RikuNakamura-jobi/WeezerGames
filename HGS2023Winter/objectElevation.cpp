@@ -410,6 +410,32 @@ void CElevation::SetVertex(void)
 }
 
 //================================
+// 頂点カラーの設定処理
+//================================
+void CElevation::SetVtxColor(const D3DXCOLOR& col)
+{
+	// 頂点情報へのポインタ
+	VERTEX_3D *pVtx;
+
+	// 頂点バッファをロックし、頂点情報へのポインタを取得
+	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
+
+	for (int nCntDep = 0; nCntDep < m_nVtxZ; nCntDep++)
+	{
+		for (int nCntWid = 0; nCntWid < m_nVtxX; nCntWid++)
+		{
+			// 頂点カラーの設定
+			pVtx[0].col = col;
+
+			pVtx++;				// 頂点データを進める
+		}
+	}
+
+	// 頂点バッファをアンロックする
+	m_pVtxBuff->Unlock();
+}
+
+//================================
 // 法線の設定処理
 //================================
 void CElevation::SetNormalize(void)
@@ -1103,6 +1129,9 @@ CElevation* CElevation::Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot, c
 			// NULL を返す
 			return nullptr;
 		}
+
+		// 色を設定する
+		pMesh->SetVtxColor(D3DXCOLOR(0.6f, 0.6f, 0.6f, 1.0f));
 
 		if (bTexture == true)
 		{ // テクスチャを割り当てる場合

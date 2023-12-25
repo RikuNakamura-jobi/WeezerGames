@@ -18,12 +18,18 @@
 #include "input.h"
 #include "motion.h"
 
+namespace
+{
+	const float GRAVITY = 0.5f;			// 重力
+}
+
 //=========================================
 // コンストラクタ
 //=========================================
 CSoldierPlayer::CSoldierPlayer() : CSoldier(CObject::TYPE_SOLDIER, CObject::PRIORITY_PLAYER)
 {
-
+	// 全ての値をクリアする
+	m_CameraRot = NONE_D3DXVECTOR3;		// カメラの向き
 }
 
 //=========================================
@@ -48,6 +54,9 @@ HRESULT CSoldierPlayer::Init(void)
 		// 失敗を返す
 		return E_FAIL;
 	}
+
+	// 全ての値を初期化する
+	m_CameraRot = NONE_D3DXVECTOR3;		// カメラの向き
 
 	// 値を返す
 	return S_OK;
@@ -99,6 +108,9 @@ void CSoldierPlayer::SetData(const D3DXVECTOR3& pos, const TYPE type, const BATT
 {
 	// 情報の設定処理
 	CSoldier::SetData(pos, type, battle);
+
+	// 全ての値を設定する
+	m_CameraRot = NONE_D3DXVECTOR3;		// カメラの向き
 }
 
 //=======================================
@@ -111,6 +123,12 @@ void CSoldierPlayer::Control(void)
 
 	// ジャンプコントロール
 	JumpControl();
+
+	// 投げのコントロール
+	ThrowControl();
+
+	// カメラのコントロール
+	CameraControl();
 }
 
 //=======================================
@@ -130,20 +148,20 @@ void CSoldierPlayer::MoveControl(void)
 		{ // Aキーを押している場合
 
 			// 目的の向きを設定する
-			rotDest.y = -D3DX_PI * 0.25f;
+			rotDest.y = -D3DX_PI * 0.25f + m_CameraRot.y;
 		}
-		if (CManager::Get()->GetInputKeyboard()->GetPress(DIK_D) == true ||
+		else if (CManager::Get()->GetInputKeyboard()->GetPress(DIK_D) == true ||
 			CManager::Get()->GetInputGamePad()->GetGameStickLXPress(0) > 0)
 		{ // Dキーを押している場合
 
 			// 目的の向きを設定する
-			rotDest.y = D3DX_PI * 0.25f;
+			rotDest.y = D3DX_PI * 0.25f + m_CameraRot.y;
 		}
 		else
 		{ // 上記以外
 
 			// 目的の向きを設定する
-			rotDest.y = 0.0f;
+			rotDest.y = 0.0f + m_CameraRot.y;
 		}
 
 		// 移動状況を設定する
@@ -158,20 +176,20 @@ void CSoldierPlayer::MoveControl(void)
 		{ // Aキーを押している場合
 
 			// 目的の向きを設定する
-			rotDest.y = -D3DX_PI * 0.75f;
+			rotDest.y = -D3DX_PI * 0.75f + m_CameraRot.y;
 		}
-		if (CManager::Get()->GetInputKeyboard()->GetPress(DIK_D) == true ||
+		else if (CManager::Get()->GetInputKeyboard()->GetPress(DIK_D) == true ||
 			CManager::Get()->GetInputGamePad()->GetGameStickLXPress(0) > 0)
 		{ // Dキーを押している場合
 
 			// 目的の向きを設定する
-			rotDest.y = D3DX_PI * 0.75f;
+			rotDest.y = D3DX_PI * 0.75f + m_CameraRot.y;
 		}
 		else
 		{ // 上記以外
 
 			// 目的の向きを設定する
-			rotDest.y = D3DX_PI;
+			rotDest.y = D3DX_PI + m_CameraRot.y;
 		}
 
 		// 移動状況を設定する
@@ -182,7 +200,7 @@ void CSoldierPlayer::MoveControl(void)
 	{ // Aキーを押している場合
 
 		// 目的の向きを設定する
-		rotDest.y = -D3DX_PI * 0.5f;
+		rotDest.y = -D3DX_PI * 0.5f + m_CameraRot.y;
 
 		// 移動状況を設定する
 		SetEnableMove(true);
@@ -192,7 +210,7 @@ void CSoldierPlayer::MoveControl(void)
 	{ // Dキーを押している場合
 
 		// 目的の向きを設定する
-		rotDest.y = D3DX_PI * 0.5f;
+		rotDest.y = D3DX_PI * 0.5f + m_CameraRot.y;
 
 		// 移動状況を設定する
 		SetEnableMove(true);
@@ -203,6 +221,9 @@ void CSoldierPlayer::MoveControl(void)
 		// 移動状況を false にする
 		SetEnableMove(false);
 	}
+
+	// 向きの正規化
+	useful::RotNormalize(&rotDest.y);
 
 	// 目的の向きを設定する
 	SetRotDest(rotDest);
@@ -221,4 +242,51 @@ void CSoldierPlayer::JumpControl(void)
 		// ジャンプ処理
 		Jump();
 	}
+}
+
+//=======================================
+// 投げのコントロール
+//=======================================
+void CSoldierPlayer::ThrowControl(void)
+{
+	if (CManager::Get()->GetInputKeyboard()->GetTrigger(DIK_RETURN) == true ||
+		CManager::Get()->GetInputGamePad()->GetTrigger(CInputGamePad::JOYKEY_B, 0) == true)
+	{ // ENTERキーを押した場合
+
+		// 投げ処理
+		Throw();
+	}
+}
+
+//=======================================
+// カメラのコントロール
+//=======================================
+void CSoldierPlayer::CameraControl(void)
+{
+	// 注視点と視点を取得する
+	D3DXVECTOR3 posR = CManager::Get()->GetCamera()->GetPosR();
+	D3DXVECTOR3 posV = CManager::Get()->GetCamera()->GetPosV();
+
+	if (CManager::Get()->GetInputKeyboard()->GetPress(DIK_LSHIFT) == true ||
+		CManager::Get()->GetInputGamePad()->GetGameStickRXPress(0) < 0)
+	{ // 左にスティックを倒した場合
+
+		// 向きを加算する
+		m_CameraRot.y -= 0.04f;
+	}
+
+	if (CManager::Get()->GetInputKeyboard()->GetPress(DIK_RSHIFT) == true ||
+		CManager::Get()->GetInputGamePad()->GetGameStickRXPress(0) > 0)
+	{ // 右にスティックを倒した場合
+
+		// 向きを加算する
+		m_CameraRot.y += 0.04f;
+	}
+
+	// 視点を設定する
+	posV.x = posR.x + sinf(m_CameraRot.y) * -100.0f;
+	posV.z = posR.z + cosf(m_CameraRot.y) * -100.0f;
+
+	// 視点を設定する
+	CManager::Get()->GetCamera()->SetPosV(posV);
 }
