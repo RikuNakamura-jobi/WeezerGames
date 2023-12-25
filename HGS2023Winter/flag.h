@@ -1,11 +1,11 @@
 //============================================
 //
-// 城ヘッダー[castle.h]
+// 旗ヘッダー[flag.h]
 // Author：小原立暉
 //
 //============================================
-#ifndef _CASTLE_H_					// このマクロ定義がされていなかったら
-#define _CASTLE_H_					// 2重インクルード防止のマクロを定義する
+#ifndef _FLAG_H_					// このマクロ定義がされていなかったら
+#define _FLAG_H_					// 2重インクルード防止のマクロを定義する
 
 //********************************************
 // インクルードファイル
@@ -13,14 +13,14 @@
 #include "model.h"
 
 //--------------------------------------------
-// クラス(城クラス)
+// クラス(旗クラス)
 //--------------------------------------------
-class CCastle : public CModel
+class CFlag : public CModel
 {
 public:			// 誰でもアクセスできる
 
-	CCastle();				// コンストラクタ
-	~CCastle();				// デストラクタ
+	CFlag();				// コンストラクタ
+	~CFlag();				// デストラクタ
 
 	// メンバ関数
 	HRESULT Init(void);		// 初期化処理
@@ -28,10 +28,10 @@ public:			// 誰でもアクセスできる
 	void Update(void);		// 更新処理
 	void Draw(void);		// 描画処理
 
-	void SetData(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot);				// 情報の設定処理
+	void SetData(const D3DXVECTOR3& pos);			// 情報の設定処理
 
 	// 静的メンバ関数
-	static CCastle* Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot);		// 生成処理
+	static CFlag* Create(const D3DXVECTOR3& pos);	// 生成処理
 
 private:		// 自分だけアクセスできる
 

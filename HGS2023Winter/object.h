@@ -47,6 +47,8 @@ public:			// 誰でもアクセスできる
 		TYPE_SOLDIER,			// 兵士
 		TYPE_SNOWBALL,			// 雪玉
 		TYPE_BLOCK,				// ブロック(遮蔽物)
+		TYPE_FLAG,				// 旗
+		TYPE_CASTLE,			// 城
 		TYPE_MAX				// この列挙型の総数
 	};
 

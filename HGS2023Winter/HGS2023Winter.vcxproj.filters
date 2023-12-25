@@ -288,6 +288,9 @@
     <ClCompile Include="soldier_ai.cpp">
       <Filter>Soldier</Filter>
     </ClCompile>
+    <ClCompile Include="flag.cpp">
+      <Filter>Stage</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fade.h">
@@ -514,6 +517,9 @@
     </ClInclude>
     <ClInclude Include="soldier_ai.h">
       <Filter>Soldier</Filter>
+    </ClInclude>
+    <ClInclude Include="flag.h">
+      <Filter>Stage</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
