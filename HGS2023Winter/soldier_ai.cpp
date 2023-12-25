@@ -255,6 +255,11 @@ void CSoldierAI::AIMove(void)
 			// ˆÚ“®ó‹µ‚ðÝ’è‚·‚é
 			SetEnableMove(true);
 		}
+		else
+		{
+			// ˆÚ“®ó‹µ‚ðÝ’è‚·‚é
+			SetEnableMove(false);
+		}
 
 		CSandbagManager *sandbagManager = CSandbagManager::Get();
 
@@ -294,7 +299,7 @@ void CSoldierAI::AIMove(void)
 		{
 			D3DXVECTOR3 vecEnemy = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
-			if (GetBattle() == GetBattle() == BATTLE_OFF)
+			if (GetBattle() == BATTLE_OFF)
 			{
 				vecEnemy = CGame::GetRespawn()->GetPos() - GetPos();
 			}
