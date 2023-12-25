@@ -89,18 +89,21 @@ HRESULT CGame::Init(void)
 
 	// ï∫émÇê∂ê¨Ç∑ÇÈ
 	CSoldier::Create(NONE_D3DXVECTOR3, CSoldier::TYPE::TYPE_PLAYER, CSoldier::BATTLE_OFF);
-	/*CSoldier::Create(D3DXVECTOR3(0.0f, 0.0f, -500.0f), CSoldier::TYPE::TYPE_AI, CSoldier::BATTLE_OFF);
-	CSoldier::Create(D3DXVECTOR3(0.0f, 0.0f, -500.0f), CSoldier::TYPE::TYPE_AI, CSoldier::BATTLE_OFF);
-	CSoldier::Create(D3DXVECTOR3(0.0f, 0.0f, -500.0f), CSoldier::TYPE::TYPE_AI, CSoldier::BATTLE_OFF);
-	CSoldier::Create(D3DXVECTOR3(0.0f, 0.0f, -500.0f), CSoldier::TYPE::TYPE_AI, CSoldier::BATTLE_OFF);*/
-	CSoldier::Create(D3DXVECTOR3(0.0f, 0.0f, 400.0f), CSoldier::TYPE::TYPE_AI, CSoldier::BATTLE_DEF);
-	CSoldier::Create(D3DXVECTOR3(0.0f, 0.0f, 400.0f), CSoldier::TYPE::TYPE_AI, CSoldier::BATTLE_DEF);
-	CSoldier::Create(D3DXVECTOR3(0.0f, 0.0f, 400.0f), CSoldier::TYPE::TYPE_AI, CSoldier::BATTLE_DEF);
-	CSoldier::Create(D3DXVECTOR3(0.0f, 0.0f, 400.0f), CSoldier::TYPE::TYPE_AI, CSoldier::BATTLE_DEF);
-	CSoldier::Create(D3DXVECTOR3(0.0f, 0.0f, 400.0f), CSoldier::TYPE::TYPE_AI, CSoldier::BATTLE_DEF);
+
+	for (int nCnt = 0; nCnt < 14; nCnt++)
+	{
+
+		CSoldier::Create(D3DXVECTOR3(0.0f, 0.0f, -500.0f), CSoldier::TYPE::TYPE_AI, CSoldier::BATTLE_OFF);
+	}
+
+	for (int nCnt = 0; nCnt < 15; nCnt++)
+	{
+
+		CSoldier::Create(D3DXVECTOR3(0.0f, 0.0f, 400.0f), CSoldier::TYPE::TYPE_AI, CSoldier::BATTLE_DEF);
+	}
 
 	// ä¯Çê∂ê¨Ç∑ÇÈ
-	m_pFlag = CFlag::Create(D3DXVECTOR3(0.0f, 0.0f, 1500.0f));
+	m_pFlag = CFlag::Create(D3DXVECTOR3(0.0f, 0.0f, 1000.0f));
 
 	// èÈÇê∂ê¨Ç∑ÇÈ
 	m_pCastle = CCastle::Create(D3DXVECTOR3(0.0f, 0.0f, 1800.0f),NONE_D3DXVECTOR3);

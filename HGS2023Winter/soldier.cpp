@@ -358,7 +358,7 @@ void CSoldier::SetData(const D3DXVECTOR3& pos, const TYPE type, const BATTLE bat
 	m_bJump = false;				// ジャンプ状況
 
 	// 全ての値を初期化する
-	SetPos(D3DXVECTOR3(pos.x - 500.0f, pos.y + 400.0f, pos.z));		// 位置
+	SetPos(D3DXVECTOR3(pos.x, pos.y, pos.z));		// 位置
 	SetPosOld(GetPos());			// 前回の位置
 	SetRot(D3DXVECTOR3(0.0f, D3DX_PI * 0.5f, 0.0f));				// 向き
 	SetScale(NONE_SCALE);			// 拡大率
