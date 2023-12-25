@@ -62,6 +62,8 @@ public:			// 誰でもアクセスできる
 
 	CMotion* GetMotion(void) const;				// モーションの情報の取得処理
 
+	void Hit();
+
 	// 静的メンバ関数
 	static CSoldier* Create(const D3DXVECTOR3& pos);	// 生成処理
 
