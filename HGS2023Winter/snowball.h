@@ -11,6 +11,7 @@
 // インクルードファイル
 //***********************************
 #include "model.h"
+#include "soldier.h"
 
 //-----------------------------------
 // クラス定義(雪玉)
@@ -34,10 +35,10 @@ public:			// 誰でもアクセスできる
 	void Update(void);		// 更新処理
 	void Draw(void);		// 描画処理
 
-	void SetData(const D3DXVECTOR3& pos, const D3DXVECTOR3& move);				// 情報の設定処理
+	void SetData(const D3DXVECTOR3& pos, const D3DXVECTOR3& move, const CSoldier::BATTLE battle);				// 情報の設定処理
 
 	// 静的メンバ関数
-	static CSnowBall* Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& move);	// 生成処理
+	static CSnowBall* Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& move, const CSoldier::BATTLE battle);	// 生成処理
 
 private:		// 自分だけアクセスできる
 
@@ -46,6 +47,7 @@ private:		// 自分だけアクセスできる
 
 	// メンバ変数
 	D3DXVECTOR3 m_move;			// 移動量
+	CSoldier::BATTLE m_type;	// 攻守の種類
 
 	// リスト構造関係
 	CSnowBall* m_pPrev;	// 前へのポインタ

@@ -72,6 +72,24 @@ void COffRespawn::SetData(const D3DXVECTOR3 pos)
 }
 
 //=====================================
+// 位置の設定処理
+//=====================================
+void COffRespawn::SetPos(const D3DXVECTOR3& pos)
+{
+	// 位置を設定する
+	m_pos = pos;
+}
+
+//=====================================
+// 位置の取得処理
+//=====================================
+D3DXVECTOR3 COffRespawn::GetPos(void) const
+{
+	// 位置を返す
+	return m_pos;
+}
+
+//=====================================
 // 生成処理
 //=====================================
 COffRespawn* COffRespawn::Create(const D3DXVECTOR3 pos)

@@ -576,7 +576,7 @@ void CSoldier::Throw(void)
 	move.z = cosf(GetRot().y) * SNOWBALL_SPEED;
 
 	// ê·ã Çê∂ê¨Ç∑ÇÈ
-	CSnowBall::Create(D3DXVECTOR3(GetPos().x, GetPos().y + SNOWBALL_HEIGHT, GetPos().z), move);
+	CSnowBall::Create(D3DXVECTOR3(GetPos().x, GetPos().y + SNOWBALL_HEIGHT, GetPos().z), move, m_battle);
 }
 
 //=======================================
