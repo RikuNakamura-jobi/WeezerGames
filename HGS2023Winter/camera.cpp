@@ -123,7 +123,10 @@ void CCamera::Update(void)
 		{ // ポーズ中以外の場合
 
 			// 種類ごとの処理
-			TypeProcess();
+			//TypeProcess();
+
+			// 操作処理
+			Control();
 		}
 		else
 		{ // 上記以外

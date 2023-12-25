@@ -365,7 +365,7 @@ void CMotion::LoadPlayer(void)
 	FILE  *pFile;							// ファイルポインタ
 
 	// ファイルを読み込み形式で開く
-	pFile = fopen("data/TXT/PlayerMotion.txt", "r");
+	pFile = fopen("data/TXT/motion_player.txt", "r");
 
 	if (pFile != nullptr)
 	{ // ファイルが開けた場合

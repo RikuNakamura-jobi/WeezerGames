@@ -13,6 +13,7 @@
 #define INIT_VTX_MIN	(D3DXVECTOR3( 9999.0f,  9999.0f,  9999.0f))		// モデルの最小の頂点座標の初期値
 #define INIT_VTX_MAX	(D3DXVECTOR3(-9999.0f, -9999.0f, -9999.0f))		// モデルの最大の頂点座標の初期値
 #define INIT_SIZE		(D3DXVECTOR3(0.0f, 0.0f, 0.0f))					// モデルサイズの初期値
+#define INIT_PLAYER		(CXFile::TYPE_PLAYER_HIP)						// プレイヤーのモデルの初期値
 
 //------------------------------------------------------------
 // クラス定義(Xファイル)

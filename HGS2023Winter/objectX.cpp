@@ -27,20 +27,20 @@ const char* CXFile::c_apModelData[CXFile::TYPE_MAX] =		// モデルの名前
 
 	// プレイヤーモデル
 	"data\\MODEL\\player\\00_hip.x",			// 腰
-	"data\\MODEL\\player\\01_body.x"			// 体
-	"data\\MODEL\\player\\02_head.x"			// 右肩
-	"data\\MODEL\\player\\03_R_shoulder.x"		// 右腕
-	"data\\MODEL\\player\\04_R_arm.x"			// 右手
-	"data\\MODEL\\player\\05_R_hand.x"			// 頭
-	"data\\MODEL\\player\\06_L_shoulder.x"		// 左肩
-	"data\\MODEL\\player\\07_L_arm.x"			// 左腕
-	"data\\MODEL\\player\\08_L_hand.x"			// 左手
-	"data\\MODEL\\player\\09_R_thigh.x"			// 右腿
-	"data\\MODEL\\player\\10_R_shin.x"			// 右脛
-	"data\\MODEL\\player\\11_R_leg.x"			// 右足
-	"data\\MODEL\\player\\12_L_thigh.x"			// 左腿
-	"data\\MODEL\\player\\13_L_shin.x"			// 左脛
-	"data\\MODEL\\player\\14_L_leg.x"			// 左足
+	"data\\MODEL\\player\\01_body.x",			// 体
+	"data\\MODEL\\player\\02_head.x",			// 右肩
+	"data\\MODEL\\player\\03_R_shoulder.x",		// 右腕
+	"data\\MODEL\\player\\04_R_arm.x",			// 右手
+	"data\\MODEL\\player\\05_R_hand.x",			// 頭
+	"data\\MODEL\\player\\06_L_shoulder.x",		// 左肩
+	"data\\MODEL\\player\\07_L_arm.x",			// 左腕
+	"data\\MODEL\\player\\08_L_hand.x",			// 左手
+	"data\\MODEL\\player\\09_R_thigh.x",		// 右腿
+	"data\\MODEL\\player\\10_R_shin.x",			// 右脛
+	"data\\MODEL\\player\\11_R_leg.x",			// 右足
+	"data\\MODEL\\player\\12_L_thigh.x",		// 左腿
+	"data\\MODEL\\player\\13_L_shin.x",			// 左脛
+	"data\\MODEL\\player\\14_L_leg.x",			// 左足
 };
 
 //------------------------------------------------------------
