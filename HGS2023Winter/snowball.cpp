@@ -10,10 +10,13 @@
 #include "main.h"
 #include "manager.h"
 #include "snowball.h"
+#include "soldier.h"
 #include "renderer.h"
 #include "useful.h"
+#include "collision.h"
 
 #include "snowball_manager.h"
+#include "soldier_manager.h"
 
 //-------------------------------------------
 // マクロ定義
@@ -204,4 +207,45 @@ CSnowBall* CSnowBall::Create(const D3DXVECTOR3& pos)
 
 	// 破片のポインタを返す
 	return pFrac;
+}
+
+//=======================================
+// 当たり判定処理
+//=======================================
+bool CSnowBall::Colision()
+{
+	CSoldierManager *soldierManager = CSoldierManager::Get();
+
+	if (soldierManager != nullptr)
+	{ // マネージャーが存在していた場合
+
+	  // ポインタを宣言
+		CSoldier *pObjectTop = soldierManager->GetTop();	// 先頭オブジェクト
+	
+		if (pObjectTop != nullptr)
+		{
+			// ポインタを宣言
+			CSoldier *pObjCheck = pObjectTop;	// オブジェクト確認用
+
+			while (pObjCheck != NULL)
+			{ // オブジェクトが使用されている場合繰り返す
+
+				CSoldier *pObjectNext = pObjCheck->GetNext();	// 次オブジェクト
+
+				if (collision::SquareTrigger(pObjCheck->GetPos(), GetPos(), pObjCheck->GetRot(), D3DXVECTOR3(100.0f, 100.0f, 100.0f), D3DXVECTOR3(-100.0f, -100.0f, -100.0f)))
+				{
+					pObjCheck->Hit();
+
+					Uninit();
+
+					return true;
+				}
+
+				// 次のオブジェクトへのポインタを代入
+				pObjCheck = pObjectNext;
+			}
+		}
+	}
+
+	return false;
 }
