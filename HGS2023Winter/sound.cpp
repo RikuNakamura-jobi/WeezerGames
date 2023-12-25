@@ -32,7 +32,8 @@ CSound::SOUNDINFO CSound::m_aSoundInfo[CSound::SOUND_LABEL_MAX] =
 	{ "data\\SE\\Cannon.wav",0 },			// 大砲の音
 	{ "data\\SE\\GroundQuake.wav",0 },		// グラウンドクエイク音
 	{ "data\\SE\\Stun.wav",0 },				// 気絶音
-	{ "data\\SE\\Damage.wav",0 },			// ダメージ音
+	{ "data\\SE\\HitDamage.wav",0 },		// ダメージ音
+	{ "data\\SE\\snowball.wav",0 },			// ダメージ音
 };
 
 //=============================================================================

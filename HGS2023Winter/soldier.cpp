@@ -22,6 +22,7 @@
 #include "objectElevation.h"
 #include "snowball.h"
 #include "character.h"
+#include "sound.h"
 
 #include "soldier_manager.h"
 #include "soldier_player.h"
@@ -271,6 +272,8 @@ void CSoldier::Hit()
 	posRes.z += (float)(rand() % 100 - 50);
 
 	SetPos(posRes);
+
+	CManager::Get()->GetSound()->Play(CSound::SOUND_LABEL_SE_DAMAGE);
 }
 
 //===========================================
@@ -603,6 +606,8 @@ void CSoldier::Throw(void)
 
 	// á‹Ê‚ð¶¬‚·‚é
 	CSnowBall::Create(D3DXVECTOR3(GetPos().x, GetPos().y + SNOWBALL_HEIGHT, GetPos().z), move, m_battle);
+
+	CManager::Get()->GetSound()->Play(CSound::SOUND_LABEL_SE_SNOW);
 }
 
 //=======================================
