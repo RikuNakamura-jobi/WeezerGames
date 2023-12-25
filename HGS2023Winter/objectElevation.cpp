@@ -1066,7 +1066,7 @@ int CElevation::NearVertexSearch(const D3DXVECTOR3& pos)
 //================================
 // 生成処理
 //================================
-CElevation* CElevation::Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot, const float fSizeX, const float fSizeZ, const int nDiviX, const int nDiviZ, char* texturename)
+CElevation* CElevation::Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot, const float fSizeX, const float fSizeZ, const int nDiviX, const int nDiviZ, char* texturename, const bool bTexture)
 {
 	// ローカルオブジェクトを生成
 	CElevation* pMesh = nullptr;	// オブジェクト3Dのインスタンスを生成
@@ -1104,8 +1104,12 @@ CElevation* CElevation::Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot, c
 			return nullptr;
 		}
 
-		// テクスチャの割り当て処理
-		pMesh->BindTexture(CManager::Get()->GetTexture()->Regist(texturename));
+		if (bTexture == true)
+		{ // テクスチャを割り当てる場合
+
+			// テクスチャの割り当て処理
+			pMesh->BindTexture(CManager::Get()->GetTexture()->Regist(texturename));
+		}
 	}
 	else
 	{ // オブジェクトが NULL の場合
@@ -1137,10 +1141,11 @@ void CElevation::TxtSet(void)
 	int nDiviZ = 0;							// 奥行の分割数
 	int nVtxX = 0;							// 頂点数(X軸)
 	int nVtxZ = 0;							// 頂点数(Z軸)
+	bool bTexture = false;					// テクスチャを読み込んだかどうか
 
 	// 変数配列を宣言
-	char aString[MAX_STRING];		// テキストの文字列の代入用
-	char aTextureName[MAX_STRING];	// テクスチャのパス名
+	char aString[MAX_STRING];				// テキストの文字列の代入用
+	char aTextureName[MAX_STRING] = {};		// テクスチャのパス名
 
 	// ポインタを宣言
 	FILE  *pFile;					// ファイルポインタ
@@ -1197,17 +1202,20 @@ void CElevation::TxtSet(void)
 						fscanf(pFile, "%s", &aString[0]);				// = を読み込む (不要)
 						fscanf(pFile, "%s", &aTextureName[0]);			// パスを読み込む
 
+						// テクスチャを読み込んだ
+						bTexture = true;
+					}
+					else if (strcmp(&aString[0], "ELEV") == 0)
+					{ // 読み込んだ文字列が ELEV の場合
+
 						// 生成処理
-						pElevation = Create(pos, rot, fSizeX, fSizeZ, nDiviX, nDiviZ, aTextureName);
+						pElevation = Create(pos, rot, fSizeX, fSizeZ, nDiviX, nDiviZ, aTextureName, bTexture);
 
 						// 頂点数(X軸)を設定する
 						nVtxX = pElevation->m_nVtxX;
 
 						// 頂点数(Z軸)を設定する
 						nVtxZ = pElevation->m_nVtxZ;
-					}
-					else if (strcmp(&aString[0], "ELEV") == 0)
-					{ // 読み込んだ文字列が ELEV の場合
 
 						fscanf(pFile, "%s", &aString[0]);				// = を読み込む (不要)
 

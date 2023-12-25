@@ -52,7 +52,7 @@ public:			// 誰でもアクセスできる
 	void AddVertex(const int nNum, const float fAdd);		// 頂点の加算処理
 
 	// 静的メンバ変数
-	static CElevation* Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot, const float fSizeX, const float fSizeZ, const int nDiviX, const int nDiviZ, char* texturename);		// 生成処理
+	static CElevation* Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot, const float fSizeX, const float fSizeZ, const int nDiviX, const int nDiviZ, char* texturename, const bool bTexture);		// 生成処理
 	static void TxtSet(void);					// テキスト読み込み処理
 
 private:		// 自分だけアクセスできる
