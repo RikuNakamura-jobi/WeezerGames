@@ -21,9 +21,6 @@
 #include "title_logo.h"
 #include "sound.h"
 
-// マクロ定義
-#define SET_RANKING_TIMER		(600)		// ランキング画面に遷移するカウント数
-
 //=========================================
 // コンストラクタ
 //=========================================
@@ -84,16 +81,6 @@ void CTitle::Update(void)
 
 	// レンダラーの更新
 	CManager::Get()->GetRenderer()->Update();
-
-	if (m_nTransCount % SET_RANKING_TIMER == 0)
-	{ // 遷移カウントが一定数に達した場合
-
-		// ランキングに遷移する
-		CManager::Get()->GetFade()->SetFade(CScene::MODE_RANKING);
-
-		// この先の処理を行わない
-		return;
-	}
 
 	if (CManager::Get()->GetInputKeyboard()->GetTrigger(DIK_RETURN) == true ||
 		CManager::Get()->GetInputGamePad()->GetTrigger(CInputGamePad::JOYKEY_START, 0) == true ||
