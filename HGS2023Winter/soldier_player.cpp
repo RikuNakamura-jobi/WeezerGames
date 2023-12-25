@@ -106,6 +106,18 @@ void CSoldierPlayer::SetData(const D3DXVECTOR3& pos, const TYPE type)
 //=======================================
 void CSoldierPlayer::Control(void)
 {
+	// 移動コントロール
+	MoveControl();
+
+	// ジャンプコントロール
+	JumpControl();
+}
+
+//=======================================
+// 移動コントロール
+//=======================================
+void CSoldierPlayer::MoveControl(void)
+{
 	// 目的の向きを取得する
 	D3DXVECTOR3 rotDest = GetRotDest();
 
@@ -186,4 +198,18 @@ void CSoldierPlayer::Control(void)
 
 	// 目的の向きを設定する
 	SetRotDest(rotDest);
+}
+
+//=======================================
+// ジャンプコントロール
+//=======================================
+void CSoldierPlayer::JumpControl(void)
+{
+	if (CManager::Get()->GetInputKeyboard()->GetTrigger(DIK_SPACE) == true &&
+		IsJump() == false)
+	{ // SPACEキーを押した場合
+
+		// ジャンプ処理
+		Jump();
+	}
 }

@@ -32,8 +32,9 @@ namespace
 	const int MAX_LIFE = 5;				// 体力の最大数
 	const int NUM_MODEL = 15;			// モデルの総数
 	const float ADD_GRAVITY = -50.0f;	// 着地時の追加の重力
-	const float SPEED = 10.0f;			// 移動量
+	const float SPEED = 8.0f;			// 移動量
 	const float GRAVITY = 0.5f;			// 重力
+	const float JUMP = 10.0f;			// ジャンプの高さ
 }
 
 //=========================================
@@ -231,6 +232,14 @@ CMotion* CSoldier::GetMotion(void) const
 {
 	// モーションの情報を返す
 	return m_pMotion;
+}
+
+//=======================================
+// 当たり判定処理
+//=======================================
+void CSoldier::Hit()
+{
+
 }
 
 //===========================================
@@ -459,15 +468,16 @@ bool CSoldier::IsJump(void) const
 //=======================================
 void CSoldier::Move(void)
 {
-	// 位置を取得する
+	// 位置と向きを取得する
 	D3DXVECTOR3 pos = GetPos();
+	D3DXVECTOR3 rot = GetRot();
 
 	if (m_bMove == true)
 	{ // 移動状況が true の場合
 
 		// 移動量を設定する
-		m_move.x = sinf(m_rotDest.y) * m_fSpeed;
-		m_move.z = cosf(m_rotDest.y) * m_fSpeed;
+		m_move.x = sinf(rot.y) * m_fSpeed;
+		m_move.z = cosf(rot.y) * m_fSpeed;
 	}
 	else
 	{ // 上記以外
@@ -483,8 +493,24 @@ void CSoldier::Move(void)
 	// 重力を足す
 	useful::Gravity(&m_move.y, pos, GRAVITY);
 
-	// 移動量を設定する
+	// 向きの正規化処理
+	useful::RotCorrect(m_rotDest.y, &rot.y, 0.5f);
+
+	// 位置と向きを設定する
 	SetPos(pos);
+	SetRot(rot);
+}
+
+//=======================================
+// ジャンプ処理
+//=======================================
+void CSoldier::Jump(void)
+{
+	// 縦の移動量を設定する
+	m_move.y = JUMP;
+
+	// ジャンプ状況を true にする
+	m_bJump = true;
 }
 
 //=======================================
@@ -521,6 +547,9 @@ void CSoldier::ElevationCollision(void)
 		// 次のポインタを取得する
 		pMesh = pMesh->GetNext();
 	}
+
+	// ジャンプ状況を設定する
+	m_bJump = bJump;
 
 	// 位置を更新する
 	SetPos(pos);

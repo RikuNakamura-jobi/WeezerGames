@@ -34,6 +34,8 @@ private:		// 自分だけアクセスできる
 
 	// メンバ関数
 	void Control(void);				// 操作処理
+	void MoveControl(void);			// 移動コントロール
+	void JumpControl(void);			// ジャンプコントロール
 };
 
 #endif
