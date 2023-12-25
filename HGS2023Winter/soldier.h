@@ -27,6 +27,12 @@ public:			// 誰でもアクセスできる
 	CSoldier();				// コンストラクタ
 	~CSoldier();			// デストラクタ
 
+	// リスト構造関係
+	void SetPrev(CSoldier* pPrev);	// 前のポインタの設定処理
+	void SetNext(CSoldier* pNext);	// 後のポインタの設定処理
+	CSoldier* GetPrev(void) const;	// 前のポインタの設定処理
+	CSoldier* GetNext(void) const;	// 次のポインタの設定処理
+
 	// メンバ関数
 	HRESULT Init(void);		// 初期化処理
 	void Uninit(void);		// 終了処理
@@ -62,6 +68,8 @@ public:			// 誰でもアクセスできる
 private:		// 自分だけアクセスできる
 
 	// メンバ関数
+	void Control(void);				// 操作処理
+	void Move(void);				// 移動処理
 	void ElevationCollision(void);	// 起伏地面の当たり判定処理
 
 	// メンバ変数
@@ -73,6 +81,10 @@ private:		// 自分だけアクセスできる
 	float m_fSpeed;					// 速度
 	bool m_bMove;					// 移動状況
 	bool m_bJump;					// ジャンプ状況
+
+	// リスト構造関係
+	CSoldier* m_pPrev;	// 前へのポインタ
+	CSoldier* m_pNext;	// 次へのポインタ
 };
 
 #endif

@@ -45,6 +45,7 @@ public:			// 誰でもアクセスできる
 		TYPE_DANGERMARK,		// 危険マーク
 		TYPE_CONFETTI,			// 紙吹雪
 		TYPE_SOLDIER,			// 兵士
+		TYPE_SNOWBALL,			// 雪玉
 		TYPE_MAX				// この列挙型の総数
 	};
 

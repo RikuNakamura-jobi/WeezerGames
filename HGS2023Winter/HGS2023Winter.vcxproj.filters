@@ -55,6 +55,9 @@
     <Filter Include="Soldier">
       <UniqueIdentifier>{ab0bd95d-8229-4c3d-a217-e0f68fb32f11}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Snowball">
+      <UniqueIdentifier>{45bf3afc-a759-4639-8978-28337f6b18b9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="fade.cpp">
@@ -258,6 +261,15 @@
     <ClCompile Include="soldier.cpp">
       <Filter>Soldier</Filter>
     </ClCompile>
+    <ClCompile Include="snowball.cpp">
+      <Filter>Snowball</Filter>
+    </ClCompile>
+    <ClCompile Include="snowball_manager.cpp">
+      <Filter>Snowball</Filter>
+    </ClCompile>
+    <ClCompile Include="soldier_manager.cpp">
+      <Filter>Soldier</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fade.h">
@@ -459,6 +471,15 @@
       <Filter>Sample</Filter>
     </ClInclude>
     <ClInclude Include="soldier.h">
+      <Filter>Soldier</Filter>
+    </ClInclude>
+    <ClInclude Include="snowball.h">
+      <Filter>Snowball</Filter>
+    </ClInclude>
+    <ClInclude Include="snowball_manager.h">
+      <Filter>Snowball</Filter>
+    </ClInclude>
+    <ClInclude Include="soldier_manager.h">
       <Filter>Soldier</Filter>
     </ClInclude>
   </ItemGroup>

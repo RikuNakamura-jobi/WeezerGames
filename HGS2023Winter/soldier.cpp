@@ -17,6 +17,9 @@
 #include "motion.h"
 #include "elevation_manager.h"
 #include "objectElevation.h"
+#include "input.h"
+
+#include "soldier_manager.h"
 
 //--------------------------------------------
 // マクロ定義
@@ -26,6 +29,7 @@ namespace
 	const int MAX_LIFE = 5;				// 体力の最大数
 	const int NUM_MODEL = 15;			// モデルの総数
 	const float ADD_GRAVITY = -50.0f;	// 着地時の追加の重力
+	const float SPEED = 10.0f;			// 移動量
 }
 
 //=========================================
@@ -38,9 +42,19 @@ CSoldier::CSoldier() : CCharacter(CObject::TYPE_SOLDIER, CObject::PRIORITY_PLAYE
 	m_move = NONE_D3DXVECTOR3;		// 移動量
 	m_rotDest = NONE_D3DXVECTOR3;	// 目的の向き
 	m_nLife = MAX_LIFE;				// 体力
-	m_fSpeed = 0.0f;				// 速度
+	m_fSpeed = SPEED;				// 速度
 	m_bMove = false;				// 移動状況
 	m_bJump = false;				// ジャンプ状況
+
+	m_pPrev = nullptr;		// 前のへのポインタ
+	m_pNext = nullptr;		// 次のへのポインタ
+
+	if (CSoldierManager::Get() != nullptr)
+	{ // マネージャーが存在していた場合
+
+		// マネージャーへの登録処理
+		CSoldierManager::Get()->Regist(this);
+	}
 }
 
 //=========================================
@@ -50,6 +64,43 @@ CSoldier::~CSoldier()
 {
 
 }
+
+//============================
+// 前のポインタの設定処理
+//============================
+void CSoldier::SetPrev(CSoldier* pPrev)
+{
+	// 前のポインタを設定する
+	m_pPrev = pPrev;
+}
+
+//============================
+// 後のポインタの設定処理
+//============================
+void CSoldier::SetNext(CSoldier* pNext)
+{
+	// 次のポインタを設定する
+	m_pNext = pNext;
+}
+
+//============================
+// 前のポインタの設定処理
+//============================
+CSoldier* CSoldier::GetPrev(void) const
+{
+	// 前のポインタを返す
+	return m_pPrev;
+}
+
+//============================
+// 次のポインタの設定処理
+//============================
+CSoldier* CSoldier::GetNext(void) const
+{
+	// 次のポインタを返す
+	return m_pNext;
+}
+
 
 //===========================================
 // プレイヤーの初期化処理
@@ -105,7 +156,7 @@ HRESULT CSoldier::Init(void)
 	m_move = NONE_D3DXVECTOR3;		// 移動量
 	m_rotDest = NONE_D3DXVECTOR3;	// 目的の向き
 	m_nLife = MAX_LIFE;				// 体力
-	m_fSpeed = 0.0f;				// 速度
+	m_fSpeed = SPEED;				// 速度
 	m_bMove = false;				// 移動状況
 	m_bJump = false;				// ジャンプ状況
 
@@ -124,6 +175,17 @@ void CSoldier::Uninit(void)
 
 	// 終了処理
 	CCharacter::Uninit();
+
+	if (CSoldierManager::Get() != nullptr)
+	{ // マネージャーが存在していた場合
+
+		// リスト構造の引き抜き処理
+		CSoldierManager::Get()->Pull(this);
+	}
+
+	// リスト構造関係のポインタを NULL にする
+	m_pPrev = nullptr;
+	m_pNext = nullptr;
 }
 
 //===========================================
@@ -133,6 +195,12 @@ void CSoldier::Update(void)
 {
 	// 前回の位置の設定処理
 	SetPosOld(GetPos());
+
+	// 操作処理
+	Control();
+
+	// 移動量
+	Move();
 
 	// モーションの更新処理
 	m_pMotion->Update();
@@ -351,6 +419,111 @@ bool CSoldier::IsJump(void) const
 {
 	// ジャンプ状況を返す
 	return m_bJump;
+}
+
+//=======================================
+// 操作処理
+//=======================================
+void CSoldier::Control(void)
+{
+	if (CManager::Get()->GetInputKeyboard()->GetPress(DIK_W) == true)
+	{ // Wキーを押している場合
+
+		if (CManager::Get()->GetInputKeyboard()->GetPress(DIK_A) == true)
+		{ // Aキーを押している場合
+
+			// 目的の向きを設定する
+			m_rotDest.y = -D3DX_PI * 0.25f;
+		}
+		if (CManager::Get()->GetInputKeyboard()->GetPress(DIK_D) == true)
+		{ // Dキーを押している場合
+
+			// 目的の向きを設定する
+			m_rotDest.y = D3DX_PI * 0.25f;
+		}
+		else
+		{ // 上記以外
+
+			// 目的の向きを設定する
+			m_rotDest.y = 0.0f;
+		}
+
+		// 移動状況を設定する
+		m_bMove = true;
+	}
+	else if (CManager::Get()->GetInputKeyboard()->GetPress(DIK_S) == true)
+	{ // Sキーを押している場合
+
+		if (CManager::Get()->GetInputKeyboard()->GetPress(DIK_A) == true)
+		{ // Aキーを押している場合
+
+			// 目的の向きを設定する
+			m_rotDest.y = -D3DX_PI * 0.75f;
+		}
+		if (CManager::Get()->GetInputKeyboard()->GetPress(DIK_D) == true)
+		{ // Dキーを押している場合
+
+			// 目的の向きを設定する
+			m_rotDest.y = D3DX_PI * 0.75f;
+		}
+		else
+		{ // 上記以外
+
+			// 目的の向きを設定する
+			m_rotDest.y = D3DX_PI;
+		}
+
+		// 移動状況を設定する
+		m_bMove = true;
+	}
+	else if (CManager::Get()->GetInputKeyboard()->GetPress(DIK_A) == true)
+	{ // Aキーを押している場合
+
+		// 目的の向きを設定する
+		m_rotDest.y = -D3DX_PI * 0.5f;
+
+		// 移動状況を設定する
+		m_bMove = true;
+	}
+	else if (CManager::Get()->GetInputKeyboard()->GetPress(DIK_D) == true)
+	{ // Dキーを押している場合
+
+		// 目的の向きを設定する
+		m_rotDest.y = D3DX_PI * 0.5f;
+
+		// 移動状況を設定する
+		m_bMove = true;
+	}
+}
+
+//=======================================
+// 移動処理
+//=======================================
+void CSoldier::Move(void)
+{
+	// 位置を取得する
+	D3DXVECTOR3 pos = GetPos();
+
+	if (m_bMove == true)
+	{ // 移動状況が true の場合
+
+		// 移動量を設定する
+		m_move.x = sinf(m_rotDest.y) * m_fSpeed;
+		m_move.z = cosf(m_rotDest.y) * m_fSpeed;
+	}
+	else
+	{ // 上記以外
+
+		// 移動量を初期化する
+		m_move.x = 0.0f;
+		m_move.z = 0.0f;
+	}
+
+	// 位置を移動する
+	pos += m_move;
+
+	// 移動量を設定する
+	SetPos(pos);
 }
 
 //=======================================
