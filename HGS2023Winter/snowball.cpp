@@ -149,9 +149,8 @@ void CSnowBall::Update(void)
 	// Žõ–½‚ðŒ¸ŽZ‚·‚é
 	m_nLife--;
 
-	Colision();
-
-	if (m_nLife <= 0)
+	if (m_nLife <= 0 ||
+		Colision() == true)
 	{ // Žõ–½‚ª 0 ˆÈ‰º‚É‚È‚Á‚½ê‡
 
 		// I—¹ˆ—
@@ -167,8 +166,18 @@ void CSnowBall::Update(void)
 //=====================================
 void CSnowBall::Draw(void)
 {
-	// •`‰æˆ—
-	CModel::Draw();
+	if (m_type == CSoldier::BATTLE_OFF)
+	{ // UŒ‚‘¤‚Ìê‡
+
+		// •`‰æˆ—
+		CModel::Draw(D3DXCOLOR(1.0f, 0.5f, 0.5f, 1.0f));
+	}
+	else
+	{ // ã‹LˆÈŠO
+
+		// •`‰æˆ—
+		CModel::Draw(D3DXCOLOR(0.5f, 0.5f, 1.0f, 1.0f));
+	}
 }
 
 //=====================================
@@ -271,8 +280,6 @@ bool CSnowBall::Colision()
 					pObjCheck->GetBattle() != m_type)
 				{
 					pObjCheck->Hit();
-
-					Uninit();
 
 					return true;
 				}
