@@ -33,7 +33,8 @@ public:				// 誰でもアクセスできる
 private:			// 自分だけアクセスできる
 
 	// メンバ変数
-	int m_nEndCount;					// 終了までのカウント
+	int m_nEndCount;			// 終了までのカウント
+	bool m_bEnd;				// 終了状況
 };
 
 #endif
