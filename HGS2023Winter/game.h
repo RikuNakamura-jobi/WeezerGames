@@ -16,6 +16,8 @@
 // 前方宣言
 //--------------------------------------------
 class CFlag;			// 旗
+class COffRespawn;		// 攻撃側の復活地点
+class CCastle;			// 城
 
 //--------------------------------------------
 // クラス(ゲームクラス)
@@ -55,6 +57,8 @@ private:					// 自分だけアクセスできる
 
 	// 静的メンバ変数(最初から必要な物を配置しておく)
 	static CFlag* m_pFlag;				// 旗の情報
+	static COffRespawn* m_pRespawn;		// 攻撃側の復活地点の情報
+	static CCastle* m_pCastle;			// 城の情報
 	static STATE m_GameState;			// ゲームの進行状態
 	static int m_nFinishCount;			// 終了カウント
 };

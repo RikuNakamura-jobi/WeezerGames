@@ -20,7 +20,7 @@
 
 namespace
 {
-	const float GRAVITY = 0.5f;		// 重力
+	const float GRAVITY = 0.5f;			// 重力
 }
 
 //=========================================
@@ -150,7 +150,7 @@ void CSoldierPlayer::MoveControl(void)
 			// 目的の向きを設定する
 			rotDest.y = -D3DX_PI * 0.25f + m_CameraRot.y;
 		}
-		if (CManager::Get()->GetInputKeyboard()->GetPress(DIK_D) == true ||
+		else if (CManager::Get()->GetInputKeyboard()->GetPress(DIK_D) == true ||
 			CManager::Get()->GetInputGamePad()->GetGameStickLXPress(0) > 0)
 		{ // Dキーを押している場合
 
@@ -178,7 +178,7 @@ void CSoldierPlayer::MoveControl(void)
 			// 目的の向きを設定する
 			rotDest.y = -D3DX_PI * 0.75f + m_CameraRot.y;
 		}
-		if (CManager::Get()->GetInputKeyboard()->GetPress(DIK_D) == true ||
+		else if (CManager::Get()->GetInputKeyboard()->GetPress(DIK_D) == true ||
 			CManager::Get()->GetInputGamePad()->GetGameStickLXPress(0) > 0)
 		{ // Dキーを押している場合
 
