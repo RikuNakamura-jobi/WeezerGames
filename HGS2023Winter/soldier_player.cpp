@@ -20,7 +20,9 @@
 
 namespace
 {
-	const float GRAVITY = 0.5f;			// 重力
+	const float GRAVITY = 0.5f;				// 重力
+	const float CAMERA_DISTANCE = -100.0f;	// カメラの距離
+	const float CAMERA_CYCLE = 0.04f;		// カメラの回す速度
 }
 
 //=========================================
@@ -90,6 +92,9 @@ void CSoldierPlayer::Update(void)
 
 	// 起伏地面との当たり判定処理
 	ElevationCollision();
+
+	// 魔法壁の当たり判定処理
+	MagicWall();
 }
 
 //===========================================
@@ -272,7 +277,7 @@ void CSoldierPlayer::CameraControl(void)
 	{ // 左にスティックを倒した場合
 
 		// 向きを加算する
-		m_CameraRot.y -= 0.04f;
+		m_CameraRot.y -= CAMERA_CYCLE;
 	}
 
 	if (CManager::Get()->GetInputKeyboard()->GetPress(DIK_RSHIFT) == true ||
@@ -280,12 +285,12 @@ void CSoldierPlayer::CameraControl(void)
 	{ // 右にスティックを倒した場合
 
 		// 向きを加算する
-		m_CameraRot.y += 0.04f;
+		m_CameraRot.y += CAMERA_CYCLE;
 	}
 
 	// 視点を設定する
-	posV.x = posR.x + sinf(m_CameraRot.y) * -100.0f;
-	posV.z = posR.z + cosf(m_CameraRot.y) * -100.0f;
+	posV.x = posR.x + sinf(m_CameraRot.y) * CAMERA_DISTANCE;
+	posV.z = posR.z + cosf(m_CameraRot.y) * CAMERA_DISTANCE;
 
 	// 視点を設定する
 	CManager::Get()->GetCamera()->SetPosV(posV);
