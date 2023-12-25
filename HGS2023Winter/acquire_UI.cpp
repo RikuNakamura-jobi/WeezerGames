@@ -17,8 +17,8 @@ namespace
 {
 	const D3DXVECTOR3 UI_SIZE[CAcquireUI::TYPE_MAX] = 
 	{
-		D3DXVECTOR3(60.0f, 22.0f, 0.0f),
 		D3DXVECTOR3(60.0f, 20.0f, 0.0f),
+		D3DXVECTOR3(0.0f, 20.0f, 0.0f),
 	};
 	const D3DXCOLOR UI_COLOR[CAcquireUI::TYPE_MAX] =
 	{
@@ -92,7 +92,11 @@ void CAcquireUI::Uninit(void)
 //========================================
 void CAcquireUI::Update(void)
 {
-	
+	for (int nCnt = 0; nCnt < TYPE_MAX; nCnt++)
+	{
+		// 頂点情報の設定処理
+		m_apUI[nCnt]->SetVtxLeft(m_apUI[nCnt]->GetSize());
+	}
 }
 
 //=====================================
@@ -205,4 +209,13 @@ CAcquireUI* CAcquireUI::Create(const D3DXVECTOR3 pos)
 
 	// UIのポインタを返す
 	return pUI;
+}
+
+//=====================================
+// ポリゴンの情報の取得処理
+//=====================================
+CBillboard* CAcquireUI::GetPolygon(const TYPE type)
+{
+	// 種類を返す
+	return m_apUI[type];
 }

@@ -39,6 +39,7 @@ public:			// 誰でもアクセスできる
 		TYPE_SANDBAG,			// 土嚢
 		TYPE_TREE,				// 木
 		TYPE_CASTLE,			// 城
+		TYPE_SNOWBALL,			// 雪玉
 
 		// プレイヤーモデル
 		TYPE_PLAYER_HIP,				//腰

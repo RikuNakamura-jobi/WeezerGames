@@ -31,7 +31,8 @@ public:						// 誰でもアクセスできる
 	{
 		STATE_START = 0,	// 開始状態
 		STATE_PLAY,			// プレイ状態
-		STATE_GOAL,			// ゴール状態
+		STATE_TIMEUP,		// タイムアップ状態
+		STATE_OFFWIN,		// 攻撃側の勝ち
 		STATE_MAX			// この列挙型の総数
 	};
 

@@ -19,8 +19,12 @@
 #include "soldier_manager.h"
 
 //-------------------------------------------
-// マクロ定義
+// 無名名前空間
 //-------------------------------------------
+namespace
+{
+	const int LIFE = 120;		// 寿命
+}
 
 //==============================
 // コンストラクタ
@@ -30,6 +34,7 @@ CSnowBall::CSnowBall() : CModel(CObject::TYPE_SNOWBALL, CObject::PRIORITY_ENTITY
 	// 全ての値をクリアする
 	m_move = NONE_D3DXVECTOR3;			// 移動量
 	m_type = CSoldier::BATTLE_OFF;		// 攻守の種類
+	m_nLife = 0;						// 寿命
 
 	m_pPrev = nullptr;		// 前のへのポインタ
 	m_pNext = nullptr;		// 次のへのポインタ
@@ -101,6 +106,7 @@ HRESULT CSnowBall::Init(void)
 	// 全ての値を初期化する
 	m_move = NONE_D3DXVECTOR3;			// 移動量
 	m_type = CSoldier::BATTLE_OFF;		// 攻守の種類
+	m_nLife = 0;						// 寿命
 
 	// 値を返す
 	return S_OK;
@@ -140,7 +146,20 @@ void CSnowBall::Update(void)
 	// 位置を設定する
 	SetPos(pos);
 
+	// 寿命を減算する
+	m_nLife--;
+
 	Colision();
+
+	if (m_nLife <= 0)
+	{ // 寿命が 0 以下になった場合
+
+		// 終了処理
+		Uninit();
+
+		// この先の処理を行わない
+		return;
+	}
 }
 
 //=====================================
@@ -158,15 +177,16 @@ void CSnowBall::Draw(void)
 void CSnowBall::SetData(const D3DXVECTOR3& pos, const D3DXVECTOR3& move, const CSoldier::BATTLE battle)
 {
 	// 情報の設定処理
-	SetPos(pos);					// 位置
-	SetPosOld(pos);					// 前回の位置
-	SetRot(NONE_D3DXVECTOR3);		// 向き
-	SetScale(NONE_SCALE);			// 拡大率
-	SetFileData(CXFile::TYPE_FRAC_WOOD);	// モデル情報
+	SetPos(pos);						// 位置
+	SetPosOld(pos);						// 前回の位置
+	SetRot(NONE_D3DXVECTOR3);			// 向き
+	SetScale(NONE_SCALE);				// 拡大率
+	SetFileData(CXFile::TYPE_SNOWBALL);	// モデル情報
 
 	// 全ての値を設定する
 	m_move = move;			// 移動量
 	m_type = battle;		// 攻守の種類
+	m_nLife = LIFE;			// 寿命
 }
 
 //=======================================

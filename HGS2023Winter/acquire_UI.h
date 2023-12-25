@@ -43,6 +43,9 @@ public:		// 誰でもアクセスできる
 
 	void SetData(const D3DXVECTOR3 pos);				// 情報の設定処理
 
+	// セット・ゲット関係
+	CBillboard* GetPolygon(const TYPE type);			// ポリゴンの情報の取得処理
+
 	// 静的メンバ関数
 	static CAcquireUI* Create(const D3DXVECTOR3 pos);	// 生成処理
 

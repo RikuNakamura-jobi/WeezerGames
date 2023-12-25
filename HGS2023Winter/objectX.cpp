@@ -30,6 +30,7 @@ const char* CXFile::c_apModelData[CXFile::TYPE_MAX] =		// モデルの名前
 	"data\\MODEL\\sandbag.x",		// 土嚢
 	"data\\MODEL\\tree.x",			// 木
 	"data\\MODEL\\castle.x",		// 城
+	"data\\MODEL\\snowball.x",		// 雪玉
 
 	// プレイヤーモデル
 	"data\\MODEL\\player\\00_hip.x",			// 腰
