@@ -41,6 +41,7 @@ public:			// 誰でもアクセス出来る
 		SOUND_LABEL_SE_GROUNDQUAKE,		// グラウンドクエイク音
 		SOUND_LABEL_SE_STUN,			// 気絶音
 		SOUND_LABEL_SE_DAMAGE,			// ダメージ音
+		SOUND_LABEL_SE_SNOW,			// ダメージ音
 		SOUND_LABEL_MAX					// この列挙型の総数
 	};
 
