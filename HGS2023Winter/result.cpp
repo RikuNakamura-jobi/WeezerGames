@@ -17,6 +17,7 @@
 #include "file.h"
 #include "camera.h"
 #include "skybox.h"
+#include "object2D.h"
 
 //--------------------------------------------
 // マクロ定義
@@ -75,8 +76,8 @@ void CResult::Update(void)
 		CManager::Get()->GetInputGamePad()->GetTrigger(CInputGamePad::JOYKEY_START, 0) == true)
 	{ // ENTERキーを押した場合
 
-		// ランキングに遷移する
-		CManager::Get()->GetFade()->SetFade(CScene::MODE_RANKING);
+		// タイトルに遷移する
+		CManager::Get()->GetFade()->SetFade(CScene::MODE_TITLE);
 
 		// この先の処理を行わない
 		return;
