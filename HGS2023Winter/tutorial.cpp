@@ -13,6 +13,7 @@
 #include "input.h"
 #include "renderer.h"
 
+#include "sound.h"
 #include "tutorial_screen.h"
 
 // マクロ定義
@@ -73,6 +74,9 @@ void CTutorial::Update(void)
 		CManager::Get()->GetInputGamePad()->GetTrigger(CInputGamePad::JOYKEY_START, 0) == true ||
 		CManager::Get()->GetInputKeyboard()->GetTrigger(DIK_RETURN) == true)
 	{ // 決定を押した場合
+
+		// 選択音を鳴らす
+		CManager::Get()->GetSound()->Play(CSound::SOUND_LABEL_SE_SELECT);
 
 		// true にする
 		m_bEnd = true;

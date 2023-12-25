@@ -19,6 +19,7 @@
 #include "camera.h"
 #include "screen.h"
 #include "result_winlose.h"
+#include "sound.h"
 
 //--------------------------------------------
 // マクロ定義
@@ -79,6 +80,9 @@ void CResult::Update(void)
 		CManager::Get()->GetInputGamePad()->GetTrigger(CInputGamePad::JOYKEY_A,0) == true ||
 		CManager::Get()->GetInputGamePad()->GetTrigger(CInputGamePad::JOYKEY_START, 0) == true)
 	{ // ENTERキーを押した場合
+
+		// 選択音を鳴らす
+		CManager::Get()->GetSound()->Play(CSound::SOUND_LABEL_SE_SELECT);
 
 		// タイトルに遷移する
 		CManager::Get()->GetFade()->SetFade(CScene::MODE_TITLE);

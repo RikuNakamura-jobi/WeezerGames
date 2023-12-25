@@ -19,6 +19,7 @@
 #include "skybox.h"
 #include "screen.h"
 #include "title_logo.h"
+#include "sound.h"
 
 // マクロ定義
 #define SET_RANKING_TIMER		(600)		// ランキング画面に遷移するカウント数
@@ -98,6 +99,9 @@ void CTitle::Update(void)
 		CManager::Get()->GetInputGamePad()->GetTrigger(CInputGamePad::JOYKEY_START, 0) == true ||
 		CManager::Get()->GetInputGamePad()->GetTrigger(CInputGamePad::JOYKEY_A, 0) == true)
 	{ // ENTERキーを押した場合
+
+		// 選択音を鳴らす
+		CManager::Get()->GetSound()->Play(CSound::SOUND_LABEL_SE_SELECT);
 
 		// チュートリアルに遷移する
 		CManager::Get()->GetFade()->SetFade(CScene::MODE_TUTORIAL);
