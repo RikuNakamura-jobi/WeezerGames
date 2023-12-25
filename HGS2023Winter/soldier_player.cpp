@@ -95,10 +95,10 @@ void CSoldierPlayer::Draw(void)
 //=======================================
 // 情報の設定処理
 //=======================================
-void CSoldierPlayer::SetData(const D3DXVECTOR3& pos, const TYPE type)
+void CSoldierPlayer::SetData(const D3DXVECTOR3& pos, const TYPE type, const BATTLE battle)
 {
 	// 情報の設定処理
-	CSoldier::SetData(pos, type);
+	CSoldier::SetData(pos, type, battle);
 }
 
 //=======================================
@@ -121,16 +121,19 @@ void CSoldierPlayer::MoveControl(void)
 	// 目的の向きを取得する
 	D3DXVECTOR3 rotDest = GetRotDest();
 
-	if (CManager::Get()->GetInputKeyboard()->GetPress(DIK_W) == true)
+	if (CManager::Get()->GetInputKeyboard()->GetPress(DIK_W) == true ||
+		CManager::Get()->GetInputGamePad()->GetGameStickLYPress(0) > 0)
 	{ // Wキーを押している場合
 
-		if (CManager::Get()->GetInputKeyboard()->GetPress(DIK_A) == true)
+		if (CManager::Get()->GetInputKeyboard()->GetPress(DIK_A) == true ||
+			CManager::Get()->GetInputGamePad()->GetGameStickLXPress(0) < 0)
 		{ // Aキーを押している場合
 
 			// 目的の向きを設定する
 			rotDest.y = -D3DX_PI * 0.25f;
 		}
-		if (CManager::Get()->GetInputKeyboard()->GetPress(DIK_D) == true)
+		if (CManager::Get()->GetInputKeyboard()->GetPress(DIK_D) == true ||
+			CManager::Get()->GetInputGamePad()->GetGameStickLXPress(0) > 0)
 		{ // Dキーを押している場合
 
 			// 目的の向きを設定する
@@ -146,16 +149,19 @@ void CSoldierPlayer::MoveControl(void)
 		// 移動状況を設定する
 		SetEnableMove(true);
 	}
-	else if (CManager::Get()->GetInputKeyboard()->GetPress(DIK_S) == true)
+	else if (CManager::Get()->GetInputKeyboard()->GetPress(DIK_S) == true ||
+		CManager::Get()->GetInputGamePad()->GetGameStickLYPress(0) < 0)
 	{ // Sキーを押している場合
 
-		if (CManager::Get()->GetInputKeyboard()->GetPress(DIK_A) == true)
+		if (CManager::Get()->GetInputKeyboard()->GetPress(DIK_A) == true ||
+			CManager::Get()->GetInputGamePad()->GetGameStickLXPress(0) < 0)
 		{ // Aキーを押している場合
 
 			// 目的の向きを設定する
 			rotDest.y = -D3DX_PI * 0.75f;
 		}
-		if (CManager::Get()->GetInputKeyboard()->GetPress(DIK_D) == true)
+		if (CManager::Get()->GetInputKeyboard()->GetPress(DIK_D) == true ||
+			CManager::Get()->GetInputGamePad()->GetGameStickLXPress(0) > 0)
 		{ // Dキーを押している場合
 
 			// 目的の向きを設定する
@@ -171,7 +177,8 @@ void CSoldierPlayer::MoveControl(void)
 		// 移動状況を設定する
 		SetEnableMove(true);
 	}
-	else if (CManager::Get()->GetInputKeyboard()->GetPress(DIK_A) == true)
+	else if (CManager::Get()->GetInputKeyboard()->GetPress(DIK_A) == true ||
+		CManager::Get()->GetInputGamePad()->GetGameStickLXPress(0) < 0)
 	{ // Aキーを押している場合
 
 		// 目的の向きを設定する
@@ -180,7 +187,8 @@ void CSoldierPlayer::MoveControl(void)
 		// 移動状況を設定する
 		SetEnableMove(true);
 	}
-	else if (CManager::Get()->GetInputKeyboard()->GetPress(DIK_D) == true)
+	else if (CManager::Get()->GetInputKeyboard()->GetPress(DIK_D) == true ||
+		CManager::Get()->GetInputGamePad()->GetGameStickLXPress(0) > 0)
 	{ // Dキーを押している場合
 
 		// 目的の向きを設定する
@@ -205,7 +213,8 @@ void CSoldierPlayer::MoveControl(void)
 //=======================================
 void CSoldierPlayer::JumpControl(void)
 {
-	if (CManager::Get()->GetInputKeyboard()->GetTrigger(DIK_SPACE) == true &&
+	if ((CManager::Get()->GetInputKeyboard()->GetTrigger(DIK_SPACE) == true ||
+		CManager::Get()->GetInputGamePad()->GetTrigger(CInputGamePad::JOYKEY_A, 0) == true) &&
 		IsJump() == false)
 	{ // SPACEキーを押した場合
 

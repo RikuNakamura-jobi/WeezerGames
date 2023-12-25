@@ -32,6 +32,14 @@ public:			// 誰でもアクセスできる
 		TYPE_MAX			// この列挙型の総数
 	};
 
+	// 列挙型定義(バトル)
+	enum BATTLE
+	{
+		BATTLE_OFF = 0,		// 攻撃側
+		BATTLE_DEF,			// 防御側
+		BATTLE_MAX			// この列挙型の総数
+	};
+
 	CSoldier();				// コンストラクタ
 	CSoldier(CObject::TYPE type, PRIORITY priority = PRIORITY_PLAYER);		// オーバーロードコンストラクタ
 	virtual ~CSoldier();	// デストラクタ
@@ -49,7 +57,7 @@ public:			// 誰でもアクセスできる
 	virtual void Update(void) = 0;	// 更新処理
 	virtual void Draw(void);		// 描画処理
 
-	virtual void SetData(const D3DXVECTOR3& pos, const TYPE type);	// 情報の設定処理
+	virtual void SetData(const D3DXVECTOR3& pos, const TYPE type, const BATTLE battle);	// 情報の設定処理
 
 	// セット・ゲット関係
 	void SetMove(const D3DXVECTOR3& move);		// 移動量の設定処理
@@ -75,7 +83,7 @@ public:			// 誰でもアクセスできる
 	void Hit();
 
 	// 静的メンバ関数
-	static CSoldier* Create(const D3DXVECTOR3& pos, const TYPE type);	// 生成処理
+	static CSoldier* Create(const D3DXVECTOR3& pos, const TYPE type, const BATTLE battle);	// 生成処理
 
 protected:		// 自分と派生クラスだけアクセスできる
 
@@ -92,6 +100,7 @@ private:		// 自分だけアクセスできる
 	D3DXVECTOR3 m_move;				// 移動量
 	D3DXVECTOR3 m_rotDest;			// 目的の向き
 	TYPE m_type;					// 種類
+	BATTLE m_battle;				// 攻守
 	int m_nLife;					// 体力
 	float m_fSpeed;					// 速度
 	bool m_bMove;					// 移動状況

@@ -28,7 +28,7 @@ public:			// 誰でもアクセスできる
 	void Update(void);		// 更新処理
 	void Draw(void);		// 描画処理
 
-	void SetData(const D3DXVECTOR3& pos, const TYPE type);		// 情報の設定処理
+	void SetData(const D3DXVECTOR3& pos, const TYPE type, const BATTLE battle);		// 情報の設定処理
 
 private:		// 自分だけアクセスできる
 
