@@ -15,7 +15,7 @@
 //--------------------------------------------
 // 前方宣言
 //--------------------------------------------
-class CPause;			// ポーズ
+class CFlag;			// 旗
 
 //--------------------------------------------
 // クラス(ゲームクラス)
@@ -45,22 +45,16 @@ public:						// 誰でもアクセスできる
 	void SetData(const MODE mode);		// 情報の設定処理
 
 	// 静的メンバ関数(セット・ゲット)
-	static CPause* GetPause(void);					// ポーズの取得処理
-
 	static void SetState(const STATE state);		// ゲームの進行状態の設定処理
 	static STATE GetState(void);					// ゲームの進行状態の取得処理
-
-	// NULL化処理
-	static void DeletePause(void);		// ポーズのNULL化処理
 
 private:					// 自分だけアクセスできる
 
 	// メンバ関数
-	void Pause(void);			// ポーズ処理
 	void Transition(void);		// 遷移処理
 
 	// 静的メンバ変数(最初から必要な物を配置しておく)
-	static CPause* m_pPause;			// ポーズの情報
+	static CFlag* m_pFlag;				// 旗の情報
 	static STATE m_GameState;			// ゲームの進行状態
 	static int m_nFinishCount;			// 終了カウント
 };

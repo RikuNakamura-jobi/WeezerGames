@@ -412,7 +412,7 @@ void CBillboard::SetVtxPosUnder(void)
 //===========================================
 // 頂点情報の設定(下頂点)
 //===========================================
-void CBillboard::SetVtxPosLeft(void)
+void CBillboard::SetVtxLeft(const D3DXVECTOR3 right)
 {
 	VERTEX_3D * pVtx;											//頂点情報へのポインタ
 
@@ -420,10 +420,10 @@ void CBillboard::SetVtxPosLeft(void)
 	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
 
 	//頂点座標の設定
-	pVtx[0].pos = D3DXVECTOR3(0.0f, +m_size.y, 0.0f);
-	pVtx[1].pos = D3DXVECTOR3(+(m_size.x * 2), +m_size.y, 0.0f);
-	pVtx[2].pos = D3DXVECTOR3(0.0f, -m_size.y, 0.0f);
-	pVtx[3].pos = D3DXVECTOR3(+(m_size.x * 2), -m_size.y, 0.0f);
+	pVtx[0].pos = D3DXVECTOR3(-m_size.x, +m_size.y, 0.0f);
+	pVtx[1].pos = D3DXVECTOR3(+right.x, +m_size.y, 0.0f);
+	pVtx[2].pos = D3DXVECTOR3(-m_size.x, -m_size.y, 0.0f);
+	pVtx[3].pos = D3DXVECTOR3(+right.x, -m_size.y, 0.0f);
 
 	//頂点バッファをアンロックする
 	m_pVtxBuff->Unlock();

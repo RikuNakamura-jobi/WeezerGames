@@ -11,6 +11,7 @@
 #include "manager.h"
 #include "flag.h"
 #include "renderer.h"
+#include "acquire_UI.h"
 #include "useful.h"
 
 //==============================
@@ -18,7 +19,8 @@
 //==============================
 CFlag::CFlag() : CModel(CObject::TYPE_FLAG, CObject::PRIORITY_ENTITY)
 {
-
+	// 全ての値をクリアする
+	m_acquire = nullptr;		// 旗取得UIの情報
 }
 
 //==============================
@@ -41,6 +43,9 @@ HRESULT CFlag::Init(void)
 		return E_FAIL;
 	}
 
+	// 全ての値をクリアする
+	m_acquire = nullptr;		// 旗取得UIの情報
+
 	// 値を返す
 	return S_OK;
 }
@@ -50,6 +55,14 @@ HRESULT CFlag::Init(void)
 //========================================
 void CFlag::Uninit(void)
 {
+	if (m_acquire != nullptr)
+	{ // 旗取得UIが NULL じゃない場合
+
+		// 旗取得UIの終了処理
+		m_acquire->Uninit();
+		m_acquire = nullptr;
+	}
+
 	// 終了処理
 	CModel::Uninit();
 }
@@ -82,6 +95,13 @@ void CFlag::SetData(const D3DXVECTOR3& pos)
 	SetRot(NONE_D3DXVECTOR3);			// 向き
 	SetScale(NONE_SCALE);				// 拡大率
 	SetFileData(CXFile::TYPE_FLAG);		// モデル情報を設定する
+
+	if (m_acquire == nullptr)
+	{ // 旗取得UIが NULL の場合
+
+		// 旗取得UIを生成する
+		m_acquire = CAcquireUI::Create(D3DXVECTOR3(pos.x, pos.y + 100.0f, pos.z));
+	}
 }
 
 //=======================================

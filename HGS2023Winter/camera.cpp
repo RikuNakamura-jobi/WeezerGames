@@ -118,34 +118,11 @@ void CCamera::Update(void)
 	{
 	case CScene::MODE_GAME:		// ゲームモード
 
-		if (CGame::GetPause() != nullptr &&
-			CGame::GetPause()->GetPause() == false)
-		{ // ポーズ中以外の場合
+		// 種類ごとの処理
+		//TypeProcess();
 
-			// 種類ごとの処理
-			//TypeProcess();
-
-			// 操作処理
-			Control();
-		}
-		else
-		{ // 上記以外
-
-// デバッグモード
-#ifdef _DEBUG
-
-// ポーズ中のカメラ操作
-#if 0
-			if (m_bControl == true)
-			{ // 捜査状況が true の場合
-
-				// 操作処理
-				Control();
-			}
-#endif
-
-#endif
-		}
+		// 操作処理
+		Control();
 
 		break;
 

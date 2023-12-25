@@ -35,7 +35,7 @@
 //--------------------------------------------
 // 静的メンバ変数宣言
 //--------------------------------------------
-CPause* CGame::m_pPause = nullptr;							// ポーズの情報
+CFlag* CGame::m_pFlag = nullptr;							// 旗の情報
 CGame::STATE CGame::m_GameState = CGame::STATE_START;		// ゲームの進行状態
 int CGame::m_nFinishCount = 0;								// 終了カウント
 
@@ -45,7 +45,6 @@ int CGame::m_nFinishCount = 0;								// 終了カウント
 CGame::CGame() : CScene(TYPE_NONE, PRIORITY_BG)
 {
 	// 全ての値をクリアする
-	m_pPause = nullptr;			// ポーズ
 	m_nFinishCount = 0;			// 終了カウント
 	m_GameState = STATE_START;	// 状態
 }
@@ -93,7 +92,7 @@ HRESULT CGame::Init(void)
 	CSnowBall::Create(D3DXVECTOR3(300.0f, 0.0f, 0.0f));
 
 	// 旗を生成する
-	CFlag::Create(D3DXVECTOR3(0.0f, 0.0f, 400.0f));
+	m_pFlag = CFlag::Create(D3DXVECTOR3(0.0f, 0.0f, 400.0f));
 
 	// 城を生成する
 	CCastle::Create(D3DXVECTOR3(0.0f, 0.0f, 500.0f),NONE_D3DXVECTOR3);
@@ -112,7 +111,7 @@ HRESULT CGame::Init(void)
 void CGame::Uninit(void)
 {
 	// ポインタを NULL にする
-	m_pPause = nullptr;			// ポーズ
+	m_pFlag = nullptr;			// 旗
 
 	// 情報を初期化する
 	m_GameState = STATE_START;	// ゲームの進行状態
@@ -133,15 +132,9 @@ void CGame::Update(void)
 	{
 	case CGame::STATE_START:
 
-		// ポーズ処理
-		Pause();
-
 		break;
 
 	case CGame::STATE_PLAY:
-
-		// ポーズ処理
-		Pause();
 
 		break;
 
@@ -198,49 +191,11 @@ void CGame::SetData(const MODE mode)
 	// 情報の設定処理
 	CScene::SetData(mode);
 
-	if (m_pPause == nullptr)
-	{ // ポーズへのポインタが NULL の場合
-
-		// ポーズの生成処理
-		m_pPause = CPause::Create();
-	}
-
 	// スタート状態にする
 	m_GameState = STATE_START;
 
 	// 情報の初期化
 	m_nFinishCount = 0;				// 終了カウント
-}
-
-//======================================
-// ポーズ処理
-//======================================
-void CGame::Pause(void)
-{
-	if (CManager::Get()->GetInputKeyboard()->GetTrigger(DIK_P) == true ||
-		CManager::Get()->GetInputGamePad()->GetTrigger(CInputGamePad::JOYKEY_BACK, 0) == true)
-	{ // Pキーを押した場合
-
-		if (CManager::Get()->GetFade()->GetFade() == CFade::FADE_NONE)
-		{ // フェード無し状態かつ、終了以外の場合
-
-			if (m_pPause->GetPause() == false)
-			{ // ポーズが false だった場合
-
-				// ポーズ状況を true にする
-				m_pPause->SetPause(true);
-			}
-			else
-			{ // ポーズが true だった場合
-
-				// ポーズ状況を false にする
-				m_pPause->SetPause(false);
-			}
-
-			// 決定音を鳴らす
-			CManager::Get()->GetSound()->Play(CSound::SOUND_LABEL_SE_DECIDE);
-		}
-	}
 }
 
 //======================================
@@ -260,15 +215,6 @@ void CGame::Transition(void)
 }
 
 //======================================
-// ポーズの取得処理
-//======================================
-CPause* CGame::GetPause(void)
-{
-	// ポーズの情報を返す
-	return m_pPause;
-}
-
-//======================================
 // ゲームの進行状態の設定処理
 //======================================
 void CGame::SetState(const STATE state)
@@ -284,13 +230,4 @@ CGame::STATE CGame::GetState(void)
 {
 	// ゲームの進行状態を返す
 	return m_GameState;
-}
-
-//======================================
-// ポーズのNULL化処理
-//======================================
-void CGame::DeletePause(void)
-{
-	// ポーズのポインタを NULL にする
-	m_pPause = nullptr;
 }

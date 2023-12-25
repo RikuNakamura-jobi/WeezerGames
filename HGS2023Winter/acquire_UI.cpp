@@ -17,8 +17,13 @@ namespace
 {
 	const D3DXVECTOR3 UI_SIZE[CAcquireUI::TYPE_MAX] = 
 	{
-		D3DXVECTOR3(60.0f,22.0f,0.0f),
-		D3DXVECTOR3(60.0f,20.0f,0.0f),
+		D3DXVECTOR3(60.0f, 22.0f, 0.0f),
+		D3DXVECTOR3(60.0f, 20.0f, 0.0f),
+	};
+	const D3DXCOLOR UI_COLOR[CAcquireUI::TYPE_MAX] =
+	{
+		D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f),
+		D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f),
 	};
 }
 
@@ -117,8 +122,32 @@ void CAcquireUI::SetData(const D3DXVECTOR3 pos)
 			m_apUI[nCnt]->SetPosOld(pos);				// 前回の位置
 			m_apUI[nCnt]->SetSize(UI_SIZE[nCnt]);		// サイズ
 
-			// 頂点座標の設定処理
-			m_apUI[nCnt]->SetVtxPosLeft();
+			switch (nCnt)
+			{
+			case CAcquireUI::TYPE_GAGE:
+
+				// 頂点座標の設定処理
+				m_apUI[nCnt]->SetVertex();
+
+				break;
+
+			case CAcquireUI::TYPE_METER:
+
+				// 頂点座標の設定処理
+				m_apUI[nCnt]->SetVtxLeft(UI_SIZE[nCnt]);
+
+				break;
+
+			default:
+
+				// 停止
+				assert(false);
+
+				break;
+			}
+
+			// 頂点カラーの設定処理
+			m_apUI[nCnt]->SetVtxColor(UI_COLOR[nCnt]);
 		}
 	}
 }
