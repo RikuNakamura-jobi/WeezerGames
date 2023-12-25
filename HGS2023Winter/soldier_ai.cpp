@@ -264,8 +264,23 @@ void CSoldierAI::AIMove(void)
 		}
 		else
 		{
-			// ˆÚ“®ó‹µ‚ðÝ’è‚·‚é
-			SetEnableMove(false);
+			D3DXVECTOR3 vecRes = CGame::GetRespawn()->GetPos() - GetPos();
+			D3DXVECTOR3 vecFlagToRes = CGame::GetRespawn()->GetPos() - CGame::GetFlag()->GetPos();
+			float lengthRes, lengthFlag;
+
+			lengthRes = D3DXVec3Length(&vecRes);
+			lengthFlag = D3DXVec3Length(&vecFlagToRes);
+
+			if (lengthRes < lengthFlag)
+			{
+				// ˆÚ“®ó‹µ‚ðÝ’è‚·‚é
+				SetEnableMove(false);
+			}
+			else
+			{
+				// ˆÚ“®ó‹µ‚ðÝ’è‚·‚é
+				SetEnableMove(true);
+			}
 		}
 
 		CSandbagManager *sandbagManager = CSandbagManager::Get();
@@ -506,7 +521,7 @@ void CSoldierAI::AIDefenseAttack(void)
 
 		if (m_nNumNearEnemy > 1)
 		{
-			if (nRand > 1)
+			if (nRand > 0)
 			{
 				m_Situation = SITUATION_GUARD;
 			}
@@ -517,7 +532,7 @@ void CSoldierAI::AIDefenseAttack(void)
 		}
 		else if (m_nNumNearEnemy > 0)
 		{
-			if (nRand > 0)
+			if (nRand > 1)
 			{
 				m_Situation = SITUATION_GUARD;
 			}
@@ -553,7 +568,7 @@ void CSoldierAI::AIDefenseGuard(void)
 			{
 				if (nRand > 2)
 				{
-					m_Situation = SITUATION_ESCAPE;
+					m_Situation = SITUATION_GUARD;
 				}
 				else
 				{

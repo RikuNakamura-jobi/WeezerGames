@@ -88,28 +88,28 @@ HRESULT CGame::Init(void)
 	CScene::Init();
 
 	// 兵士を生成する
-	CSoldier::Create(NONE_D3DXVECTOR3, CSoldier::TYPE::TYPE_PLAYER, CSoldier::BATTLE_OFF);
+	CSoldier::Create(D3DXVECTOR3(0.0f, 0.0f, -800.0f), CSoldier::TYPE::TYPE_PLAYER, CSoldier::BATTLE_OFF);
 
-	for (int nCnt = 0; nCnt < 14; nCnt++)
+	for (int nCnt = 0; nCnt < 24; nCnt++)
 	{
 
-		CSoldier::Create(D3DXVECTOR3(0.0f, 0.0f, -500.0f), CSoldier::TYPE::TYPE_AI, CSoldier::BATTLE_OFF);
+		CSoldier::Create(D3DXVECTOR3((float)(rand() % 1200 - 600), 0.0f, -800.0f), CSoldier::TYPE::TYPE_AI, CSoldier::BATTLE_OFF);
 	}
 
-	for (int nCnt = 0; nCnt < 15; nCnt++)
+	for (int nCnt = 0; nCnt < 25; nCnt++)
 	{
 
-		CSoldier::Create(D3DXVECTOR3(0.0f, 0.0f, 400.0f), CSoldier::TYPE::TYPE_AI, CSoldier::BATTLE_DEF);
+		CSoldier::Create(D3DXVECTOR3((float)(rand() % 1200 - 600), 0.0f, 2000.0f), CSoldier::TYPE::TYPE_AI, CSoldier::BATTLE_DEF);
 	}
 
 	// 旗を生成する
-	m_pFlag = CFlag::Create(D3DXVECTOR3(0.0f, 0.0f, 1000.0f));
+	m_pFlag = CFlag::Create(D3DXVECTOR3(0.0f, 0.0f, 720.0f));
 
 	// 城を生成する
-	m_pCastle = CCastle::Create(D3DXVECTOR3(0.0f, 0.0f, 1800.0f),NONE_D3DXVECTOR3);
+	m_pCastle = CCastle::Create(D3DXVECTOR3(0.0f, 0.0f, 2500.0f),NONE_D3DXVECTOR3);
 
 	// 攻撃側の復活地点を生成する
-	m_pRespawn = COffRespawn::Create(D3DXVECTOR3(0.0f, 0.0f, -500.0f));
+	m_pRespawn = COffRespawn::Create(D3DXVECTOR3(0.0f, 0.0f, -600.0f));
 
 	// 情報の初期化
 	m_nFinishCount = 0;				// 終了カウント
