@@ -16,10 +16,9 @@
 #include "useful.h"
 
 #include "motion.h"
-#include "objectX.h"
 #include "elevation_manager.h"
 #include "objectElevation.h"
-#include "input.h"
+#include "snowball.h"
 
 #include "soldier_manager.h"
 #include "soldier_player.h"
@@ -550,6 +549,22 @@ void CSoldier::Jump(void)
 
 	// ƒWƒƒƒ“ƒvó‹µ‚ğ true ‚É‚·‚é
 	m_bJump = true;
+}
+
+//=======================================
+// “Š‚°‚éˆ—
+//=======================================
+void CSoldier::Throw(void)
+{
+	// ˆÚ“®—Ê‚ğéŒ¾
+	D3DXVECTOR3 move = NONE_D3DXVECTOR3;
+
+	// ˆÚ“®—Ê‚ğİ’è‚·‚é
+	move.x = sinf(GetRot().y) * 4.0f;
+	move.z = cosf(GetRot().y) * 4.0f;
+
+	// á‹Ê‚ğ¶¬‚·‚é
+	CSnowBall::Create(D3DXVECTOR3(GetPos().x, GetPos().y + 30.0f, GetPos().z), move);
 }
 
 //=======================================

@@ -88,9 +88,6 @@ HRESULT CGame::Init(void)
 	CSoldier::Create(NONE_D3DXVECTOR3, CSoldier::TYPE::TYPE_PLAYER, CSoldier::BATTLE_OFF);
 	CSoldier::Create(D3DXVECTOR3(400.0f, 0.0f, 0.0f), CSoldier::TYPE::TYPE_AI, CSoldier::BATTLE_OFF);
 
-	// 雪玉を生成する
-	CSnowBall::Create(D3DXVECTOR3(300.0f, 0.0f, 0.0f));
-
 	// 旗を生成する
 	m_pFlag = CFlag::Create(D3DXVECTOR3(0.0f, 0.0f, 400.0f));
 
@@ -151,18 +148,6 @@ void CGame::Update(void)
 		assert(false);
 
 		break;
-	}
-
-	if (CManager::Get()->GetInputKeyboard()->GetTrigger(DIK_RETURN) == true ||
-		CManager::Get()->GetInputGamePad()->GetTrigger(CInputGamePad::JOYKEY_START, 0) == true ||
-		CManager::Get()->GetInputGamePad()->GetTrigger(CInputGamePad::JOYKEY_A, 0) == true)
-	{ // ENTERキーを押した場合
-
-		// チュートリアルに遷移する
-		CManager::Get()->GetFade()->SetFade(CScene::MODE_RESULT);
-
-		// この先の処理を行わない
-		return;
 	}
 
 	if (CManager::Get()->GetRenderer() != nullptr)

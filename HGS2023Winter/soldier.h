@@ -90,6 +90,7 @@ protected:		// 自分と派生クラスだけアクセスできる
 	// メンバ関数
 	void Move(void);				// 移動処理
 	void Jump(void);				// ジャンプ処理
+	void Throw(void);				// 投げる処理
 	void ElevationCollision(void);	// 起伏地面の当たり判定処理
 
 private:		// 自分だけアクセスできる

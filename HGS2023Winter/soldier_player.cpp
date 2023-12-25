@@ -111,6 +111,9 @@ void CSoldierPlayer::Control(void)
 
 	// ジャンプコントロール
 	JumpControl();
+
+	// 投げのコントロール
+	ThrowControl();
 }
 
 //=======================================
@@ -220,5 +223,20 @@ void CSoldierPlayer::JumpControl(void)
 
 		// ジャンプ処理
 		Jump();
+	}
+}
+
+//=======================================
+// 投げのコントロール
+//=======================================
+void CSoldierPlayer::ThrowControl(void)
+{
+	if ((CManager::Get()->GetInputKeyboard()->GetTrigger(DIK_RETURN) == true ||
+		CManager::Get()->GetInputGamePad()->GetTrigger(CInputGamePad::JOYKEY_B, 0) == true) &&
+		IsJump() == false)
+	{ // ENTERキーを押した場合
+
+		// 投げ処理
+		Throw();
 	}
 }
