@@ -95,6 +95,9 @@ void CSoldierPlayer::Update(void)
 
 	// 魔法壁の当たり判定処理
 	MagicWall();
+
+	// 状態マネージャー
+	StateManager();
 }
 
 //===========================================
@@ -123,14 +126,18 @@ void CSoldierPlayer::SetData(const D3DXVECTOR3& pos, const TYPE type, const BATT
 //=======================================
 void CSoldierPlayer::Control(void)
 {
-	// 移動コントロール
-	MoveControl();
+	if (GetState() != STATE_THROW)
+	{ // 投げ状態以外の場合
 
-	// ジャンプコントロール
-	JumpControl();
+		// 移動コントロール
+		MoveControl();
 
-	// 投げのコントロール
-	ThrowControl();
+		// ジャンプコントロール
+		JumpControl();
+
+		// 投げのコントロール
+		ThrowControl();
+	}
 
 	// カメラのコントロール
 	CameraControl();
@@ -143,6 +150,7 @@ void CSoldierPlayer::MoveControl(void)
 {
 	// 目的の向きを取得する
 	D3DXVECTOR3 rotDest = GetRotDest();
+	bool bMove;		// 移動状況
 
 	if (CManager::Get()->GetInputKeyboard()->GetPress(DIK_W) == true ||
 		CManager::Get()->GetInputGamePad()->GetGameStickLYPress(0) > 0)
@@ -169,8 +177,8 @@ void CSoldierPlayer::MoveControl(void)
 			rotDest.y = 0.0f + m_CameraRot.y;
 		}
 
-		// 移動状況を設定する
-		SetEnableMove(true);
+		// 移動状況を true にする
+		bMove = true;
 	}
 	else if (CManager::Get()->GetInputKeyboard()->GetPress(DIK_S) == true ||
 		CManager::Get()->GetInputGamePad()->GetGameStickLYPress(0) < 0)
@@ -197,8 +205,8 @@ void CSoldierPlayer::MoveControl(void)
 			rotDest.y = D3DX_PI + m_CameraRot.y;
 		}
 
-		// 移動状況を設定する
-		SetEnableMove(true);
+		// 移動状況を true にする
+		bMove = true;
 	}
 	else if (CManager::Get()->GetInputKeyboard()->GetPress(DIK_A) == true ||
 		CManager::Get()->GetInputGamePad()->GetGameStickLXPress(0) < 0)
@@ -207,8 +215,8 @@ void CSoldierPlayer::MoveControl(void)
 		// 目的の向きを設定する
 		rotDest.y = -D3DX_PI * 0.5f + m_CameraRot.y;
 
-		// 移動状況を設定する
-		SetEnableMove(true);
+		// 移動状況を true にする
+		bMove = true;
 	}
 	else if (CManager::Get()->GetInputKeyboard()->GetPress(DIK_D) == true ||
 		CManager::Get()->GetInputGamePad()->GetGameStickLXPress(0) > 0)
@@ -217,15 +225,33 @@ void CSoldierPlayer::MoveControl(void)
 		// 目的の向きを設定する
 		rotDest.y = D3DX_PI * 0.5f + m_CameraRot.y;
 
-		// 移動状況を設定する
-		SetEnableMove(true);
+		// 移動状況を true にする
+		bMove = true;
 	}
 	else
 	{ // 上記以外
 
 		// 移動状況を false にする
-		SetEnableMove(false);
+		bMove = false;
 	}
+
+	if (bMove == true &&
+		GetMotion()->GetType() == MOTIONTYPE_NEUTRAL)
+	{ // 移動モーションじゃない場合
+
+		// 移動モーションを設定する
+		GetMotion()->Set(MOTIONTYPE_MOVE);
+	}
+	else if(bMove == false &&
+		GetMotion()->GetType() == MOTIONTYPE_MOVE)
+	{ // 待機モーションじゃない場合
+
+		// 移動モーションを設定する
+		GetMotion()->Set(MOTIONTYPE_NEUTRAL);
+	}
+
+	// 移動状況を設定する
+	SetEnableMove(bMove);
 
 	// 向きの正規化
 	useful::RotNormalize(&rotDest.y);
@@ -246,6 +272,13 @@ void CSoldierPlayer::JumpControl(void)
 
 		// ジャンプ処理
 		Jump();
+
+		if (GetMotion()->GetType() != MOTIONTYPE_JUMP)
+		{ // ジャンプモーションじゃない場合
+
+			// ジャンプモーションを設定する
+			GetMotion()->Set(MOTIONTYPE_JUMP);
+		}
 	}
 }
 
@@ -258,8 +291,15 @@ void CSoldierPlayer::ThrowControl(void)
 		CManager::Get()->GetInputGamePad()->GetTrigger(CInputGamePad::JOYKEY_B, 0) == true)
 	{ // ENTERキーを押した場合
 
-		// 投げ処理
-		Throw();
+		// 投げ状態にする
+		SetState(STATE_THROW);
+
+		if (GetMotion()->GetType() != MOTIONTYPE_THROW)
+		{ // ジャンプモーションじゃない場合
+
+			// ジャンプモーションを設定する
+			GetMotion()->Set(MOTIONTYPE_THROW);
+		}
 	}
 }
 

@@ -32,12 +32,30 @@ public:			// 誰でもアクセスできる
 		TYPE_MAX			// この列挙型の総数
 	};
 
+	// 列挙型定義(モーションの種類)
+	enum MOTIONTYPE
+	{
+		MOTIONTYPE_NEUTRAL = 0,		// 待機モーション
+		MOTIONTYPE_MOVE,			// 移動モーション
+		MOTIONTYPE_THROW,			// 投げモーション
+		MOTIONTYPE_JUMP,			// ジャンプモーション
+		MOTIONTYPE_MAX				// この列挙型の総数
+	};
+
 	// 列挙型定義(バトル)
 	enum BATTLE
 	{
 		BATTLE_OFF = 0,		// 攻撃側
 		BATTLE_DEF,			// 防御側
 		BATTLE_MAX			// この列挙型の総数
+	};
+
+	// 列挙型定義(状態)
+	enum STATE
+	{
+		STATE_NONE = 0,		// 通常状態
+		STATE_THROW,		// 投げ状態
+		STATE_MAX			// この列挙型の総数
 	};
 
 	CSoldier();				// コンストラクタ
@@ -68,6 +86,9 @@ public:			// 誰でもアクセスできる
 
 	TYPE GetType(void) const;					// 種類の取得処理
 
+	void SetState(const STATE state);			// 状態の設定処理
+	STATE GetState(void) const;					// 状態の取得処理
+
 	void SetLife(const int nLife);				// 体力の設定処理
 	int GetLife(void) const;					// 体力の取得処理
 
@@ -95,6 +116,7 @@ protected:		// 自分と派生クラスだけアクセスできる
 	void Throw(void);				// 投げる処理
 	void ElevationCollision(void);	// 起伏地面の当たり判定処理
 	void MagicWall(void);			// 魔法壁の当たり判定処理
+	void StateManager(void);		// 状態マネージャー
 
 private:		// 自分だけアクセスできる
 
@@ -105,7 +127,9 @@ private:		// 自分だけアクセスできる
 	D3DXVECTOR3 m_rotDest;			// 目的の向き
 	TYPE m_type;					// 種類
 	BATTLE m_battle;				// 攻守
+	STATE m_state;					// 状態
 	int m_nLife;					// 体力
+	int m_nSnowCount;				// 雪投げカウント
 	float m_fSpeed;					// 速度
 	bool m_bMove;					// 移動状況
 	bool m_bJump;					// ジャンプ状況
