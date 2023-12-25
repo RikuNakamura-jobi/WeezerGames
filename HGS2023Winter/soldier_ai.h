@@ -19,6 +19,24 @@ class CSoldierAI : public CSoldier
 {
 public:			// 誰でもアクセスできる
 
+	// 列挙型定義(戦闘AI)
+	enum BATTLEAI
+	{
+		BATTLEAI_ATTACK = 0,	// 攻撃的
+		BATTLEAI_GUARD,			// 守備的
+		BATTLEAI_MAX			// この列挙型の総数
+	};
+
+	// 列挙型定義(戦闘AI)
+	enum SITUATION
+	{
+		SITUATION_ASSAULT = 0,	// 突撃
+		SITUATION_SHOOT,		// 攻撃
+		SITUATION_GUARD,		// 守備
+		SITUATION_ESCAPE,		// 逃走
+		SITUATION_MAX			// この列挙型の総数
+	};
+
 	CSoldierAI();			// コンストラクタ
 	~CSoldierAI();			// デストラクタ
 
@@ -32,6 +50,27 @@ public:			// 誰でもアクセスできる
 
 private:		// 自分だけアクセスできる
 
+	// メンバ関数
+	void AI(void);	//AIのまとめ
+
+	// 移動など
+	void AIMove(void);
+
+	// 行動選択
+	void AIOffense(void);
+	void AIOffenseAttack(void);
+	void AIOffenseGuard(void);
+	void AIDefense(void);
+	void AIDefenseAttack(void);
+	void AIDefenseGuard(void);
+
+	// メンバ変数
+	BATTLEAI m_BattleAI;
+	SITUATION m_Situation;
+
+	int m_nCountJudge;
+	int m_nNumNearPlayer;
+	int m_nNumNearEnemy;
 };
 
 #endif

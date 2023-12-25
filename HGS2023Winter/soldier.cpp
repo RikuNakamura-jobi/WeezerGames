@@ -432,6 +432,14 @@ float CSoldier::GetSpeed(void) const
 }
 
 //=======================================
+// w‰c‚Ìæ“¾ˆ—
+//=======================================
+CSoldier::BATTLE CSoldier::GetBattle(void) const
+{
+	return m_battle;
+}
+
+//=======================================
 // ˆÚ“®ó‹µ‚Ìİ’èˆ—
 //=======================================
 void CSoldier::SetEnableMove(bool bMove)
