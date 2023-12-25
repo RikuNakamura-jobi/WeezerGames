@@ -133,6 +133,8 @@ void CSoldierAI::SetData(const D3DXVECTOR3& pos, const TYPE type, const BATTLE b
 void CSoldierAI::AI(void)
 {
 	m_nCountJudge++;
+	m_nNumNearPlayer = 0;
+	m_nNumNearEnemy = 0;
 
 	CSoldierManager *soldierManager = CSoldierManager::Get();
 	m_AimPos = GetPos();
@@ -152,8 +154,10 @@ void CSoldierAI::AI(void)
 			{ // オブジェクトが使用されている場合繰り返す
 
 				CSoldier *pObjectNext = pObjCheck->GetNext();	// 次オブジェクト
+				D3DXVECTOR3 vecPlayer = pObjCheck->GetPos() - GetPos();
+				float fLength = D3DXVec3Length(&vecPlayer);
 
-				if (D3DXVec3Length(&(pObjCheck->GetPos() - GetPos())) < 500.0f)
+				if (fLength < 1000.0f)
 				{
 					if (pObjCheck->GetBattle() == GetBattle())
 					{
@@ -194,8 +198,11 @@ void CSoldierAI::AI(void)
 		AIDefense();
 	}
 
-	AIMove();
-	AIShoot();
+	if (GetState() != STATE_THROW)
+	{ // 投げ状態以外の場合
+		AIMove();
+		AIShoot();
+	}
 }
 
 //=======================================
@@ -334,7 +341,7 @@ void CSoldierAI::AIShoot(void)
 {
 	if (m_Situation == SITUATION_SHOOT)
 	{
-		if (m_nCountJudge == rand() % 60)
+		if (m_nCountJudge == rand() % 60 && m_nNumNearEnemy > 0)
 		{
 			// 投げ処理
 			Throw();

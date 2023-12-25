@@ -21,6 +21,7 @@
 #include "elevation_manager.h"
 #include "objectElevation.h"
 #include "snowball.h"
+#include "character.h"
 
 #include "soldier_manager.h"
 #include "soldier_player.h"
@@ -40,7 +41,7 @@ namespace
 	const float GRAVITY = 0.4f;				// 重力
 	const float JUMP = 4.0f;				// ジャンプの高さ
 	const float SNOWBALL_SPEED = 16.0f;		// 雪玉の速度
-	const float SNOWBALL_HEIGHT = 20.0f;	// 雪玉の高さ
+	const float SNOWBALL_HEIGHT = 40.0f;	// 雪玉の高さ
 	const float ROT_CORRECT = 0.1f;			// 向きの補正係数
 	const float STAGE_RIGHTMAX = 800.0f;	// ステージの右側の最大値
 	const float STAGE_LEFTMAX = -800.0f;	// ステージの左側の最大値
