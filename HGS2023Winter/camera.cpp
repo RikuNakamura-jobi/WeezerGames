@@ -390,8 +390,7 @@ void CCamera::Rotation(void)
 //=======================
 void CCamera::Move(void)
 {
-	if (CManager::Get()->GetInputKeyboard()->GetPress(DIK_UP) == true ||
-		CManager::Get()->GetInputGamePad()->GetGameStickRYPress(0) > 0)
+	if (CManager::Get()->GetInputKeyboard()->GetPress(DIK_UP) == true)
 	{ // WƒL[‚ð‰Ÿ‚µ‚½ê‡
 
 		if (CManager::Get()->GetInputKeyboard()->GetPress(DIK_RIGHT) == true)
