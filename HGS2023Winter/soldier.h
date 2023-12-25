@@ -62,6 +62,8 @@ public:			// 誰でもアクセスできる
 private:		// 自分だけアクセスできる
 
 	// メンバ関数
+	void Control(void);				// 操作処理
+	void Move(void);				// 移動処理
 	void ElevationCollision(void);	// 起伏地面の当たり判定処理
 
 	// メンバ変数
