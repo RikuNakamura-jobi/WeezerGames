@@ -30,8 +30,7 @@
 //--------------------------------------------
 // マクロ定義
 //--------------------------------------------
-#define SUCCESS_TRANS_COUNT		(80)		// 成功時の遷移カウント
-#define FAILED_TRANS_COUNT		(200)		// 失敗時の遷移カウント
+#define GAMECOUNT		(7200)		// ゲームのカウント
 
 //--------------------------------------------
 // 静的メンバ変数宣言
@@ -143,9 +142,15 @@ void CGame::Update(void)
 	{
 	case CGame::STATE_START:
 
+		// 終了カウントを加算する
+		m_nFinishCount++;
+
 		break;
 
 	case CGame::STATE_PLAY:
+
+		// 終了カウントを加算する
+		m_nFinishCount++;
 
 		break;
 
@@ -170,6 +175,13 @@ void CGame::Update(void)
 
 		// レンダラーの更新
 		CManager::Get()->GetRenderer()->Update();
+	}
+
+	if (m_nFinishCount >= GAMECOUNT)
+	{ // ゲームカウントが一定数を超えた場合
+
+		// タイムアップ状態にする
+		m_GameState = STATE_TIMEUP;
 	}
 
 	CManager::Get()->GetDebugProc()->Print("状態：%d", m_GameState);
@@ -203,15 +215,8 @@ void CGame::SetData(const MODE mode)
 //======================================
 void CGame::Transition(void)
 {
-	// 終了カウントを加算する
-	m_nFinishCount++;
-
-	if (m_nFinishCount % SUCCESS_TRANS_COUNT == 0)
-	{ // 終了カウントが一定数を超えた場合
-
-		// リザルトに遷移する
-		CManager::Get()->GetFade()->SetFade(CScene::MODE_RESULT);
-	}
+	// リザルトに遷移する
+	CManager::Get()->GetFade()->SetFade(CScene::MODE_RESULT);
 }
 
 //======================================

@@ -18,6 +18,7 @@
 #include "file.h"
 #include "camera.h"
 #include "screen.h"
+#include "result_winlose.h"
 
 //--------------------------------------------
 // ƒ}ƒNƒ’è‹`
@@ -52,6 +53,9 @@ HRESULT CResult::Init(void)
 
 	// 2D‰æ–Ê‚ğ¶¬‚·‚é
 	CScreen::Create();
+
+	// Ÿ—˜”s–k‚ğ¶¬‚·‚é
+	CWinLose::Create();
 
 	// ¬Œ÷‚ğ•Ô‚·
 	return S_OK;
