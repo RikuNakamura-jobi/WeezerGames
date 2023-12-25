@@ -291,6 +291,12 @@
     <ClCompile Include="flag.cpp">
       <Filter>Stage</Filter>
     </ClCompile>
+    <ClCompile Include="acquire_UI.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="off_respawn.cpp">
+      <Filter>Stage</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fade.h">
@@ -519,6 +525,12 @@
       <Filter>Soldier</Filter>
     </ClInclude>
     <ClInclude Include="flag.h">
+      <Filter>Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="acquire_UI.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="off_respawn.h">
       <Filter>Stage</Filter>
     </ClInclude>
   </ItemGroup>

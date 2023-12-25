@@ -23,6 +23,8 @@
 
 #include "soldier.h"
 #include "snowball.h"
+#include "castle.h"
+#include "flag.h"
 
 //--------------------------------------------
 // マクロ定義
@@ -89,6 +91,12 @@ HRESULT CGame::Init(void)
 
 	// 雪玉を生成する
 	CSnowBall::Create(D3DXVECTOR3(300.0f, 0.0f, 0.0f));
+
+	// 旗を生成する
+	CFlag::Create(D3DXVECTOR3(0.0f, 0.0f, 400.0f));
+
+	// 城を生成する
+	CCastle::Create(D3DXVECTOR3(0.0f, 0.0f, 500.0f),NONE_D3DXVECTOR3);
 
 	// 情報の初期化
 	m_nFinishCount = 0;				// 終了カウント

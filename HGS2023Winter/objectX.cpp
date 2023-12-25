@@ -25,6 +25,11 @@ const char* CXFile::c_apModelData[CXFile::TYPE_MAX] =		// モデルの名前
 	"data\\MODEL\\Platform\\FracWood.x",		// 木片(破片)
 	"data\\MODEL\\Platform\\Ripple.x",			// 波紋
 
+	// 通常モデル
+	"data\\MODEL\\flag.x",			// 旗
+	"data\\MODEL\\sandbag.x",		// 土嚢
+	"data\\MODEL\\tree.x",			// 木
+
 	// プレイヤーモデル
 	"data\\MODEL\\player\\00_hip.x",			// 腰
 	"data\\MODEL\\player\\01_body.x",			// 体
