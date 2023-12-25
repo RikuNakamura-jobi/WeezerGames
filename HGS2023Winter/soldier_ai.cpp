@@ -10,20 +10,33 @@
 #include "manager.h"
 #include "soldier_ai.h"
 #include "game.h"
+#include "flag.h"
+#include "castle.h"
+#include "off_respawn.h"
+#include "sandbag.h"
 #include "renderer.h"
 #include "debugproc.h"
 #include "model.h"
 #include "useful.h"
+#include "collision.h"
 
 #include "input.h"
 #include "motion.h"
+
+#include "soldier_manager.h"
+#include "sandbag_manager.h"
 
 //=========================================
 // コンストラクタ
 //=========================================
 CSoldierAI::CSoldierAI() : CSoldier(CObject::TYPE_SOLDIER, CObject::PRIORITY_PLAYER)
 {
-
+	m_BattleAI = BATTLEAI_ATTACK;
+	m_Situation = SITUATION_ASSAULT;
+	m_nCountJudge = 0;
+	m_nNumNearPlayer = 0;
+	m_nNumNearEnemy = 0;
+	m_fTargetRot = 0.0f;
 }
 
 //=========================================
@@ -49,6 +62,8 @@ HRESULT CSoldierAI::Init(void)
 		return E_FAIL;
 	}
 
+	m_nCountJudge = 0;
+
 	// 値を返す
 	return S_OK;
 }
@@ -69,6 +84,9 @@ void CSoldierAI::Update(void)
 {
 	// 前回の位置の設定処理
 	SetPosOld(GetPos());
+
+	// AI
+	AI();
 
 	// 移動量
 	Move();
@@ -96,4 +114,455 @@ void CSoldierAI::SetData(const D3DXVECTOR3& pos, const TYPE type, const BATTLE b
 {
 	// 情報の設定処理
 	CSoldier::SetData(pos, type, battle);
+
+	int nRand = rand() % 2;
+
+	if (nRand)
+	{
+		m_BattleAI = BATTLEAI_ATTACK;
+	}
+	else
+	{
+		m_BattleAI = BATTLEAI_GUARD;
+	}
+}
+
+//=======================================
+// AIの処理
+//=======================================
+void CSoldierAI::AI(void)
+{
+	m_nCountJudge++;
+
+	CSoldierManager *soldierManager = CSoldierManager::Get();
+	m_AimPos = GetPos();
+
+	if (soldierManager != nullptr)
+	{ // マネージャーが存在していた場合
+
+	  // ポインタを宣言
+		CSoldier *pObjectTop = soldierManager->GetTop();	// 先頭オブジェクト
+
+		if (pObjectTop != nullptr)
+		{
+			// ポインタを宣言
+			CSoldier *pObjCheck = pObjectTop;	// オブジェクト確認用
+
+			while (pObjCheck != NULL)
+			{ // オブジェクトが使用されている場合繰り返す
+
+				CSoldier *pObjectNext = pObjCheck->GetNext();	// 次オブジェクト
+
+				if (D3DXVec3Length(&(pObjCheck->GetPos() - GetPos())) < 500.0f)
+				{
+					if (pObjCheck->GetBattle() == GetBattle())
+					{
+						m_nNumNearPlayer++;
+					}
+					else
+					{
+						m_nNumNearEnemy++;
+
+						if (m_AimPos == GetPos())
+						{
+							m_AimPos = pObjCheck->GetPos();
+						}
+						else
+						{
+							int nRand = rand() % 4;
+
+							if (nRand > 2)
+							{
+								m_AimPos = pObjCheck->GetPos();
+							}
+						}
+					}
+				}
+
+				// 次のオブジェクトへのポインタを代入
+				pObjCheck = pObjectNext;
+			}
+		}
+	}
+
+	if (GetBattle() == BATTLE_OFF)
+	{
+		AIOffense();
+	}
+	else
+	{
+		AIDefense();
+	}
+
+	AIMove();
+	AIShoot();
+}
+
+//=======================================
+// 移動AIの処理
+//=======================================
+void CSoldierAI::AIMove(void)
+{
+	// 目的の向きを取得する
+	D3DXVECTOR3 rotDest = GetRotDest();
+
+	if (m_Situation == SITUATION_ASSAULT)
+	{
+		if (m_nCountJudge == 0)
+		{
+			D3DXVECTOR3 vecFlag = CGame::GetFlag()->GetPos() - GetPos();
+
+			m_fTargetRot = atan2f(vecFlag.x, vecFlag.z) + ((float)((rand() % 61) - 30) * 0.01f);
+		}
+
+		// 目的の向きを設定する
+		rotDest.y = m_fTargetRot;
+
+		// 移動状況を設定する
+		SetEnableMove(true);
+	}
+	else if (m_Situation == SITUATION_SHOOT)
+	{
+		if (m_nCountJudge == 0)
+		{
+			D3DXVECTOR3 vecEnemy = m_AimPos - GetPos();
+
+			m_fTargetRot = atan2f(vecEnemy.x, vecEnemy.z);
+		}
+
+		// 目的の向きを設定する
+		rotDest.y = m_fTargetRot;
+
+		// 移動状況を設定する
+		SetEnableMove(false);
+	}
+	else if (m_Situation == SITUATION_GUARD)
+	{
+		if (m_nCountJudge == 0)
+		{
+			D3DXVECTOR3 vecFlag = CGame::GetRespawn()->GetPos() - GetPos();
+
+			m_fTargetRot = atan2f(vecFlag.x, vecFlag.z) + ((float)((rand() % 61) - 30) * 0.01f);
+		}
+
+		// 目的の向きを設定する
+		rotDest.y = m_fTargetRot;
+
+		D3DXVECTOR3 vecFlag = CGame::GetFlag()->GetPos() - GetPos();
+
+		if (D3DXVec3Length(&vecFlag) < 400.0f)
+		{
+			// 移動状況を設定する
+			SetEnableMove(true);
+		}
+
+		CSandbagManager *sandbagManager = CSandbagManager::Get();
+
+		if (sandbagManager != nullptr)
+		{ // マネージャーが存在していた場合
+
+		  // ポインタを宣言
+			CSandbag *pObjectTop = sandbagManager->GetTop();	// 先頭オブジェクト
+
+			if (pObjectTop != nullptr)
+			{
+				// ポインタを宣言
+				CSandbag *pObjCheck = pObjectTop;	// オブジェクト確認用
+
+				while (pObjCheck != NULL)
+				{ // オブジェクトが使用されている場合繰り返す
+
+					CSandbag *pObjectNext = pObjCheck->GetNext();	// 次オブジェクト
+
+					D3DXVECTOR3 movePos = collision::PosRelativeMtx(GetPos(), D3DXVECTOR3(0.0f, rotDest.y, 0.0f), D3DXVECTOR3(10.0f, 0.0f, 0.0f));
+
+					if (collision::SquareTrigger(pObjCheck->GetPos(), movePos, pObjCheck->GetRot(), D3DXVECTOR3(100.0f, 100.0f, 100.0f), D3DXVECTOR3(-100.0f, -100.0f, -100.0f)))
+					{
+						// 移動状況を設定する
+						SetEnableMove(false);
+					}
+
+					// 次のオブジェクトへのポインタを代入
+					pObjCheck = pObjectNext;
+				}
+			}
+		}
+	}
+	else if (m_Situation == SITUATION_ESCAPE)
+	{
+		if (m_nCountJudge == 0)
+		{
+			D3DXVECTOR3 vecEnemy = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+
+			if (GetBattle() == GetBattle() == BATTLE_OFF)
+			{
+				vecEnemy = CGame::GetRespawn()->GetPos() - GetPos();
+			}
+			else
+			{
+				vecEnemy = CGame::GetCastle()->GetPos() - GetPos();
+			}
+
+			m_fTargetRot = atan2f(vecEnemy.x, vecEnemy.z);
+		}
+
+		// 目的の向きを設定する
+		rotDest.y = m_fTargetRot;
+
+		// 移動状況を設定する
+		SetEnableMove(true);
+	}
+	else
+	{
+		// 移動状況を設定する
+		SetEnableMove(false);
+	}
+
+	// 目的の向きを設定する
+	SetRotDest(rotDest);
+}
+
+//=======================================
+// 雪玉投げAIの処理
+//=======================================
+void CSoldierAI::AIShoot(void)
+{
+	if (m_Situation == SITUATION_SHOOT)
+	{
+		if (m_nCountJudge == rand() % 60)
+		{
+			// 投げ処理
+			Throw();
+		}
+	}
+}
+
+//=======================================
+// 攻めAIの処理
+//=======================================
+void CSoldierAI::AIOffense(void)
+{
+	if (m_BattleAI == BATTLEAI_ATTACK)
+	{
+		AIOffenseAttack();
+	}
+	else
+	{
+		AIOffenseGuard();
+	}
+
+	D3DXVECTOR3 vecFlag = CGame::GetFlag()->GetPos() - GetPos();
+
+	if (D3DXVec3Length(&vecFlag) < 200.0f)
+	{
+		if (m_nNumNearEnemy > 1)
+		{
+			int nRand = rand() % 4;
+
+			if (nRand > 2)
+			{
+				m_Situation = SITUATION_ASSAULT;
+			}
+			else
+			{
+				m_Situation = SITUATION_SHOOT;
+			}
+		}
+		else
+		{
+			m_Situation = SITUATION_SHOOT;
+		}
+	}
+}
+void CSoldierAI::AIOffenseAttack(void)
+{//攻撃的
+
+	int nRand = 0;
+
+	if (m_nCountJudge % 60 == 0)
+	{
+		m_nCountJudge = 0;
+
+		nRand = rand() % 4;
+
+		if (m_nNumNearEnemy > 1)
+		{
+			if (nRand > 1)
+			{
+				m_Situation = SITUATION_ASSAULT;
+			}
+			else
+			{
+				m_Situation = SITUATION_SHOOT;
+			}
+		}
+		else if (m_nNumNearEnemy > 0)
+		{
+			if (nRand > 0)
+			{
+				m_Situation = SITUATION_ASSAULT;
+			}
+			else
+			{
+				m_Situation = SITUATION_SHOOT;
+			}
+		}
+		else
+		{
+			m_Situation = SITUATION_ASSAULT;
+		}
+	}
+}
+void CSoldierAI::AIOffenseGuard(void)
+{//守備的
+
+	int nRand = 0;
+
+	if (m_nCountJudge % 60 == 0)
+	{
+		m_nCountJudge = 0;
+
+		nRand = rand() % 4;
+
+		if (m_nNumNearEnemy > 2)
+		{
+			if (m_nNumNearPlayer == 0)
+			{
+				if (nRand > 0)
+				{
+					m_Situation = SITUATION_ESCAPE;
+				}
+				else
+				{
+					m_Situation = SITUATION_SHOOT;
+				}
+			}
+			else
+			{
+				if (nRand > 2)
+				{
+					m_Situation = SITUATION_ASSAULT;
+				}
+				else
+				{
+					m_Situation = SITUATION_SHOOT;
+				}
+			}
+		}
+		else if (m_nNumNearEnemy > 0)
+		{
+			if (nRand > 2)
+			{
+				m_Situation = SITUATION_ASSAULT;
+			}
+			else
+			{
+				m_Situation = SITUATION_SHOOT;
+			}
+		}
+		else
+		{
+			m_Situation = SITUATION_ASSAULT;
+		}
+	}
+}
+
+//=======================================
+// 守りAIの処理
+//=======================================
+void CSoldierAI::AIDefense(void)
+{
+	if (m_BattleAI == BATTLEAI_ATTACK)
+	{
+		AIDefenseAttack();
+	}
+	else
+	{
+		AIDefenseGuard();
+	}
+}
+void CSoldierAI::AIDefenseAttack(void)
+{// 攻撃的
+
+	int nRand = 0;
+
+	if (m_nCountJudge % 60 == 0)
+	{
+		m_nCountJudge = 0;
+
+		nRand = rand() % 4;
+
+		if (m_nNumNearEnemy > 1)
+		{
+			if (nRand > 1)
+			{
+				m_Situation = SITUATION_GUARD;
+			}
+			else
+			{
+				m_Situation = SITUATION_SHOOT;
+			}
+		}
+		else if (m_nNumNearEnemy > 0)
+		{
+			if (nRand > 0)
+			{
+				m_Situation = SITUATION_GUARD;
+			}
+			else
+			{
+				m_Situation = SITUATION_SHOOT;
+			}
+		}
+		else
+		{
+			m_Situation = SITUATION_GUARD;
+		}
+	}
+}
+void CSoldierAI::AIDefenseGuard(void)
+{// 守備的
+	
+	int nRand = 0;
+
+	if (m_nCountJudge % 60 == 0)
+	{
+		m_nCountJudge = 0;
+
+		nRand = rand() % 4;
+
+		if (m_nNumNearEnemy > 2)
+		{
+			if (m_nNumNearPlayer == 0)
+			{
+				m_Situation = SITUATION_SHOOT;
+			}
+			else
+			{
+				if (nRand > 2)
+				{
+					m_Situation = SITUATION_ESCAPE;
+				}
+				else
+				{
+					m_Situation = SITUATION_SHOOT;
+				}
+			}
+		}
+		else if (m_nNumNearEnemy > 0)
+		{
+			if (nRand > 2)
+			{
+				m_Situation = SITUATION_GUARD;
+			}
+			else
+			{
+				m_Situation = SITUATION_SHOOT;
+			}
+		}
+		else
+		{
+			m_Situation = SITUATION_GUARD;
+		}
+	}
 }

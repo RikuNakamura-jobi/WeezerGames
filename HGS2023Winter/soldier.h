@@ -95,6 +95,8 @@ public:			// 誰でもアクセスできる
 	void SetSpeed(float fSpeed);				// 速度の設定処理
 	float GetSpeed(void) const;					// 速度の取得処理
 
+	BATTLE GetBattle(void) const;				// 陣営の取得処理
+
 	void SetEnableMove(bool bMove);				// 移動状況の設定処理
 	bool IsMove(void) const;					// 移動状況の取得処理
 

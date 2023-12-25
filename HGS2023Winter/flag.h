@@ -40,6 +40,9 @@ public:			// 誰でもアクセスできる
 
 private:		// 自分だけアクセスできる
 
+	// メンバ関数
+	void collision(void);
+
 	// メンバ変数
 	CAcquireUI* m_acquire;		// 旗取得UIの情報
 };
