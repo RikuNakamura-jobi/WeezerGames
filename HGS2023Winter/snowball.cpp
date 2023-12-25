@@ -13,6 +13,8 @@
 #include "renderer.h"
 #include "useful.h"
 
+#include "snowball_manager.h"
+
 //-------------------------------------------
 // マクロ定義
 //-------------------------------------------
@@ -24,6 +26,16 @@ CSnowBall::CSnowBall() : CModel(CObject::TYPE_SNOWBALL, CObject::PRIORITY_ENTITY
 {
 	// 全ての値をクリアする
 	m_move = NONE_D3DXVECTOR3;			// 移動量
+
+	m_pPrev = nullptr;		// 前のへのポインタ
+	m_pNext = nullptr;		// 次のへのポインタ
+
+	if (CSnowBallManager::Get() != nullptr)
+	{ // マネージャーが存在していた場合
+
+		// マネージャーへの登録処理
+		CSnowBallManager::Get()->Regist(this);
+	}
 }
 
 //==============================
@@ -32,6 +44,42 @@ CSnowBall::CSnowBall() : CModel(CObject::TYPE_SNOWBALL, CObject::PRIORITY_ENTITY
 CSnowBall::~CSnowBall()
 {
 
+}
+
+//============================
+// 前のポインタの設定処理
+//============================
+void CSnowBall::SetPrev(CSnowBall* pPrev)
+{
+	// 前のポインタを設定する
+	m_pPrev = pPrev;
+}
+
+//============================
+// 後のポインタの設定処理
+//============================
+void CSnowBall::SetNext(CSnowBall* pNext)
+{
+	// 次のポインタを設定する
+	m_pNext = pNext;
+}
+
+//============================
+// 前のポインタの設定処理
+//============================
+CSnowBall* CSnowBall::GetPrev(void) const
+{
+	// 前のポインタを返す
+	return m_pPrev;
+}
+
+//============================
+// 次のポインタの設定処理
+//============================
+CSnowBall* CSnowBall::GetNext(void) const
+{
+	// 次のポインタを返す
+	return m_pNext;
 }
 
 //==============================
@@ -60,6 +108,17 @@ void CSnowBall::Uninit(void)
 {
 	// 終了処理
 	CModel::Uninit();
+
+	if (CSnowBallManager::Get() != nullptr)
+	{ // マネージャーが存在していた場合
+
+		// リスト構造の引き抜き処理
+		CSnowBallManager::Get()->Pull(this);
+	}
+
+	// リスト構造関係のポインタを NULL にする
+	m_pPrev = nullptr;
+	m_pNext = nullptr;
 }
 
 //=====================================

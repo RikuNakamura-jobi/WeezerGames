@@ -264,6 +264,9 @@
     <ClCompile Include="snowball.cpp">
       <Filter>Snowball</Filter>
     </ClCompile>
+    <ClCompile Include="snowball_manager.cpp">
+      <Filter>Snowball</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fade.h">
@@ -468,6 +471,9 @@
       <Filter>Soldier</Filter>
     </ClInclude>
     <ClInclude Include="snowball.h">
+      <Filter>Snowball</Filter>
+    </ClInclude>
+    <ClInclude Include="snowball_manager.h">
       <Filter>Snowball</Filter>
     </ClInclude>
   </ItemGroup>

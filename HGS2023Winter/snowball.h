@@ -22,6 +22,12 @@ public:			// 誰でもアクセスできる
 	CSnowBall();			// コンストラクタ
 	~CSnowBall();			// デストラクタ
 
+	// リスト構造関係
+	void SetPrev(CSnowBall* pPrev);	// 前のポインタの設定処理
+	void SetNext(CSnowBall* pNext);	// 後のポインタの設定処理
+	CSnowBall* GetPrev(void) const;	// 前のポインタの設定処理
+	CSnowBall* GetNext(void) const;	// 次のポインタの設定処理
+
 	// メンバ関数
 	HRESULT Init(void);		// 初期化処理
 	void Uninit(void);		// 終了処理
@@ -37,6 +43,10 @@ private:		// 自分だけアクセスできる
 
 	// メンバ変数
 	D3DXVECTOR3 m_move;			// 移動量
+
+	// リスト構造関係
+	CSnowBall* m_pPrev;	// 前へのポインタ
+	CSnowBall* m_pNext;	// 次へのポインタ
 };
 
 #endif

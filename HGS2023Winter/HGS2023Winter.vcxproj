@@ -210,6 +210,7 @@
     <ClCompile Include="shadowModel.cpp" />
     <ClCompile Include="skybox.cpp" />
     <ClCompile Include="snowball.cpp" />
+    <ClCompile Include="snowball_manager.cpp" />
     <ClCompile Include="soldier.cpp" />
     <ClCompile Include="sound.cpp" />
     <ClCompile Include="speech_message.cpp" />
@@ -280,6 +281,7 @@
     <ClInclude Include="shadowModel.h" />
     <ClInclude Include="skybox.h" />
     <ClInclude Include="snowball.h" />
+    <ClInclude Include="snowball_manager.h" />
     <ClInclude Include="soldier.h" />
     <ClInclude Include="sound.h" />
     <ClInclude Include="speech_message.h" />
