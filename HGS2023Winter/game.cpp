@@ -21,6 +21,9 @@
 #include "objectElevation.h"
 #include "skybox.h"
 
+#include "soldier.h"
+#include "snowball.h"
+
 //--------------------------------------------
 // マクロ定義
 //--------------------------------------------
@@ -79,6 +82,12 @@ HRESULT CGame::Init(void)
 
 	// シーンの初期化
 	CScene::Init();
+
+	// 兵士を生成する
+	CSoldier::Create(NONE_D3DXVECTOR3);
+
+	// 雪玉を生成する
+	CSnowBall::Create(D3DXVECTOR3(300.0f, 0.0f, 0.0f));
 
 	// 情報の初期化
 	m_nFinishCount = 0;				// 終了カウント

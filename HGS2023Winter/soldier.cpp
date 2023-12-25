@@ -13,6 +13,7 @@
 #include "renderer.h"
 #include "debugproc.h"
 #include "model.h"
+#include "useful.h"
 
 #include "motion.h"
 #include "elevation_manager.h"
@@ -30,6 +31,7 @@ namespace
 	const int NUM_MODEL = 15;			// モデルの総数
 	const float ADD_GRAVITY = -50.0f;	// 着地時の追加の重力
 	const float SPEED = 10.0f;			// 移動量
+	const float GRAVITY = 0.5f;			// 重力
 }
 
 //=========================================
@@ -151,6 +153,9 @@ HRESULT CSoldier::Init(void)
 		// 停止
 		assert(false);
 	}
+
+	// 待機モーションを設定
+	GetMotion()->Set(0);
 
 	// 全ての値を初期化する
 	m_move = NONE_D3DXVECTOR3;		// 移動量
@@ -297,9 +302,9 @@ void CSoldier::SetData(const D3DXVECTOR3& pos)
 		// 初期化処理
 		GetHierarchy(nCntData)->SetPos(pos);										// 位置
 		GetHierarchy(nCntData)->SetPosOld(pos);										// 前回の位置
-		GetHierarchy(nCntData)->SetRot(D3DXVECTOR3(0.0f, 0.0f, 0.0f));				// 向き
+		GetHierarchy(nCntData)->SetRot(NONE_D3DXVECTOR3);							// 向き
 		GetHierarchy(nCntData)->SetScale(NONE_SCALE);								// 拡大率
-		GetHierarchy(nCntData)->SetFileData(CXFile::TYPE(nCntData));	// データの設定処理
+		GetHierarchy(nCntData)->SetFileData(CXFile::TYPE(INIT_PLAYER + nCntData));	// データの設定処理
 	}
 }
 
@@ -494,6 +499,12 @@ void CSoldier::Control(void)
 		// 移動状況を設定する
 		m_bMove = true;
 	}
+	else
+	{ // 上記以外
+
+		// 移動状況を false にする
+		m_bMove = false;
+	}
 }
 
 //=======================================
@@ -521,6 +532,9 @@ void CSoldier::Move(void)
 
 	// 位置を移動する
 	pos += m_move;
+
+	// 重力を足す
+	useful::Gravity(&m_move.y, pos, GRAVITY);
 
 	// 移動量を設定する
 	SetPos(pos);
