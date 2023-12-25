@@ -123,15 +123,15 @@ void CFlag::collision(void)
 
 			if (nNumOffe == nNumDefe)
 			{
-
+				// OBARA::ここはゲージを動かさない
 			}
 			else if (nNumOffe > nNumDefe)
 			{
-
+				// OBARA::ここはゲージを増やす
 			}
 			else
 			{
-
+				// OBARA::ここはゲージを減らす
 			}
 		}
 	}
