@@ -20,6 +20,7 @@ public:			// 誰でもアクセス出来る
 	enum SOUND_LABEL
 	{
 		SOUND_LABEL_BGM_TITLE = 0,		// タイトルBGM
+		SOUND_LABEL_BGM_TUTORIAL,		// チュートリアルBGM
 		SOUND_LABEL_BGM_GAME,			// ゲームBGM
 		SOUND_LABEL_BGM_RESULT,			// リザルトBGM
 		SOUND_LABEL_BGM_RANKING,		// ランキングBGM
