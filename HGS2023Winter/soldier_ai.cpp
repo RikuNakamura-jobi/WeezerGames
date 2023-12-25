@@ -345,6 +345,21 @@ void CSoldierAI::AIMove(void)
 		SetEnableMove(false);
 	}
 
+	if (IsMove() == true &&
+		GetMotion()->GetType() == MOTIONTYPE_NEUTRAL)
+	{ // 移動モーションじゃない場合
+
+		// 移動モーションを設定する
+		GetMotion()->Set(MOTIONTYPE_MOVE);
+	}
+	else if(IsMove() == false &&
+		GetMotion()->GetType() == MOTIONTYPE_MOVE)
+	{ // 待機モーションじゃない場合
+
+		// 移動モーションを設定する
+		GetMotion()->Set(MOTIONTYPE_NEUTRAL);
+	}
+
 	// 目的の向きを設定する
 	SetRotDest(rotDest);
 }
@@ -360,6 +375,13 @@ void CSoldierAI::AIShoot(void)
 		{
 			// 投げ処理
 			Throw();
+
+			if (GetMotion()->GetType() != MOTIONTYPE_THROW)
+			{  // 投げモーション以外の場合
+
+				// 投げモーションにする
+				GetMotion()->Set(MOTIONTYPE_THROW);
+			}
 		}
 	}
 }

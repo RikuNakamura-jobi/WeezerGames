@@ -312,6 +312,9 @@
     <ClCompile Include="tutorial_screen.cpp">
       <Filter>scene\tutorial</Filter>
     </ClCompile>
+    <ClCompile Include="result_winlose.cpp">
+      <Filter>scene\result</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fade.h">
@@ -562,6 +565,9 @@
     </ClInclude>
     <ClInclude Include="tutorial_screen.h">
       <Filter>scene\tutorial</Filter>
+    </ClInclude>
+    <ClInclude Include="result_winlose.h">
+      <Filter>scene\result</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
