@@ -61,6 +61,7 @@ public:			// 誰でもアクセスできる
 	void SetVertexWall(void);		// 壁の設定処理
 	void SetVertexCylinder(void);	// 筒の設定処理
 	void SetVertexDome(void);		// ドームの設定処理
+	void SetVtxColor(const D3DXCOLOR& col);		// 色の設定処理
 
 	void SetIndex(const int nNumVtx1, const int nNumVtx2);		// インデックスの設定処理
 

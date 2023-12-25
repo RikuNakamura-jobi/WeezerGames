@@ -14,7 +14,6 @@
 //----------------------------------------------------
 // マクロ定義
 //----------------------------------------------------
-#define TEXTURE				"data\\TEXTURE\\Platform\\NoonSky.jpg"				// テクスチャのパス
 #define SKYBOX_POS			(D3DXVECTOR3(20000.0f, -10000.0f, 0.0f))	// 位置
 #define SKYBOX_ROT			(D3DXVECTOR3(0.0f, 0.0f, 0.0f))				// 向き
 #define SKYBOX_WIDTH		(40000.0f)									// 横幅
@@ -123,8 +122,8 @@ CSkyBox* CSkyBox::Create(void)
 			return nullptr;
 		}
 
-		// テクスチャの割り当て処理
-		pSkyBox->BindTexture(CManager::Get()->GetTexture()->Regist(TEXTURE));
+		// 空色を設定する
+		pSkyBox->SetVtxColor(D3DXCOLOR(0.3f, 0.8f, 1.0f, 1.0f));
 
 		// ライティング状況を設定する
 		pSkyBox->SetLighting(true);

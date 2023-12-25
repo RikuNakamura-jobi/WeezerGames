@@ -703,6 +703,32 @@ void CMesh::SetVertexDome(void)
 }
 
 //================================
+// 色の設定処理
+//================================
+void CMesh::SetVtxColor(const D3DXCOLOR& col)
+{
+		// ローカル変数宣言
+	VERTEX_3D *pVtx;		// 頂点情報へのポインタ
+
+	// 頂点バッファをロック
+	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
+
+	for (int nCntHeight = 0; nCntHeight < m_vtx.y; nCntHeight++)
+	{
+		for (int nCntCircum = 0; nCntCircum < m_vtx.x; nCntCircum++)
+		{
+			//頂点カラーの設定
+			pVtx[0].col = col;
+
+			pVtx++;			// 頂点データを進める
+		}
+	}
+
+	// 頂点バッファをアンロックする
+	m_pVtxBuff->Unlock();
+}
+
+//================================
 // インデックスの設定処理
 //================================
 void CMesh::SetIndex(const int nNumVtx1, const int nNumVtx2)
