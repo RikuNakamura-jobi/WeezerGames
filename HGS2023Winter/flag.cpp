@@ -1,6 +1,6 @@
 //===========================================
 //
-// 城のメイン処理[castle.cpp]
+// 旗のメイン処理[flag.cpp]
 // Author 小原立暉
 //
 //===========================================
@@ -9,14 +9,14 @@
 //*******************************************
 #include "main.h"
 #include "manager.h"
-#include "castle.h"
+#include "flag.h"
 #include "renderer.h"
 #include "useful.h"
 
 //==============================
 // コンストラクタ
 //==============================
-CCastle::CCastle() : CModel(CObject::TYPE_CASTLE, CObject::PRIORITY_ENTITY)
+CFlag::CFlag() : CModel(CObject::TYPE_FLAG, CObject::PRIORITY_ENTITY)
 {
 
 }
@@ -24,7 +24,7 @@ CCastle::CCastle() : CModel(CObject::TYPE_CASTLE, CObject::PRIORITY_ENTITY)
 //==============================
 // デストラクタ
 //==============================
-CCastle::~CCastle()
+CFlag::~CFlag()
 {
 
 }
@@ -32,7 +32,7 @@ CCastle::~CCastle()
 //==============================
 // 破片の初期化処理
 //==============================
-HRESULT CCastle::Init(void)
+HRESULT CFlag::Init(void)
 {
 	if (FAILED(CModel::Init()))
 	{ // 初期化処理に失敗した場合
@@ -48,7 +48,7 @@ HRESULT CCastle::Init(void)
 //========================================
 // 破片の終了処理
 //========================================
-void CCastle::Uninit(void)
+void CFlag::Uninit(void)
 {
 	// 終了処理
 	CModel::Uninit();
@@ -57,7 +57,7 @@ void CCastle::Uninit(void)
 //=====================================
 // 破片の更新処理
 //=====================================
-void CCastle::Update(void)
+void CFlag::Update(void)
 {
 	
 }
@@ -65,7 +65,7 @@ void CCastle::Update(void)
 //=====================================
 // 破片の描画処理
 //=====================================
-void CCastle::Draw(void)
+void CFlag::Draw(void)
 {
 	// 描画処理
 	CModel::Draw();
@@ -74,12 +74,12 @@ void CCastle::Draw(void)
 //=====================================
 // 情報の設定処理
 //=====================================
-void CCastle::SetData(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot)
+void CFlag::SetData(const D3DXVECTOR3& pos)
 {
 	// 情報の設定処理
 	SetPos(pos);							// 位置
 	SetPosOld(pos);							// 前回の位置
-	SetRot(rot);							// 向き
+	SetRot(NONE_D3DXVECTOR3);				// 向き
 	SetScale(NONE_SCALE);					// 拡大率
 	SetFileData(CXFile::TYPE_FRAC_SCREW);	// モデル情報を設定する
 }
@@ -87,16 +87,16 @@ void CCastle::SetData(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot)
 //=======================================
 // 生成処理
 //=======================================
-CCastle* CCastle::Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot)
+CFlag* CFlag::Create(const D3DXVECTOR3& pos)
 {
 	// ローカルオブジェクトを生成
-	CCastle* pCastle = nullptr;			// インスタンスを生成
+	CFlag* pFlag = nullptr;			// インスタンスを生成
 
-	if (pCastle == nullptr)
+	if (pFlag == nullptr)
 	{ // オブジェクトが NULL の場合
 
 		// インスタンスを生成
-		pCastle = new CCastle;
+		pFlag = new CFlag;
 	}
 	else
 	{ // オブジェクトが NULL じゃない場合
@@ -108,11 +108,11 @@ CCastle* CCastle::Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot)
 		return nullptr;
 	}
 
-	if (pCastle != nullptr)
+	if (pFlag != nullptr)
 	{ // オブジェクトが NULL じゃない場合
 
 		// 初期化処理
-		if (FAILED(pCastle->Init()))
+		if (FAILED(pFlag->Init()))
 		{ // 初期化に失敗した場合
 
 			// 停止
@@ -123,7 +123,7 @@ CCastle* CCastle::Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot)
 		}
 
 		// 情報の設定処理
-		pCastle->SetData(pos, rot);
+		pFlag->SetData(pos);
 	}
 	else
 	{ // オブジェクトが NULL の場合
@@ -136,5 +136,5 @@ CCastle* CCastle::Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot)
 	}
 
 	// 城のポインタを返す
-	return pCastle;
+	return pFlag;
 }

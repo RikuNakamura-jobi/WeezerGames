@@ -165,6 +165,7 @@
     <ClCompile Include="elevation_manager.cpp" />
     <ClCompile Include="fade.cpp" />
     <ClCompile Include="file.cpp" />
+    <ClCompile Include="flag.cpp" />
     <ClCompile Include="fraction.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="input.cpp" />
@@ -244,6 +245,7 @@
     <ClInclude Include="elevation_manager.h" />
     <ClInclude Include="fade.h" />
     <ClInclude Include="file.h" />
+    <ClInclude Include="flag.h" />
     <ClInclude Include="fraction.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="input.h" />

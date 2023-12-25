@@ -84,8 +84,8 @@ HRESULT CGame::Init(void)
 	CScene::Init();
 
 	// ï∫émÇê∂ê¨Ç∑ÇÈ
-	CSoldier::Create(NONE_D3DXVECTOR3, CSoldier::TYPE::TYPE_PLAYER);
-	CSoldier::Create(D3DXVECTOR3(400.0f, 0.0f, 0.0f), CSoldier::TYPE::TYPE_AI);
+	CSoldier::Create(NONE_D3DXVECTOR3, CSoldier::TYPE::TYPE_PLAYER, CSoldier::BATTLE_OFF);
+	CSoldier::Create(D3DXVECTOR3(400.0f, 0.0f, 0.0f), CSoldier::TYPE::TYPE_AI, CSoldier::BATTLE_OFF);
 
 	// ê·ã Çê∂ê¨Ç∑ÇÈ
 	CSnowBall::Create(D3DXVECTOR3(300.0f, 0.0f, 0.0f));
