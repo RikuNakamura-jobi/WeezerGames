@@ -130,7 +130,14 @@ bool CFlag::collision(void)
 
 				if (D3DXVec3Length(&(pObjCheck->GetPos() - GetPos())) < 500.0f)
 				{
-					nNumOffe++;
+					if (pObjCheck->GetBattle() == CSoldier::BATTLE_OFF)
+					{
+						nNumOffe++;
+					}
+					else
+					{
+						nNumDefe++;
+					}
 				}
 
 				// 次のオブジェクトへのポインタを代入
