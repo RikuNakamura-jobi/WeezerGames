@@ -13,15 +13,18 @@
 #include "flag.h"
 #include "castle.h"
 #include "off_respawn.h"
+#include "sandbag.h"
 #include "renderer.h"
 #include "debugproc.h"
 #include "model.h"
 #include "useful.h"
+#include "collision.h"
 
 #include "input.h"
 #include "motion.h"
 
 #include "soldier_manager.h"
+#include "sandbag_manager.h"
 
 //=========================================
 // コンストラクタ
@@ -159,19 +162,19 @@ void CSoldierAI::AI(void)
 					else
 					{
 						m_nNumNearEnemy++;
-					}
 
-					if (m_AimPos == GetPos())
-					{
-						m_AimPos = pObjCheck->GetPos();
-					}
-					else
-					{
-						int nRand = rand() % 4;
-
-						if (nRand > 2)
+						if (m_AimPos == GetPos())
 						{
 							m_AimPos = pObjCheck->GetPos();
+						}
+						else
+						{
+							int nRand = rand() % 4;
+
+							if (nRand > 2)
+							{
+								m_AimPos = pObjCheck->GetPos();
+							}
 						}
 					}
 				}
@@ -252,6 +255,38 @@ void CSoldierAI::AIMove(void)
 			// 移動状況を設定する
 			SetEnableMove(true);
 		}
+
+		CSandbagManager *sandbagManager = CSandbagManager::Get();
+
+		if (sandbagManager != nullptr)
+		{ // マネージャーが存在していた場合
+
+		  // ポインタを宣言
+			CSandbag *pObjectTop = sandbagManager->GetTop();	// 先頭オブジェクト
+
+			if (pObjectTop != nullptr)
+			{
+				// ポインタを宣言
+				CSandbag *pObjCheck = pObjectTop;	// オブジェクト確認用
+
+				while (pObjCheck != NULL)
+				{ // オブジェクトが使用されている場合繰り返す
+
+					CSandbag *pObjectNext = pObjCheck->GetNext();	// 次オブジェクト
+
+					D3DXVECTOR3 movePos = collision::PosRelativeMtx(GetPos(), D3DXVECTOR3(0.0f, rotDest.y, 0.0f), D3DXVECTOR3(10.0f, 0.0f, 0.0f));
+
+					if (collision::SquareTrigger(pObjCheck->GetPos(), movePos, pObjCheck->GetRot(), D3DXVECTOR3(100.0f, 100.0f, 100.0f), D3DXVECTOR3(-100.0f, -100.0f, -100.0f)))
+					{
+						// 移動状況を設定する
+						SetEnableMove(false);
+					}
+
+					// 次のオブジェクトへのポインタを代入
+					pObjCheck = pObjectNext;
+				}
+			}
+		}
 	}
 	else if (m_Situation == SITUATION_ESCAPE)
 	{
@@ -315,6 +350,29 @@ void CSoldierAI::AIOffense(void)
 	{
 		AIOffenseGuard();
 	}
+
+	D3DXVECTOR3 vecFlag = CGame::GetFlag()->GetPos() - GetPos();
+
+	if (D3DXVec3Length(&vecFlag) < 200.0f)
+	{
+		if (m_nNumNearEnemy > 1)
+		{
+			int nRand = rand() % 4;
+
+			if (nRand > 2)
+			{
+				m_Situation = SITUATION_ASSAULT;
+			}
+			else
+			{
+				m_Situation = SITUATION_SHOOT;
+			}
+		}
+		else
+		{
+			m_Situation = SITUATION_SHOOT;
+		}
+	}
 }
 void CSoldierAI::AIOffenseAttack(void)
 {//攻撃的
@@ -352,29 +410,6 @@ void CSoldierAI::AIOffenseAttack(void)
 		else
 		{
 			m_Situation = SITUATION_ASSAULT;
-		}
-	}
-
-	D3DXVECTOR3 vecFlag = CGame::GetFlag()->GetPos() - GetPos();
-
-	if (D3DXVec3Length(&vecFlag) < 200.0f)
-	{
-		if (m_nNumNearEnemy > 1)
-		{
-			nRand = rand() % 4;
-
-			if (nRand > 2)
-			{
-				m_Situation = SITUATION_ASSAULT;
-			}
-			else
-			{
-				m_Situation = SITUATION_SHOOT;
-			}
-		}
-		else
-		{
-			m_Situation = SITUATION_WAIT;
 		}
 	}
 }
@@ -429,13 +464,6 @@ void CSoldierAI::AIOffenseGuard(void)
 		{
 			m_Situation = SITUATION_ASSAULT;
 		}
-	}
-
-	D3DXVECTOR3 vecFlag = CGame::GetFlag()->GetPos() - GetPos();
-
-	if (D3DXVec3Length(&vecFlag) < 200.0f)
-	{
-		m_Situation = SITUATION_WAIT;
 	}
 }
 
