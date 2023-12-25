@@ -264,10 +264,11 @@ void CSoldier::Hit()
 	else
 	{
 		posRes = CGame::GetCastle()->GetPos();
+		posRes.z -= 400.0f;
 	}
 
-	posRes.x += (float)(rand() % 200 - 100);
-	posRes.z += (float)(rand() % 200 - 100);
+	posRes.x += (float)(rand() % 1200 - 600);
+	posRes.z += (float)(rand() % 100 - 50);
 
 	SetPos(posRes);
 }
