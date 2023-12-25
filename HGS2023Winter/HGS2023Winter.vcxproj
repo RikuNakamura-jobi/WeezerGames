@@ -220,6 +220,7 @@
     <ClCompile Include="sandbag_manager.cpp" />
     <ClCompile Include="scene.cpp" />
     <ClCompile Include="score.cpp" />
+    <ClCompile Include="screen.cpp" />
     <ClCompile Include="shadowCircle.cpp" />
     <ClCompile Include="shadowModel.cpp" />
     <ClCompile Include="skybox.cpp" />
@@ -235,6 +236,7 @@
     <ClCompile Include="texture.cpp" />
     <ClCompile Include="time.cpp" />
     <ClCompile Include="title.cpp" />
+    <ClCompile Include="title_logo.cpp" />
     <ClCompile Include="tutorial.cpp" />
     <ClCompile Include="useful.cpp" />
   </ItemGroup>
@@ -302,6 +304,7 @@
     <ClInclude Include="sandbag_manager.h" />
     <ClInclude Include="scene.h" />
     <ClInclude Include="score.h" />
+    <ClInclude Include="screen.h" />
     <ClInclude Include="shadowCircle.h" />
     <ClInclude Include="shadowModel.h" />
     <ClInclude Include="skybox.h" />
@@ -317,6 +320,7 @@
     <ClInclude Include="texture.h" />
     <ClInclude Include="time.h" />
     <ClInclude Include="title.h" />
+    <ClInclude Include="title_logo.h" />
     <ClInclude Include="tutorial.h" />
     <ClInclude Include="useful.h" />
   </ItemGroup>

@@ -14,8 +14,11 @@
 #include "title.h"
 #include "fade.h"
 #include "Objectmesh.h"
+#include "texture.h"
 
 #include "skybox.h"
+#include "screen.h"
+#include "title_logo.h"
 
 // マクロ定義
 #define SET_RANKING_TIMER		(600)		// ランキング画面に遷移するカウント数
@@ -48,8 +51,11 @@ HRESULT CTitle::Init(void)
 	// テキスト読み込み処理
 	CMesh::TxtSet();
 
-	// スカイボックスの生成処理
-	CSkyBox::Create();
+	// 2D画面を生成する
+	CScreen::Create();
+
+	// タイトルロゴを生成
+	CTitleLogo::Create();
 
 	// 全ての値を初期化する
 	m_nTransCount = 0;

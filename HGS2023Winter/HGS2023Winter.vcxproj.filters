@@ -303,6 +303,12 @@
     <ClCompile Include="sandbag_manager.cpp">
       <Filter>Stage</Filter>
     </ClCompile>
+    <ClCompile Include="screen.cpp">
+      <Filter>scene</Filter>
+    </ClCompile>
+    <ClCompile Include="title_logo.cpp">
+      <Filter>scene\title</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fade.h">
@@ -544,6 +550,12 @@
     </ClInclude>
     <ClInclude Include="sandbag_manager.h">
       <Filter>Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="screen.h">
+      <Filter>scene</Filter>
+    </ClInclude>
+    <ClInclude Include="title_logo.h">
+      <Filter>scene\title</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
