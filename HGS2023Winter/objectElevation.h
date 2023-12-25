@@ -34,6 +34,7 @@ public:			// 誰でもアクセスできる
 	void SetData(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot, const float fSizeX, const float fSizeZ, const int nDiviX, const int nDiviZ);			// 情報の設定処理
 
 	void SetVertex(void);		// フィールドの設定処理
+	void SetVtxColor(const D3DXCOLOR& col);		// 頂点カラーの設定処理
 	void SetNormalize(void);	// 法線の設定処理
 	void SetIndex(void);		// インデックスの設定処理
 	float ElevationCollision(const D3DXVECTOR3& pos);					// 起伏の当たり判定

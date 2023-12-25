@@ -66,6 +66,8 @@ public:			// 誰でもアクセスできる
 	void SetRotDest(const D3DXVECTOR3& rot);	// 目標の向きの設定処理
 	D3DXVECTOR3 GetRotDest(void) const;			// 目標の向きの取得処理
 
+	TYPE GetType(void) const;					// 種類の取得処理
+
 	void SetLife(const int nLife);				// 体力の設定処理
 	int GetLife(void) const;					// 体力の取得処理
 
