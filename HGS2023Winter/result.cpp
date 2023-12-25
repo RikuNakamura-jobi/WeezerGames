@@ -12,12 +12,12 @@
 #include "result.h"
 #include "input.h"
 #include "fade.h"
+#include "texture.h"
 #include "Objectmesh.h"
 
 #include "file.h"
 #include "camera.h"
-#include "skybox.h"
-#include "object2D.h"
+#include "screen.h"
 
 //--------------------------------------------
 // マクロ定義
@@ -47,11 +47,11 @@ HRESULT CResult::Init(void)
 	// シーンの初期化
 	CScene::Init();
 
-	// スカイボックスの生成処理
-	CSkyBox::Create();
-
 	// テキスト読み込み処理
 	CMesh::TxtSet();
+
+	// 2D画面を生成する
+	CScreen::Create();
 
 	// 成功を返す
 	return S_OK;

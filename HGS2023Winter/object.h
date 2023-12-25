@@ -50,6 +50,8 @@ public:			// 誰でもアクセスできる
 		TYPE_FLAG,				// 旗
 		TYPE_CASTLE,			// 城
 		TYPE_ACQUIREUI,			// 旗取得UI
+		TYPE_SCREEN,			// スクリーン
+		TYPE_TITLELOGO,			// タイトルロゴ
 		TYPE_MAX				// この列挙型の総数
 	};
 
