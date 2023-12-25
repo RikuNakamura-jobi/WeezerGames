@@ -33,6 +33,25 @@ public:			// 誰でもアクセスできる
 		TYPE_FRAC_WOOD,			// 木片(破片)
 		TYPE_RIPPLE,			// 波紋
 
+
+		// プレイヤーモデル
+		TYPE_PLAYER_HIP,				//腰
+		TYPE_PLAYER_BODY,				//体
+		TYPE_PLAYER_RSHORDER,			//右肩
+		TYPE_PLAYER_RARM,				//右腕
+		TYPE_PLAYER_RHAND,				//右手
+		TYPE_PLAYER_HEAD,				//頭
+		TYPE_PLAYER_LSHORDER,			//左肩
+		TYPE_PLAYER_LARM,				//左腕
+		TYPE_PLAYER_LHAND,				//左手
+		TYPE_PLAYER_RTHIGH,				//右腿
+		TYPE_PLAYER_RFOOT,				//右脛
+		TYPE_PLAYER_RLEG,				//右足
+		TYPE_PLAYER_LTHIGH,				//左腿
+		TYPE_PLAYER_LFOOT,				//左脛
+		TYPE_PLAYER_LLEG,				//左足
+
+
 		TYPE_MAX,				// 全モデルの総数
 	};
 
