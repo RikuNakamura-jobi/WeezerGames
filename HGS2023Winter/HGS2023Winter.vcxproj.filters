@@ -294,6 +294,9 @@
     <ClCompile Include="acquire_UI.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="off_respawn.cpp">
+      <Filter>Stage</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fade.h">
@@ -526,6 +529,9 @@
     </ClInclude>
     <ClInclude Include="acquire_UI.h">
       <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="off_respawn.h">
+      <Filter>Stage</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

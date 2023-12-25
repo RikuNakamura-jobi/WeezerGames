@@ -77,11 +77,11 @@ void CFlag::Draw(void)
 void CFlag::SetData(const D3DXVECTOR3& pos)
 {
 	// 情報の設定処理
-	SetPos(pos);							// 位置
-	SetPosOld(pos);							// 前回の位置
-	SetRot(NONE_D3DXVECTOR3);				// 向き
-	SetScale(NONE_SCALE);					// 拡大率
-	SetFileData(CXFile::TYPE_FRAC_SCREW);	// モデル情報を設定する
+	SetPos(pos);						// 位置
+	SetPosOld(pos);						// 前回の位置
+	SetRot(NONE_D3DXVECTOR3);			// 向き
+	SetScale(NONE_SCALE);				// 拡大率
+	SetFileData(CXFile::TYPE_FLAG);		// モデル情報を設定する
 }
 
 //=======================================

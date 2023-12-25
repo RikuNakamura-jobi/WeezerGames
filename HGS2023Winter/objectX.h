@@ -34,6 +34,10 @@ public:			// 誰でもアクセスできる
 		TYPE_FRAC_WOOD,			// 木片(破片)
 		TYPE_RIPPLE,			// 波紋
 
+		// 通常モデル
+		TYPE_FLAG,				// 旗
+		TYPE_SANDBAG,			// 土嚢
+		TYPE_TREE,				// 木
 
 		// プレイヤーモデル
 		TYPE_PLAYER_HIP,				//腰
