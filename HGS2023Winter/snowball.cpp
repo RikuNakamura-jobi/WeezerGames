@@ -267,7 +267,7 @@ bool CSnowBall::Colision()
 
 				CSoldier *pObjectNext = pObjCheck->GetNext();	// 次オブジェクト
 
-				if (collision::SquareTrigger(pObjCheck->GetPos(), GetPos(), pObjCheck->GetRot(), D3DXVECTOR3(30.0f, 30.0f, 30.0f), D3DXVECTOR3(-30.0f, -30.0f, -30.0f)) &&
+				if (collision::SquareTrigger(pObjCheck->GetPos(), GetPos(), pObjCheck->GetRot(), D3DXVECTOR3(20.0f, 60.0f, 20.0f), D3DXVECTOR3(-20.0f, -60.0f, -20.0f)) &&
 					pObjCheck->GetBattle() != m_type)
 				{
 					pObjCheck->Hit();
