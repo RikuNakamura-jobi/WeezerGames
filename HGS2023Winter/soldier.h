@@ -130,7 +130,6 @@ private:		// 自分だけアクセスできる
 	TYPE m_type;					// 種類
 	BATTLE m_battle;				// 攻守
 	STATE m_state;					// 状態
-	int m_nLife;					// 体力
 	int m_nSnowCount;				// 雪投げカウント
 	float m_fSpeed;					// 速度
 	bool m_bMove;					// 移動状況
