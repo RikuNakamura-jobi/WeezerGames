@@ -149,6 +149,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="block.cpp" />
+    <ClCompile Include="block_manager.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="castle.cpp" />
     <ClCompile Include="character.cpp" />
@@ -224,6 +226,8 @@
     <ClCompile Include="useful.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="block.h" />
+    <ClInclude Include="block_manager.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="castle.h" />
     <ClInclude Include="character.h" />
