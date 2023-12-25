@@ -1,24 +1,24 @@
 //============================================
 //
-// 兵士マネージャー処理[soldier_manager.cpp]
+// ブロックマネージャー処理[block_manager.cpp]
 // Author：小原立暉
 //
 //============================================
 //********************************************
 // インクルードファイル
 //********************************************
-#include "soldier.h"
-#include "soldier_manager.h"
+#include "block.h"
+#include "block_manager.h"
 
 //--------------------------------------------
 // 静的メンバ変数宣言
 //--------------------------------------------
-CSoldierManager* CSoldierManager::m_pManager = nullptr;			// マネージャー
+CBlockManager* CBlockManager::m_pManager = nullptr;			// マネージャー
 
 //============================
 // コンストラクタ
 //============================
-CSoldierManager::CSoldierManager()
+CBlockManager::CBlockManager()
 {
 	// 全ての値をクリアする
 	m_pTop = nullptr;		// 先頭のオブジェクト
@@ -28,7 +28,7 @@ CSoldierManager::CSoldierManager()
 //============================
 // 登録処理
 //============================
-void CSoldierManager::Regist(CSoldier* pThis)
+void CBlockManager::Regist(CBlock* pThis)
 {
 	if (m_pTop == nullptr)
 	{ // オブジェクトが NULL の場合
@@ -46,7 +46,7 @@ void CSoldierManager::Regist(CSoldier* pThis)
 	{ // 上記以外
 
 		// ローカルポインタを宣言
-		CSoldier* pObject = m_pTop;			// 先頭のオブジェクト
+		CBlock* pObject = m_pTop;			// 先頭のオブジェクト
 
 		while (pObject->GetNext() != nullptr)
 		{ // オブジェクトがある限り回る
@@ -72,10 +72,10 @@ void CSoldierManager::Regist(CSoldier* pThis)
 //============================
 // 終了処理
 //============================
-void CSoldierManager::Uninit(void)
+void CBlockManager::Uninit(void)
 {
 	// ローカル変数宣言
-	CSoldier* pObj = nullptr;		// 現在のオブジェクトのポインタ
+	CBlock* pObj = nullptr;		// 現在のオブジェクトのポインタ
 
 	// オブジェクトを代入する
 	pObj = m_pTop;
@@ -98,7 +98,7 @@ void CSoldierManager::Uninit(void)
 //============================
 // デストラクタ
 //============================
-CSoldierManager::~CSoldierManager()
+CBlockManager::~CBlockManager()
 {
 
 }
@@ -106,7 +106,7 @@ CSoldierManager::~CSoldierManager()
 //===========================================
 // オブジェクトの取得処理
 //===========================================
-CSoldier* CSoldierManager::GetTop(void)
+CBlock* CBlockManager::GetTop(void)
 {
 	// オブジェクトの情報を渡す
 	return m_pTop;
@@ -115,10 +115,10 @@ CSoldier* CSoldierManager::GetTop(void)
 //===========================================
 // リスト構造の引き抜き処理
 //===========================================
-void CSoldierManager::Pull(CSoldier* pThis)
+void CBlockManager::Pull(CBlock* pThis)
 {
 	// ローカル変数宣言
-	CSoldier* pObj = nullptr;		// 現在のオブジェクトのポインタ
+	CBlock* pObj = nullptr;		// 現在のオブジェクトのポインタ
 
 	// オブジェクトを代入する
 	pObj = m_pTop;
@@ -158,13 +158,13 @@ void CSoldierManager::Pull(CSoldier* pThis)
 //============================
 //生成処理
 //============================
-CSoldierManager* CSoldierManager::Create(void)
+CBlockManager* CBlockManager::Create(void)
 {
 	if (m_pManager == nullptr)
 	{ // オブジェクトが NULL の場合
 
 		// オブジェクトを生成
-		m_pManager = new CSoldierManager;
+		m_pManager = new CBlockManager;
 	}
 	else
 	{ // オブジェクトが NULL じゃない場合
@@ -190,7 +190,7 @@ CSoldierManager* CSoldierManager::Create(void)
 //============================
 // 取得処理
 //============================
-CSoldierManager* CSoldierManager::Get(void)
+CBlockManager* CBlockManager::Get(void)
 {
 	// マネージャーのポインタを返す
 	return m_pManager;

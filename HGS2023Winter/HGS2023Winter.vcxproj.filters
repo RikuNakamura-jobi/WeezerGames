@@ -276,6 +276,18 @@
     <ClCompile Include="castle.cpp">
       <Filter>Stage</Filter>
     </ClCompile>
+    <ClCompile Include="block.cpp">
+      <Filter>Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="block_manager.cpp">
+      <Filter>Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="soldier_player.cpp">
+      <Filter>Soldier</Filter>
+    </ClCompile>
+    <ClCompile Include="soldier_ai.cpp">
+      <Filter>Soldier</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fade.h">
@@ -490,6 +502,18 @@
     </ClInclude>
     <ClInclude Include="castle.h">
       <Filter>Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="block.h">
+      <Filter>Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="block_manager.h">
+      <Filter>Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="soldier_player.h">
+      <Filter>Soldier</Filter>
+    </ClInclude>
+    <ClInclude Include="soldier_ai.h">
+      <Filter>Soldier</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
