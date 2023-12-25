@@ -34,6 +34,7 @@ public:			// 誰でもアクセスできる
 		SITUATION_SHOOT,		// 攻撃
 		SITUATION_GUARD,		// 守備
 		SITUATION_ESCAPE,		// 逃走
+		SITUATION_WAIT,			// 待機
 		SITUATION_MAX			// この列挙型の総数
 	};
 
@@ -55,6 +56,7 @@ private:		// 自分だけアクセスできる
 
 	// 移動など
 	void AIMove(void);
+	void AIShoot(void);
 
 	// 行動選択
 	void AIOffense(void);
