@@ -37,6 +37,7 @@ namespace
 	const float JUMP = 10.0f;				// ジャンプの高さ
 	const float SNOWBALL_SPEED = 16.0f;		// 雪玉の速度
 	const float SNOWBALL_HEIGHT = 20.0f;	// 雪玉の高さ
+	const float ROT_CORRECT = 0.1f;			// 向きの補正係数
 }
 
 //=========================================
@@ -543,7 +544,7 @@ void CSoldier::Move(void)
 	useful::Gravity(&m_move.y, pos, GRAVITY);
 
 	// 向きの正規化処理
-	useful::RotCorrect(m_rotDest.y, &rot.y, 0.1f);
+	useful::RotCorrect(m_rotDest.y, &rot.y, ROT_CORRECT);
 
 	// 位置と向きを設定する
 	SetPos(pos);
