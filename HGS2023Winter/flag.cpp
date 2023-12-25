@@ -13,10 +13,20 @@
 #include "soldier.h"
 #include "renderer.h"
 #include "acquire_UI.h"
+#include "objectbillboard.h"
 #include "useful.h"
 
 #include "snowball_manager.h"
 #include "soldier_manager.h"
+#include "game.h"
+
+//-------------------------------------------
+// 無名名前空間
+//-------------------------------------------
+namespace
+{
+	const float OFF_WIN = 60.0f;		// 攻撃側が勝利になる値
+}
 
 //==============================
 // コンストラクタ
@@ -76,7 +86,13 @@ void CFlag::Uninit(void)
 //=====================================
 void CFlag::Update(void)
 {
-	
+	// 当たり判定
+	if (collision() == true)
+	{ // 旗のゲージが溜まった場合
+
+		// 攻撃側の勝ちにする
+		CGame::SetState(CGame::STATE_OFFWIN);
+	}
 }
 
 //=====================================
@@ -91,7 +107,7 @@ void CFlag::Draw(void)
 //=====================================
 // 旗の当たり判定処理
 //=====================================
-void CFlag::collision(void)
+bool CFlag::collision(void)
 {
 	CSoldierManager *soldierManager = CSoldierManager::Get();
 	int nNumOffe = 0, nNumDefe = 0;
@@ -99,7 +115,7 @@ void CFlag::collision(void)
 	if (soldierManager != nullptr)
 	{ // マネージャーが存在していた場合
 
-	  // ポインタを宣言
+		// ポインタを宣言
 		CSoldier *pObjectTop = soldierManager->GetTop();	// 先頭オブジェクト
 
 		if (pObjectTop != nullptr)
@@ -128,13 +144,53 @@ void CFlag::collision(void)
 			else if (nNumOffe > nNumDefe)
 			{
 				// OBARA::ここはゲージを増やす
+				if (m_acquire != nullptr)
+				{ // 旗取得UIが NULL じゃない場合
+
+					// ビルボードの情報を取得
+					D3DXVECTOR3 size = m_acquire->GetPolygon(CAcquireUI::TYPE_METER)->GetSize();
+
+					// サイズを加算する
+					size.x += 0.1f;
+
+					// サイズを適用する
+					m_acquire->GetPolygon(CAcquireUI::TYPE_METER)->SetSize(size);
+
+					if (size.x >= OFF_WIN)
+					{ // サイズが一定数を超えた場合
+
+						// サイズを補正する
+						size.x = OFF_WIN;
+
+						// サイズを適用する
+						m_acquire->GetPolygon(CAcquireUI::TYPE_METER)->SetSize(size);
+
+						// true を返す
+						return true;
+					}
+				}
 			}
 			else
 			{
 				// OBARA::ここはゲージを減らす
+				if (m_acquire != nullptr)
+				{ // 旗取得UIが NULL じゃない場合
+
+					// ビルボードの情報を取得
+					D3DXVECTOR3 size = m_acquire->GetPolygon(CAcquireUI::TYPE_METER)->GetSize();
+
+					// サイズを加算する
+					size.x -= 0.1f;
+
+					// サイズを適用する
+					m_acquire->GetPolygon(CAcquireUI::TYPE_METER)->SetSize(size);
+				}
 			}
 		}
 	}
+
+	// false を返す
+	return false;
 }
 
 //=====================================

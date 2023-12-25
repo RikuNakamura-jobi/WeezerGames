@@ -48,6 +48,7 @@ private:		// 自分だけアクセスできる
 	// メンバ変数
 	D3DXVECTOR3 m_move;			// 移動量
 	CSoldier::BATTLE m_type;	// 攻守の種類
+	int m_nLife;				// 寿命
 
 	// リスト構造関係
 	CSnowBall* m_pPrev;	// 前へのポインタ
