@@ -150,9 +150,6 @@ void CPause::Uninit(void)
 
 	// ”jŠüˆ—
 	Release();
-
-	// ƒ|[ƒY‚ÌNULL‰»ˆ—
-	CGame::DeletePause();
 }
 
 //========================================

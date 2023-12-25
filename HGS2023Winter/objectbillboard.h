@@ -35,6 +35,7 @@ public:			// 誰でもアクセスできる
 	// 頂点情報関係
 	void SetVertex(void);										// 頂点情報の設定
 	void SetVtxPosUnder(void);									// 頂点情報の設定(下頂点)
+	void SetVtxLeft(const D3DXVECTOR3 right);					// 頂点情報の設定(左揃え)
 	void SetVtxAnim(const float fTex, const int nPattern);		// アニメーションの設定
 	void SetVtxAnimRev(const float fTex, const int nPattern);	// アニメーションの設定(反転)
 	void SetVtxColor(D3DXCOLOR col);							// 頂点カラーの設定

@@ -303,29 +303,8 @@ void CObject::UpdateAll(void)
 		DeathDecision(nCnt);
 	}
 
-	if (CManager::Get()->GetMode() == CScene::MODE_GAME)
-	{ // ゲームモードの場合
-
-		if (CGame::GetPause() != nullptr &&
-			CGame::GetPause()->GetPause() == true)
-		{ // ポーズ中の場合
-
-			// ゲームの更新処理
-			UpdateGame();
-		}
-		else
-		{ // ポーズ以外の場合
-
-			// 通常更新処理
-			UpdateNormal();
-		}
-	}
-	else
-	{ // 上記以外
-
-		// 通常更新処理
-		UpdateNormal();
-	}
+	// 通常更新処理
+	UpdateNormal();
 }
 
 //===========================================
@@ -432,42 +411,8 @@ void CObject::UpdateGame(void)
 //===========================================
 void CObject::DrawAll(void)
 {
-	switch (CManager::Get()->GetMode())
-	{
-	case CScene::MODE_GAME:		// ゲーム画面
-
-		if (CGame::GetPause() != nullptr)
-		{ // ポーズの情報があった場合
-
-			if (CGame::GetPause()->GetPause() == true)
-			{ // ポーズ状態の場合
-
-				// ゲームの描画処理
-				DrawGame();
-			}
-			else
-			{ // 通常状態以外の場合
-
-				// 通常の描画処理
-				DrawNormal();
-			}
-		}
-		else
-		{ // ポーズの情報が無かった場合
-
-			// 通常の描画処理
-			DrawNormal();
-		}
-
-		break;
-
-	default:	// 上記以外
-
-		// 通常の描画処理
-		DrawNormal();
-
-		break;
-	}
+	// 通常の描画処理
+	DrawNormal();
 }
 
 //===========================================

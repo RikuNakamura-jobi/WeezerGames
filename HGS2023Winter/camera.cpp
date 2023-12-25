@@ -17,8 +17,9 @@
 #include "object.h"
 #include "model.h"
 #include "scene.h"
-#include "file.h"
-#include "pause.h"
+
+#include "soldier_manager.h"
+#include "soldier.h"
 
 //-------------------------------------------
 // マクロ定義
@@ -39,18 +40,10 @@
 #define POS_SPEED					(30.0f)				// 移動速度
 #define DIS_SPEED					(16.0f)				// 距離の移動量
 #define CAMERA_DISTANCE				(550.0f)			// カメラの距離
-#define POSR_POINT					(40.0f)				// 追従モードの注視点の位置
-#define POSV_POINT					(40.0f)				// 追従モードの視点の位置
 #define CORRECT_POSR				(0.22f)				// 注視点の補正倍率
 #define CORRECT_POSV				(0.20f)				// 視点の補正倍率
 #define RANKING_MOVE				(40.0f)				// ランキングカメラの移動量
 #define RANKING_STOP				(25000.0f)			// ランキングカメラの止まる座標
-#define MIN_POSR_Y					(90.0f)				// 注視点の最低座標(Y軸)
-#define MIN_POSV_Y					(120.0f)			// 視点の最低座標(Y軸)
-
-#define CHASE_SHIFT_X				(400.0f)			// 追跡カメラの前にずらす距離(X軸)
-#define POSR_SHIFT_Y				(190.0f)			// 注視点のずらす幅(Y軸)
-#define POSV_SHIFT_Y				(220.0f)			// 視点のずらす幅(Y軸)
 
 //=======================
 // コンストラクタ
@@ -118,34 +111,11 @@ void CCamera::Update(void)
 	{
 	case CScene::MODE_GAME:		// ゲームモード
 
-		if (CGame::GetPause() != nullptr &&
-			CGame::GetPause()->GetPause() == false)
-		{ // ポーズ中以外の場合
+		// 種類ごとの処理
+		TypeProcess();
 
-			// 種類ごとの処理
-			//TypeProcess();
-
-			// 操作処理
-			Control();
-		}
-		else
-		{ // 上記以外
-
-// デバッグモード
-#ifdef _DEBUG
-
-// ポーズ中のカメラ操作
-#if 0
-			if (m_bControl == true)
-			{ // 捜査状況が true の場合
-
-				// 操作処理
-				Control();
-			}
-#endif
-
-#endif
-		}
+		// 操作処理
+		Control();
 
 		break;
 
@@ -194,20 +164,6 @@ void CCamera::Update(void)
 
 	//// 目的の向きを設定する
 	//m_rotDest = 0.0f;
-
-	if (m_posR.y <= MIN_POSR_Y)
-	{ // 注視点が一定数になった場合
-
-		// 注視点を設定する
-		m_posR.y = MIN_POSR_Y;
-	}
-
-	if (m_posV.y <= MIN_POSV_Y)
-	{ // 視点が一定数になった場合
-
-		// 視点を設定する
-		m_posV.y = MIN_POSV_Y;
-	}
 }
 
 //=======================
@@ -438,8 +394,7 @@ void CCamera::Move(void)
 		CManager::Get()->GetInputGamePad()->GetGameStickRYPress(0) > 0)
 	{ // Wキーを押した場合
 
-		if (CManager::Get()->GetInputKeyboard()->GetPress(DIK_RIGHT) == true ||
-			CManager::Get()->GetInputGamePad()->GetGameStickRXPress(0) > 0)
+		if (CManager::Get()->GetInputKeyboard()->GetPress(DIK_RIGHT) == true)
 		{ // Dキーを押した場合
 
 			m_posR.x += sinf(D3DX_PI * 0.25f + m_rot.y) * POS_SPEED;
@@ -448,8 +403,7 @@ void CCamera::Move(void)
 			m_posR.z += cosf(D3DX_PI * 0.25f + m_rot.y) * POS_SPEED;
 			m_posV.z += cosf(D3DX_PI * 0.25f + m_rot.y) * POS_SPEED;
 		}
-		else if (CManager::Get()->GetInputKeyboard()->GetPress(DIK_LEFT) == true ||
-			CManager::Get()->GetInputGamePad()->GetGameStickRXPress(0) < 0)
+		else if (CManager::Get()->GetInputKeyboard()->GetPress(DIK_LEFT) == true)
 		{ // Aキーを押した場合
 
 			m_posR.x += sinf(-D3DX_PI * 0.25f + m_rot.y) * POS_SPEED;
@@ -468,12 +422,10 @@ void CCamera::Move(void)
 			m_posV.z += cosf(m_rot.y) * POS_SPEED;
 		}
 	}
-	else if (CManager::Get()->GetInputKeyboard()->GetPress(DIK_DOWN) == true ||
-		CManager::Get()->GetInputGamePad()->GetGameStickRYPress(0) < 0)
+	else if (CManager::Get()->GetInputKeyboard()->GetPress(DIK_DOWN) == true)
 	{ // Sキーを押した場合
 
-		if (CManager::Get()->GetInputKeyboard()->GetPress(DIK_RIGHT) == true ||
-			CManager::Get()->GetInputGamePad()->GetGameStickRXPress(0) > 0)
+		if (CManager::Get()->GetInputKeyboard()->GetPress(DIK_RIGHT) == true)
 		{ // Dキーを押した場合
 
 			m_posR.x += sinf(D3DX_PI * 0.75f + m_rot.y) * POS_SPEED;
@@ -482,8 +434,7 @@ void CCamera::Move(void)
 			m_posR.z += cosf(D3DX_PI * 0.75f + m_rot.y) * POS_SPEED;
 			m_posV.z += cosf(D3DX_PI * 0.75f + m_rot.y) * POS_SPEED;
 		}
-		else if (CManager::Get()->GetInputKeyboard()->GetPress(DIK_LEFT) == true ||
-			CManager::Get()->GetInputGamePad()->GetGameStickRXPress(0) < 0)
+		else if (CManager::Get()->GetInputKeyboard()->GetPress(DIK_LEFT) == true)
 		{ // Aキーを押した場合
 
 			m_posR.x += sinf(-D3DX_PI * 0.75f + m_rot.y) * POS_SPEED;
@@ -502,8 +453,7 @@ void CCamera::Move(void)
 			m_posV.z -= cosf(m_rot.y) * POS_SPEED;
 		}
 	}
-	else if (CManager::Get()->GetInputKeyboard()->GetPress(DIK_RIGHT) == true ||
-		CManager::Get()->GetInputGamePad()->GetGameStickRXPress(0) > 0)
+	else if (CManager::Get()->GetInputKeyboard()->GetPress(DIK_RIGHT) == true)
 	{ // Dキーを押した場合
 
 		m_posR.x += sinf(D3DX_PI * 0.5f + m_rot.y) * POS_SPEED;
@@ -512,8 +462,7 @@ void CCamera::Move(void)
 		m_posR.z += cosf(D3DX_PI * 0.5f + m_rot.y) * POS_SPEED;
 		m_posV.z += cosf(D3DX_PI * 0.5f + m_rot.y) * POS_SPEED;
 	}
-	else if (CManager::Get()->GetInputKeyboard()->GetPress(DIK_LEFT) == true ||
-		CManager::Get()->GetInputGamePad()->GetGameStickRXPress(0) < 0)
+	else if (CManager::Get()->GetInputKeyboard()->GetPress(DIK_LEFT) == true)
 	{ // Aキーを押した場合
 
 		m_posR.x -= sinf(D3DX_PI * 0.5f + m_rot.y) * POS_SPEED;
@@ -717,40 +666,43 @@ void CCamera::Chase(void)
 	// ローカル変数宣言
 	D3DXVECTOR3 pos;					// 位置
 	D3DXVECTOR3 rot;					// 向き
-	//CPlayer* pPlayer = CPlayer::Get();	// プレイヤーのポインタ
-	m_DisDest = CAMERA_DISTANCE;		// 目的の距離
+	CSoldier* pSoldier = CSoldierManager::Get()->GetTop();	// プレイヤーのポインタ
+	m_DisDest = 100.0f;		// 目的の距離
 
 	// 距離の補正処理
 	useful::Correct(m_DisDest, &m_Dis, CORRECT_POSR);
 	useful::Correct(m_rotDest, &m_rot.y, CORRECT_POSR);
 
-	//if (pPlayer != nullptr)
-	//{ // プレイヤーが NULL じゃない場合
+	while (pSoldier->GetType() != CSoldier::TYPE_PLAYER)
+	{ // プレイヤーじゃない限り回す
 
-	//	// プレイヤーの情報を取得する
-	//	pos = pPlayer->GetPos();		// 位置
-	//	rot = pPlayer->GetRot();		// 向き
+		// 次のオブジェクトを代入する
+		pSoldier = pSoldier->GetNext();
+	}
 
-	//	// 目的の注視点を設定する
-	//	m_posRDest.x = pos.x + CHASE_SHIFT_X;
-	//	m_posRDest.y = pos.y + POSR_SHIFT_Y;
-	//	m_posRDest.z = pos.z;
+	if (pSoldier != nullptr)
+	{ // プレイヤーが NULL じゃない場合
 
-	//	// 目的の視点を設定する
-	//	m_posVDest.x = m_posRDest.x + sinf(m_rot.y) * -m_Dis;
-	//	m_posVDest.y = pos.y + POSV_SHIFT_Y;
-	//	m_posVDest.z = m_posRDest.z + cosf(m_rot.y) * -m_Dis;
+		// プレイヤーの情報を取得する
+		pos = pSoldier->GetPos();		// 位置
+		rot = pSoldier->GetRot();		// 向き
 
-	//	// 注視点を補正
-	//	m_posR.x += (m_posRDest.x - m_posR.x) * CORRECT_POSR;
-	//	m_posR.y += (m_posRDest.y - m_posR.y) * CORRECT_POSR;
-	//	m_posR.z += (m_posRDest.z - m_posR.z) * CORRECT_POSR;
+		// 目的の注視点を設定する
+		m_posRDest.x = pos.x;
+		m_posRDest.y = pos.y + 20.0f;
+		m_posRDest.z = pos.z;
 
-	//	// 視点を補正
-	//	m_posV.x += (m_posVDest.x - m_posV.x) * CORRECT_POSV;
-	//	m_posV.y += (m_posVDest.y - m_posV.y) * CORRECT_POSR;
-	//	m_posV.z += (m_posVDest.z - m_posV.z) * CORRECT_POSV;
-	//}
+		// 目的の視点を設定する
+		m_posVDest.y = pos.y + 60.0f;
+
+		// 注視点を補正
+		m_posR.x += (m_posRDest.x - m_posR.x) * CORRECT_POSR;
+		m_posR.y += (m_posRDest.y - m_posR.y) * CORRECT_POSR;
+		m_posR.z += (m_posRDest.z - m_posR.z) * CORRECT_POSR;
+
+		// 視点を補正
+		m_posV.y += (m_posVDest.y - m_posV.y) * CORRECT_POSR;
+	}
 }
 
 //=======================

@@ -129,7 +129,14 @@ void CSnowBall::Uninit(void)
 //=====================================
 void CSnowBall::Update(void)
 {
+	// 位置を取得する
+	D3DXVECTOR3 pos = GetPos();
 
+	// 位置を移動する
+	pos += m_move;
+
+	// 位置を設定する
+	SetPos(pos);
 }
 
 //=====================================
@@ -144,7 +151,7 @@ void CSnowBall::Draw(void)
 //=====================================
 // 情報の設定処理
 //=====================================
-void CSnowBall::SetData(const D3DXVECTOR3& pos)
+void CSnowBall::SetData(const D3DXVECTOR3& pos, const D3DXVECTOR3& move)
 {
 	// 情報の設定処理
 	SetPos(pos);					// 位置
@@ -152,12 +159,15 @@ void CSnowBall::SetData(const D3DXVECTOR3& pos)
 	SetRot(NONE_D3DXVECTOR3);		// 向き
 	SetScale(NONE_SCALE);			// 拡大率
 	SetFileData(CXFile::TYPE_FRAC_WOOD);	// モデル情報
+
+	// 全ての値を設定する
+	m_move = move;			// 移動量
 }
 
 //=======================================
 // 生成処理
 //=======================================
-CSnowBall* CSnowBall::Create(const D3DXVECTOR3& pos)
+CSnowBall* CSnowBall::Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& move)
 {
 	// ローカルオブジェクトを生成
 	CSnowBall* pFrac = nullptr;	// インスタンスを生成
@@ -193,7 +203,7 @@ CSnowBall* CSnowBall::Create(const D3DXVECTOR3& pos)
 		}
 
 		// 情報の設定処理
-		pFrac->SetData(pos);
+		pFrac->SetData(pos, move);
 	}
 	else
 	{ // オブジェクトが NULL の場合

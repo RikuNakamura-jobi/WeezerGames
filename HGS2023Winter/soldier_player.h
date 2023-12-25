@@ -36,6 +36,11 @@ private:		// 自分だけアクセスできる
 	void Control(void);				// 操作処理
 	void MoveControl(void);			// 移動コントロール
 	void JumpControl(void);			// ジャンプコントロール
+	void ThrowControl(void);		// 投げのコントロール
+	void CameraControl(void);		// カメラのコントロール
+
+	// メンバ変数
+	D3DXVECTOR3 m_CameraRot;		// カメラの向き
 };
 
 #endif

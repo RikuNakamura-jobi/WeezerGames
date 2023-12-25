@@ -149,6 +149,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="acquire_UI.cpp" />
     <ClCompile Include="block.cpp" />
     <ClCompile Include="block_manager.cpp" />
     <ClCompile Include="camera.cpp" />
@@ -194,6 +195,7 @@
     <ClCompile Include="Objectmesh.cpp" />
     <ClCompile Include="objectScroll.cpp" />
     <ClCompile Include="objectX.cpp" />
+    <ClCompile Include="off_respawn.cpp" />
     <ClCompile Include="orbit.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="particle2D.cpp" />
@@ -229,6 +231,7 @@
     <ClCompile Include="useful.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="acquire_UI.h" />
     <ClInclude Include="block.h" />
     <ClInclude Include="block_manager.h" />
     <ClInclude Include="camera.h" />
@@ -274,6 +277,7 @@
     <ClInclude Include="Objectmesh.h" />
     <ClInclude Include="objectScroll.h" />
     <ClInclude Include="objectX.h" />
+    <ClInclude Include="off_respawn.h" />
     <ClInclude Include="orbit.h" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="particle2D.h" />

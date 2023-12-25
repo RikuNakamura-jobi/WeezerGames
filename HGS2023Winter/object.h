@@ -49,6 +49,7 @@ public:			// 誰でもアクセスできる
 		TYPE_BLOCK,				// ブロック(遮蔽物)
 		TYPE_FLAG,				// 旗
 		TYPE_CASTLE,			// 城
+		TYPE_ACQUIREUI,			// 旗取得UI
 		TYPE_MAX				// この列挙型の総数
 	};
 
