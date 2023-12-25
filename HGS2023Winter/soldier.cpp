@@ -475,15 +475,6 @@ CSoldier::STATE CSoldier::GetState(void) const
 }
 
 //=======================================
-// ‘Ì—Í‚Ìæ“¾ˆ—
-//=======================================
-int CSoldier::GetLife(void) const
-{
-	// ‘Ì—Í‚ğ•Ô‚·
-	return m_nLife;
-}
-
-//=======================================
 // ‘¬“x‚Ìİ’èˆ—
 //=======================================
 void CSoldier::SetSpeed(float fSpeed)

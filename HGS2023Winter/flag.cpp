@@ -189,6 +189,13 @@ bool CFlag::collision(void)
 					// サイズを加算する
 					size.x -= 0.1f;
 
+					if (size.x <= 0.0f)
+					{ // サイズが0.0f以下になった場合
+
+						// サイズを補正する
+						size.x = 0.0f;
+					}
+
 					// サイズを適用する
 					m_acquire->GetPolygon(CAcquireUI::TYPE_METER)->SetSize(size);
 				}

@@ -89,9 +89,6 @@ public:			// 誰でもアクセスできる
 	void SetState(const STATE state);			// 状態の設定処理
 	STATE GetState(void) const;					// 状態の取得処理
 
-	void SetLife(const int nLife);				// 体力の設定処理
-	int GetLife(void) const;					// 体力の取得処理
-
 	void SetSpeed(float fSpeed);				// 速度の設定処理
 	float GetSpeed(void) const;					// 速度の取得処理
 
