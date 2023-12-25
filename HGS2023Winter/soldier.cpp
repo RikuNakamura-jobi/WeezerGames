@@ -426,6 +426,29 @@ bool CSoldier::IsJump(void) const
 //=======================================
 void CSoldier::Control(void)
 {
+	CInputGamePad *pPad = CManager::Get()->GetInputGamePad();				// パッド
+	CCamera	*pCamera = CManager::Get()->GetCamera();						// カメラ
+
+	D3DXVECTOR3 vecStickL = D3DXVECTOR3((float)pPad->GetGameStickLXPress(0), (float)pPad->GetGameStickLYPress(0), 0.0f);	// スティック各軸の倒し量
+	float fStickL = sqrtf(vecStickL.x * vecStickL.x + vecStickL.y * vecStickL.y) * 0.5f;	// スティックの倒し量
+	float rotStickL = atan2f(vecStickL.x, vecStickL.y);
+
+	if (pCamera == NULL) { assert(false);}	// 非使用中
+
+	if ((float)USHRT_MAX * 0.01f < fStickL)
+	{ // デッドゾーン以上の場合
+
+	  // 変数を宣言
+		float fMove = fStickL * 0.00015f;	// プレイヤー移動量
+
+		// 移動量を更新
+		m_move.x += sinf(rotStickL + pCamera->GetRot().y + D3DX_PI * 0.5f) * fMove;
+		m_move.z += cosf(rotStickL + pCamera->GetRot().y + D3DX_PI * 0.5f) * fMove;
+
+		// 移動モーションを設定
+		//currentMotion = MOTION_MOVE;
+	}
+
 	if (CManager::Get()->GetInputKeyboard()->GetPress(DIK_W) == true)
 	{ // Wキーを押している場合
 
