@@ -24,8 +24,18 @@ class CSoldier : public CCharacter
 {
 public:			// 誰でもアクセスできる
 
+	// 列挙型定義(種類)
+	enum TYPE
+	{
+		TYPE_AI = 0,		// AI(CPU)
+		TYPE_PLAYER,		// プレイヤー
+		TYPE_MAX			// この列挙型の総数
+	};
+
 	CSoldier();				// コンストラクタ
-	~CSoldier();			// デストラクタ
+	CSoldier(CObject::TYPE type, PRIORITY priority = PRIORITY_PLAYER);		// オーバーロードコンストラクタ
+	virtual ~CSoldier();	// デストラクタ
+	void Box(void);			// コンストラクタの箱
 
 	// リスト構造関係
 	void SetPrev(CSoldier* pPrev);	// 前のポインタの設定処理
@@ -34,12 +44,12 @@ public:			// 誰でもアクセスできる
 	CSoldier* GetNext(void) const;	// 次のポインタの設定処理
 
 	// メンバ関数
-	HRESULT Init(void);		// 初期化処理
-	void Uninit(void);		// 終了処理
-	void Update(void);		// 更新処理
-	void Draw(void);		// 描画処理
+	virtual HRESULT Init(void);		// 初期化処理
+	virtual void Uninit(void);		// 終了処理
+	virtual void Update(void) = 0;	// 更新処理
+	virtual void Draw(void);		// 描画処理
 
-	void SetData(const D3DXVECTOR3& pos);		// 情報の設定処理
+	virtual void SetData(const D3DXVECTOR3& pos, const TYPE type);	// 情報の設定処理
 
 	// セット・ゲット関係
 	void SetMove(const D3DXVECTOR3& move);		// 移動量の設定処理
@@ -63,20 +73,22 @@ public:			// 誰でもアクセスできる
 	CMotion* GetMotion(void) const;				// モーションの情報の取得処理
 
 	// 静的メンバ関数
-	static CSoldier* Create(const D3DXVECTOR3& pos);	// 生成処理
+	static CSoldier* Create(const D3DXVECTOR3& pos, const TYPE type);	// 生成処理
 
-private:		// 自分だけアクセスできる
+protected:		// 自分と派生クラスだけアクセスできる
 
 	// メンバ関数
-	void Control(void);				// 操作処理
 	void Move(void);				// 移動処理
 	void ElevationCollision(void);	// 起伏地面の当たり判定処理
+
+private:		// 自分だけアクセスできる
 
 	// メンバ変数
 	CMotion* m_pMotion;				// モーションの情報
 
 	D3DXVECTOR3 m_move;				// 移動量
 	D3DXVECTOR3 m_rotDest;			// 目的の向き
+	TYPE m_type;					// 種類
 	int m_nLife;					// 体力
 	float m_fSpeed;					// 速度
 	bool m_bMove;					// 移動状況
