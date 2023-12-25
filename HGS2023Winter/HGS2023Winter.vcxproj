@@ -150,6 +150,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="camera.cpp" />
+    <ClCompile Include="castle.cpp" />
     <ClCompile Include="character.cpp" />
     <ClCompile Include="collision.cpp" />
     <ClCompile Include="collpolygon.cpp" />
@@ -224,6 +225,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera.h" />
+    <ClInclude Include="castle.h" />
     <ClInclude Include="character.h" />
     <ClInclude Include="collision.h" />
     <ClInclude Include="collpolygon.h" />

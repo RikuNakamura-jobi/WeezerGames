@@ -58,6 +58,9 @@
     <Filter Include="Snowball">
       <UniqueIdentifier>{45bf3afc-a759-4639-8978-28337f6b18b9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Stage">
+      <UniqueIdentifier>{c9b506c0-24af-40e7-b59f-563b72cfc286}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="fade.cpp">
@@ -270,6 +273,9 @@
     <ClCompile Include="soldier_manager.cpp">
       <Filter>Soldier</Filter>
     </ClCompile>
+    <ClCompile Include="castle.cpp">
+      <Filter>Stage</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fade.h">
@@ -481,6 +487,9 @@
     </ClInclude>
     <ClInclude Include="soldier_manager.h">
       <Filter>Soldier</Filter>
+    </ClInclude>
+    <ClInclude Include="castle.h">
+      <Filter>Stage</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
