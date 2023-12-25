@@ -149,6 +149,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="acquire_UI.cpp" />
     <ClCompile Include="block.cpp" />
     <ClCompile Include="block_manager.cpp" />
     <ClCompile Include="camera.cpp" />
@@ -229,6 +230,7 @@
     <ClCompile Include="useful.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="acquire_UI.h" />
     <ClInclude Include="block.h" />
     <ClInclude Include="block_manager.h" />
     <ClInclude Include="camera.h" />

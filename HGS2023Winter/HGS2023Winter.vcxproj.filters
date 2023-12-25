@@ -291,6 +291,9 @@
     <ClCompile Include="flag.cpp">
       <Filter>Stage</Filter>
     </ClCompile>
+    <ClCompile Include="acquire_UI.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fade.h">
@@ -520,6 +523,9 @@
     </ClInclude>
     <ClInclude Include="flag.h">
       <Filter>Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="acquire_UI.h">
+      <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
