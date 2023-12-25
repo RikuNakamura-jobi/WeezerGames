@@ -87,7 +87,6 @@ void CSoldier::Box(void)
 	m_type = TYPE_AI;				// 種類
 	m_battle = BATTLE_OFF;			// 攻守
 	m_state = STATE_NONE;			// 状態
-	m_nLife = MAX_LIFE;				// 体力
 	m_nSnowCount = 0;				// 雪投げカウント
 	m_fSpeed = SPEED;				// 速度
 	m_bMove = false;				// 移動状況
@@ -200,7 +199,6 @@ HRESULT CSoldier::Init(void)
 	m_type = TYPE_AI;				// 種類
 	m_battle = BATTLE_OFF;			// 攻守
 	m_state = STATE_NONE;			// 状態
-	m_nLife = MAX_LIFE;				// 体力
 	m_nSnowCount = 0;				// 雪投げカウント
 	m_fSpeed = SPEED;				// 速度
 	m_bMove = false;				// 移動状況
@@ -355,7 +353,6 @@ void CSoldier::SetData(const D3DXVECTOR3& pos, const TYPE type, const BATTLE bat
 	m_type = type;					// 種類
 	m_battle = battle;				// 攻守
 	m_state = STATE_NONE;			// 状態
-	m_nLife = MAX_LIFE;				// 体力
 	m_nSnowCount = 0;				// 雪投げカウント
 	m_fSpeed = SPEED;				// 速度
 	m_bMove = false;				// 移動状況
@@ -476,34 +473,6 @@ CSoldier::STATE CSoldier::GetState(void) const
 {
 	// 状態を返す
 	return m_state;
-}
-
-//=======================================
-// 体力の設定処理
-//=======================================
-void CSoldier::SetLife(const int nLife)
-{
-	if (nLife > MAX_LIFE)
-	{ // 体力が一定以上の場合
-
-		// 体力を最大に設定する
-		m_nLife = MAX_LIFE;
-	}
-	else
-	{ // 上記以外
-
-		// 体力を設定する
-		m_nLife = nLife;
-	}
-}
-
-//=======================================
-// 体力の取得処理
-//=======================================
-int CSoldier::GetLife(void) const
-{
-	// 体力を返す
-	return m_nLife;
 }
 
 //=======================================
