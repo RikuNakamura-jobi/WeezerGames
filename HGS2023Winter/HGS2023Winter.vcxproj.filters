@@ -297,6 +297,12 @@
     <ClCompile Include="off_respawn.cpp">
       <Filter>Stage</Filter>
     </ClCompile>
+    <ClCompile Include="sandbag.cpp">
+      <Filter>Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="sandbag_manager.cpp">
+      <Filter>Stage</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fade.h">
@@ -531,6 +537,12 @@
       <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="off_respawn.h">
+      <Filter>Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="sandbag.h">
+      <Filter>Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="sandbag_manager.h">
       <Filter>Stage</Filter>
     </ClInclude>
   </ItemGroup>

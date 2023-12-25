@@ -210,6 +210,8 @@
     <ClCompile Include="ripple.cpp" />
     <ClCompile Include="sample.cpp" />
     <ClCompile Include="sample_manager.cpp" />
+    <ClCompile Include="sandbag.cpp" />
+    <ClCompile Include="sandbag_manager.cpp" />
     <ClCompile Include="scene.cpp" />
     <ClCompile Include="score.cpp" />
     <ClCompile Include="shadowCircle.cpp" />
@@ -290,6 +292,8 @@
     <ClInclude Include="ripple.h" />
     <ClInclude Include="sample.h" />
     <ClInclude Include="sample_manager.h" />
+    <ClInclude Include="sandbag.h" />
+    <ClInclude Include="sandbag_manager.h" />
     <ClInclude Include="scene.h" />
     <ClInclude Include="score.h" />
     <ClInclude Include="shadowCircle.h" />

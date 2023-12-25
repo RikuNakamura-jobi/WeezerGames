@@ -24,6 +24,7 @@
 #include "snowball_manager.h"
 #include "soldier_manager.h"
 #include "block_manager.h"
+#include "sandbag_manager.h"
 
 //--------------------------------------------
 // 静的メンバ変数宣言
@@ -57,6 +58,7 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 	CSnowBallManager::Create();			// 雪玉マネージャー
 	CSoldierManager::Create();			// 兵士マネージャー
 	CBlockManager::Create();			// 遮蔽物マネージャー
+	CSandbagManager::Create();			// 土嚢マネージャー
 
 	if (m_pFile == nullptr)
 	{ // ファイルへのポインタが nullptr の場合
@@ -508,6 +510,7 @@ void CManager::Uninit(void)
 	CSnowBallManager::Get()->Uninit();		// 雪玉マネージャー
 	CSoldierManager::Get()->Uninit();		// 兵士マネージャー
 	CBlockManager::Get()->Uninit();			// 遮蔽物マネージャー
+	CSandbagManager::Get()->Uninit();		// 土嚢マネージャー
 
 	// マネージャーのメモリを解放する
 	delete m_pManager;

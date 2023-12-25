@@ -81,7 +81,7 @@ void CCastle::SetData(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot)
 	SetPosOld(pos);						// 前回の位置
 	SetRot(rot);						// 向き
 	SetScale(NONE_SCALE);				// 拡大率
-	SetFileData(CXFile::TYPE_SANDBAG);	// モデル情報を設定する
+	SetFileData(CXFile::TYPE_CASTLE);	// モデル情報を設定する
 }
 
 //=======================================
