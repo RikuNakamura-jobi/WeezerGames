@@ -10,8 +10,12 @@
 #include "main.h"
 #include "manager.h"
 #include "flag.h"
+#include "soldier.h"
 #include "renderer.h"
 #include "useful.h"
+
+#include "snowball_manager.h"
+#include "soldier_manager.h"
 
 //==============================
 // コンストラクタ
@@ -69,6 +73,55 @@ void CFlag::Draw(void)
 {
 	// 描画処理
 	CModel::Draw();
+}
+
+//=====================================
+// 旗の当たり判定処理
+//=====================================
+void CFlag::collision(void)
+{
+	CSoldierManager *soldierManager = CSoldierManager::Get();
+	int nNumOffe = 0, nNumDefe = 0;
+
+	if (soldierManager != nullptr)
+	{ // マネージャーが存在していた場合
+
+	  // ポインタを宣言
+		CSoldier *pObjectTop = soldierManager->GetTop();	// 先頭オブジェクト
+
+		if (pObjectTop != nullptr)
+		{
+			// ポインタを宣言
+			CSoldier *pObjCheck = pObjectTop;	// オブジェクト確認用
+
+			while (pObjCheck != NULL)
+			{ // オブジェクトが使用されている場合繰り返す
+
+				CSoldier *pObjectNext = pObjCheck->GetNext();	// 次オブジェクト
+
+				if (D3DXVec3Length(&(pObjCheck->GetPos() - GetPos())) < 500.0f)
+				{
+					nNumOffe++;
+				}
+
+				// 次のオブジェクトへのポインタを代入
+				pObjCheck = pObjectNext;
+			}
+
+			if (nNumOffe == nNumDefe)
+			{
+
+			}
+			else if (nNumOffe > nNumDefe)
+			{
+
+			}
+			else
+			{
+
+			}
+		}
+	}
 }
 
 //=====================================
