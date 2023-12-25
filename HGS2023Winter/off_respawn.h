@@ -30,6 +30,10 @@ public:		// 誰でもアクセスできる
 
 	void SetData(const D3DXVECTOR3 pos);				// 情報の設定処理
 
+	// セット・ゲット関係
+	void SetPos(const D3DXVECTOR3& pos);		// 位置の設定処理
+	D3DXVECTOR3 GetPos(void) const;				// 位置の取得処理
+
 	// 静的メンバ関数
 	static COffRespawn* Create(const D3DXVECTOR3 pos);	// 生成処理
 

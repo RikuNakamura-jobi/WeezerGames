@@ -38,6 +38,10 @@ namespace
 	const float SNOWBALL_SPEED = 16.0f;		// 雪玉の速度
 	const float SNOWBALL_HEIGHT = 20.0f;	// 雪玉の高さ
 	const float ROT_CORRECT = 0.1f;			// 向きの補正係数
+	const float STAGE_RIGHTMAX = 800.0f;	// ステージの右側の最大値
+	const float STAGE_LEFTMAX = -800.0f;	// ステージの左側の最大値
+	const float STAGE_FARMAX = 2000.0f;		// ステージの奥側の最大値
+	const float STAGE_NEARMAX = -2000.0f;	// ステージの手前側の最大値
 }
 
 //=========================================
@@ -584,7 +588,7 @@ void CSoldier::Throw(void)
 	move.z = cosf(GetRot().y) * SNOWBALL_SPEED;
 
 	// 雪玉を生成する
-	CSnowBall::Create(D3DXVECTOR3(GetPos().x, GetPos().y + SNOWBALL_HEIGHT, GetPos().z), move);
+	CSnowBall::Create(D3DXVECTOR3(GetPos().x, GetPos().y + SNOWBALL_HEIGHT, GetPos().z), move, m_battle);
 }
 
 //=======================================
@@ -626,5 +630,45 @@ void CSoldier::ElevationCollision(void)
 	m_bJump = bJump;
 
 	// 位置を更新する
+	SetPos(pos);
+}
+
+//=======================================
+// 魔法壁の当たり判定処理
+//=======================================
+void CSoldier::MagicWall(void)
+{
+	// 位置を取得する
+	D3DXVECTOR3 pos = GetPos();
+
+	if (pos.x >= STAGE_RIGHTMAX)
+	{ // 右の限界地を超えた場合
+
+		// 位置を設定する
+		pos.x = STAGE_RIGHTMAX;
+	}
+
+	if (pos.x <= STAGE_LEFTMAX)
+	{ // 左の限界地を超えた場合
+
+		// 位置を設定する
+		pos.x = STAGE_LEFTMAX;
+	}
+
+	if (pos.z >= STAGE_FARMAX)
+	{ // 奥の限界地を超えた場合
+
+		// 位置を設定する
+		pos.z = STAGE_FARMAX;
+	}
+
+	if (pos.z <= STAGE_NEARMAX)
+	{ // 手前の限界地を超えた場合
+
+		// 位置を設定する
+		pos.z = STAGE_NEARMAX;
+	}
+
+	// 位置を適用する
 	SetPos(pos);
 }

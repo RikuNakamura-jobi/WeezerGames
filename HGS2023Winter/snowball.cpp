@@ -29,6 +29,7 @@ CSnowBall::CSnowBall() : CModel(CObject::TYPE_SNOWBALL, CObject::PRIORITY_ENTITY
 {
 	// 全ての値をクリアする
 	m_move = NONE_D3DXVECTOR3;			// 移動量
+	m_type = CSoldier::BATTLE_OFF;		// 攻守の種類
 
 	m_pPrev = nullptr;		// 前のへのポインタ
 	m_pNext = nullptr;		// 次のへのポインタ
@@ -99,6 +100,7 @@ HRESULT CSnowBall::Init(void)
 
 	// 全ての値を初期化する
 	m_move = NONE_D3DXVECTOR3;			// 移動量
+	m_type = CSoldier::BATTLE_OFF;		// 攻守の種類
 
 	// 値を返す
 	return S_OK;
@@ -153,7 +155,7 @@ void CSnowBall::Draw(void)
 //=====================================
 // 情報の設定処理
 //=====================================
-void CSnowBall::SetData(const D3DXVECTOR3& pos, const D3DXVECTOR3& move)
+void CSnowBall::SetData(const D3DXVECTOR3& pos, const D3DXVECTOR3& move, const CSoldier::BATTLE battle)
 {
 	// 情報の設定処理
 	SetPos(pos);					// 位置
@@ -164,12 +166,13 @@ void CSnowBall::SetData(const D3DXVECTOR3& pos, const D3DXVECTOR3& move)
 
 	// 全ての値を設定する
 	m_move = move;			// 移動量
+	m_type = battle;		// 攻守の種類
 }
 
 //=======================================
 // 生成処理
 //=======================================
-CSnowBall* CSnowBall::Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& move)
+CSnowBall* CSnowBall::Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& move, const CSoldier::BATTLE battle)
 {
 	// ローカルオブジェクトを生成
 	CSnowBall* pFrac = nullptr;	// インスタンスを生成
@@ -205,7 +208,7 @@ CSnowBall* CSnowBall::Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& move)
 		}
 
 		// 情報の設定処理
-		pFrac->SetData(pos, move);
+		pFrac->SetData(pos, move, battle);
 	}
 	else
 	{ // オブジェクトが NULL の場合
