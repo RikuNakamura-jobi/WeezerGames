@@ -92,8 +92,8 @@ void CSoldierAI::Draw(void)
 //=======================================
 // î•ñ‚Ìİ’èˆ—
 //=======================================
-void CSoldierAI::SetData(const D3DXVECTOR3& pos, const TYPE type)
+void CSoldierAI::SetData(const D3DXVECTOR3& pos, const TYPE type, const BATTLE battle)
 {
 	// î•ñ‚Ìİ’èˆ—
-	CSoldier::SetData(pos, type);
+	CSoldier::SetData(pos, type, battle);
 }

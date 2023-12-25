@@ -16,6 +16,7 @@
 #include "useful.h"
 
 #include "motion.h"
+#include "objectX.h"
 #include "elevation_manager.h"
 #include "objectElevation.h"
 #include "input.h"
@@ -73,6 +74,7 @@ void CSoldier::Box(void)
 	m_move = NONE_D3DXVECTOR3;		// 移動量
 	m_rotDest = NONE_D3DXVECTOR3;	// 目的の向き
 	m_type = TYPE_AI;				// 種類
+	m_battle = BATTLE_OFF;			// 攻守
 	m_nLife = MAX_LIFE;				// 体力
 	m_fSpeed = SPEED;				// 速度
 	m_bMove = false;				// 移動状況
@@ -183,6 +185,7 @@ HRESULT CSoldier::Init(void)
 	m_move = NONE_D3DXVECTOR3;		// 移動量
 	m_rotDest = NONE_D3DXVECTOR3;	// 目的の向き
 	m_type = TYPE_AI;				// 種類
+	m_battle = BATTLE_OFF;			// 攻守
 	m_nLife = MAX_LIFE;				// 体力
 	m_fSpeed = SPEED;				// 速度
 	m_bMove = false;				// 移動状況
@@ -245,7 +248,7 @@ void CSoldier::Hit()
 //===========================================
 // 生成処理
 //===========================================
-CSoldier* CSoldier::Create(const D3DXVECTOR3& pos, const TYPE type)
+CSoldier* CSoldier::Create(const D3DXVECTOR3& pos, const TYPE type, const BATTLE battle)
 {
 	// 兵士のポインタを宣言
 	CSoldier* pSoldier = nullptr;
@@ -299,7 +302,7 @@ CSoldier* CSoldier::Create(const D3DXVECTOR3& pos, const TYPE type)
 		}
 
 		// 情報の設定処理
-		pSoldier->SetData(pos, type);
+		pSoldier->SetData(pos, type, battle);
 	}
 	else
 	{ // オブジェクトが NULL の場合
@@ -315,12 +318,13 @@ CSoldier* CSoldier::Create(const D3DXVECTOR3& pos, const TYPE type)
 //=======================================
 // 情報の設定処理
 //=======================================
-void CSoldier::SetData(const D3DXVECTOR3& pos, const TYPE type)
+void CSoldier::SetData(const D3DXVECTOR3& pos, const TYPE type, const BATTLE battle)
 {
 	// 全ての値を設定する
 	m_move = NONE_D3DXVECTOR3;		// 移動量
 	m_rotDest = NONE_D3DXVECTOR3;	// 目的の向き
 	m_type = type;					// 種類
+	m_battle = battle;				// 攻守
 	m_nLife = MAX_LIFE;				// 体力
 	m_fSpeed = SPEED;				// 速度
 	m_bMove = false;				// 移動状況
@@ -476,8 +480,8 @@ void CSoldier::Move(void)
 	{ // 移動状況が true の場合
 
 		// 移動量を設定する
-		m_move.x = sinf(rot.y) * m_fSpeed;
-		m_move.z = cosf(rot.y) * m_fSpeed;
+		m_move.x = sinf(m_rotDest.y) * m_fSpeed;
+		m_move.z = cosf(m_rotDest.y) * m_fSpeed;
 	}
 	else
 	{ // 上記以外
