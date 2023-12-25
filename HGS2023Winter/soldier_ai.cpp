@@ -370,7 +370,7 @@ void CSoldierAI::AIOffense(void)
 		}
 		else
 		{
-			m_Situation = SITUATION_SHOOT;
+			m_Situation = SITUATION_WAIT;
 		}
 	}
 }

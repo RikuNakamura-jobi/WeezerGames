@@ -32,9 +32,9 @@ namespace
 	const int MAX_LIFE = 5;					// 体力の最大数
 	const int NUM_MODEL = 15;				// モデルの総数
 	const float ADD_GRAVITY = -50.0f;		// 着地時の追加の重力
-	const float SPEED = 8.0f;				// 移動量
-	const float GRAVITY = 0.5f;				// 重力
-	const float JUMP = 10.0f;				// ジャンプの高さ
+	const float SPEED = 4.0f;				// 移動量
+	const float GRAVITY = 0.4f;				// 重力
+	const float JUMP = 6.0f;				// ジャンプの高さ
 	const float SNOWBALL_SPEED = 16.0f;		// 雪玉の速度
 	const float SNOWBALL_HEIGHT = 20.0f;	// 雪玉の高さ
 	const float ROT_CORRECT = 0.1f;			// 向きの補正係数

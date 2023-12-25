@@ -255,7 +255,7 @@ void CSoldierPlayer::JumpControl(void)
 void CSoldierPlayer::ThrowControl(void)
 {
 	if (CManager::Get()->GetInputKeyboard()->GetTrigger(DIK_RETURN) == true ||
-		CManager::Get()->GetInputGamePad()->GetTrigger(CInputGamePad::JOYKEY_B, 0) == true)
+		CManager::Get()->GetInputGamePad()->GetTrigger(CInputGamePad::JOYKEY_RB, 0) == true)
 	{ // ENTERƒL[‚ğ‰Ÿ‚µ‚½ê‡
 
 		// “Š‚°ˆ—
