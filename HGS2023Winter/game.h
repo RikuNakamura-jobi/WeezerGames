@@ -50,6 +50,10 @@ public:						// 誰でもアクセスできる
 	static void SetState(const STATE state);		// ゲームの進行状態の設定処理
 	static STATE GetState(void);					// ゲームの進行状態の取得処理
 
+	static CFlag *GetFlag(void);						// 旗の取得処理
+	static COffRespawn *GetRespawn(void);			// リスポーン位置の取得処理
+	static CCastle *GetCastle(void);					// 城の取得処理
+
 private:					// 自分だけアクセスできる
 
 	// メンバ関数

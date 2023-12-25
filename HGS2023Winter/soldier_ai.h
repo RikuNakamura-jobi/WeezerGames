@@ -67,10 +67,11 @@ private:		// 自分だけアクセスできる
 	// メンバ変数
 	BATTLEAI m_BattleAI;
 	SITUATION m_Situation;
-
+	D3DXVECTOR3 m_AimPos;
 	int m_nCountJudge;
 	int m_nNumNearPlayer;
 	int m_nNumNearEnemy;
+	float m_fTargetRot;
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include "manager.h"
 #include "soldier_ai.h"
 #include "game.h"
+#include "flag.h"
 #include "renderer.h"
 #include "debugproc.h"
 #include "model.h"
@@ -30,6 +31,7 @@ CSoldierAI::CSoldierAI() : CSoldier(CObject::TYPE_SOLDIER, CObject::PRIORITY_PLA
 	m_nCountJudge = 0;
 	m_nNumNearPlayer = 0;
 	m_nNumNearEnemy = 0;
+	m_fTargetRot = 0.0f;
 }
 
 //=========================================
@@ -128,6 +130,7 @@ void CSoldierAI::AI(void)
 	m_nCountJudge++;
 
 	CSoldierManager *soldierManager = CSoldierManager::Get();
+	m_AimPos = GetPos();
 
 	if (soldierManager != nullptr)
 	{ // マネージャーが存在していた場合
@@ -154,6 +157,20 @@ void CSoldierAI::AI(void)
 					else
 					{
 						m_nNumNearEnemy++;
+					}
+
+					if (m_AimPos == GetPos())
+					{
+						m_AimPos = pObjCheck->GetPos();
+					}
+					else
+					{
+						int nRand = rand() % 4;
+
+						if (nRand > 2)
+						{
+							m_AimPos = pObjCheck->GetPos();
+						}
 					}
 				}
 
@@ -183,32 +200,60 @@ void CSoldierAI::AIMove(void)
 
 	if (m_Situation == SITUATION_ASSAULT)
 	{
+		if (m_nCountJudge == 0)
+		{
+			D3DXVECTOR3 vecFlag = CGame::GetFlag()->GetPos() - GetPos();
+
+			m_fTargetRot = atan2f(vecFlag.x, vecFlag.z);
+		}
+
 		// 目的の向きを設定する
-		rotDest.y = D3DX_PI;
+		rotDest.y = m_fTargetRot + ((float)((rand() % 61) - 30) * 0.01f);
 
 		// 移動状況を設定する
 		SetEnableMove(true);
 	}
 	else if (m_Situation == SITUATION_SHOOT)
 	{
+		if (m_nCountJudge == 0)
+		{
+			D3DXVECTOR3 vecEnemy = m_AimPos - GetPos();
+
+			m_fTargetRot = atan2f(vecEnemy.x, vecEnemy.z);
+		}
+
 		// 目的の向きを設定する
-		rotDest.y = D3DX_PI;
+		rotDest.y = m_fTargetRot;
 
 		// 移動状況を設定する
-		SetEnableMove(true);
+		SetEnableMove(false);
 	}
 	else if (m_Situation == SITUATION_GUARD)
 	{
+		if (m_nCountJudge == 0)
+		{
+			D3DXVECTOR3 vecEnemy = m_AimPos - GetPos();
+
+			m_fTargetRot = atan2f(vecEnemy.x, vecEnemy.z);
+		}
+
 		// 目的の向きを設定する
-		rotDest.y = D3DX_PI;
+		rotDest.y = m_fTargetRot;
 
 		// 移動状況を設定する
-		SetEnableMove(true);
+		SetEnableMove(false);
 	}
 	else if (m_Situation == SITUATION_ESCAPE)
 	{
+		if (m_nCountJudge == 0)
+		{
+			D3DXVECTOR3 vecEnemy = m_AimPos - GetPos();
+
+			m_fTargetRot = atan2f(vecEnemy.x, vecEnemy.z);
+		}
+
 		// 目的の向きを設定する
-		rotDest.y = D3DX_PI;
+		rotDest.y = m_fTargetRot;
 
 		// 移動状況を設定する
 		SetEnableMove(true);
