@@ -345,7 +345,42 @@ void CSoldier::SetData(const D3DXVECTOR3& pos, const TYPE type, const BATTLE bat
 		GetHierarchy(nCntData)->SetPosOld(pos);										// 前回の位置
 		GetHierarchy(nCntData)->SetRot(NONE_D3DXVECTOR3);							// 向き
 		GetHierarchy(nCntData)->SetScale(NONE_SCALE);								// 拡大率
-		GetHierarchy(nCntData)->SetFileData(CXFile::TYPE(INIT_PLAYER + nCntData));	// データの設定処理
+
+		if (nCntData == 2)
+		{ // 頭を決めるとき
+
+			switch (m_battle)
+			{
+			case CSoldier::BATTLE_OFF:
+
+				GetHierarchy(nCntData)->SetFileData(CXFile::TYPE_PLAYER_HEAD);		// データの設定処理
+
+				break;
+
+			case CSoldier::BATTLE_DEF:
+
+				GetHierarchy(nCntData)->SetFileData(CXFile::TYPE_PLAYER_DEFHEAD);	// データの設定処理
+
+				break;
+
+			default:
+
+				// 停止
+				assert(false);
+
+				break;
+			}
+		}
+		else if(nCntData >= 3)
+		{ // 頭以降
+
+			GetHierarchy(nCntData)->SetFileData(CXFile::TYPE(INIT_PLAYER + nCntData + 1));	// データの設定処理
+		}
+		else
+		{ // 上記以外
+
+			GetHierarchy(nCntData)->SetFileData(CXFile::TYPE(INIT_PLAYER + nCntData));		// データの設定処理
+		}
 	}
 }
 

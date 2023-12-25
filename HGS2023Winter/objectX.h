@@ -38,14 +38,16 @@ public:			// 誰でもアクセスできる
 		TYPE_FLAG,				// 旗
 		TYPE_SANDBAG,			// 土嚢
 		TYPE_TREE,				// 木
+		TYPE_CASTLE,			// 城
 
 		// プレイヤーモデル
 		TYPE_PLAYER_HIP,				//腰
 		TYPE_PLAYER_BODY,				//体
+		TYPE_PLAYER_DEFHEAD,			//防御頭
+		TYPE_PLAYER_HEAD,				//頭
 		TYPE_PLAYER_RSHORDER,			//右肩
 		TYPE_PLAYER_RARM,				//右腕
 		TYPE_PLAYER_RHAND,				//右手
-		TYPE_PLAYER_HEAD,				//頭
 		TYPE_PLAYER_LSHORDER,			//左肩
 		TYPE_PLAYER_LARM,				//左腕
 		TYPE_PLAYER_LHAND,				//左手
