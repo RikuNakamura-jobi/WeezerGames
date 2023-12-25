@@ -22,6 +22,7 @@
 #include "elevation_manager.h"
 #include "mesh_manager.h"
 #include "snowball_manager.h"
+#include "soldier_manager.h"
 
 //--------------------------------------------
 // 静的メンバ変数宣言
@@ -53,6 +54,7 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 	CElevationManager::Create();		// 起伏マネージャー
 	CMeshManager::Create();				// メッシュマネージャー
 	CSnowBallManager::Create();			// 雪玉マネージャー
+	CSoldierManager::Create();			// 兵士マネージャー
 
 	if (m_pFile == nullptr)
 	{ // ファイルへのポインタが nullptr の場合
@@ -502,6 +504,7 @@ void CManager::Uninit(void)
 	CElevationManager::Get()->Uninit();		// 起伏マネージャー
 	CMeshManager::Get()->Uninit();			// メッシュマネージャー
 	CSnowBallManager::Get()->Uninit();		// 雪玉マネージャー
+	CSoldierManager::Get()->Uninit();		// 兵士マネージャー
 
 	// マネージャーのメモリを解放する
 	delete m_pManager;

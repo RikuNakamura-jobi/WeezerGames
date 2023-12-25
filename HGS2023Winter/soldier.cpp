@@ -19,6 +19,8 @@
 #include "objectElevation.h"
 #include "input.h"
 
+#include "soldier_manager.h"
+
 //--------------------------------------------
 // マクロ定義
 //--------------------------------------------
@@ -43,6 +45,16 @@ CSoldier::CSoldier() : CCharacter(CObject::TYPE_SOLDIER, CObject::PRIORITY_PLAYE
 	m_fSpeed = SPEED;				// 速度
 	m_bMove = false;				// 移動状況
 	m_bJump = false;				// ジャンプ状況
+
+	m_pPrev = nullptr;		// 前のへのポインタ
+	m_pNext = nullptr;		// 次のへのポインタ
+
+	if (CSoldierManager::Get() != nullptr)
+	{ // マネージャーが存在していた場合
+
+		// マネージャーへの登録処理
+		CSoldierManager::Get()->Regist(this);
+	}
 }
 
 //=========================================
@@ -52,6 +64,43 @@ CSoldier::~CSoldier()
 {
 
 }
+
+//============================
+// 前のポインタの設定処理
+//============================
+void CSoldier::SetPrev(CSoldier* pPrev)
+{
+	// 前のポインタを設定する
+	m_pPrev = pPrev;
+}
+
+//============================
+// 後のポインタの設定処理
+//============================
+void CSoldier::SetNext(CSoldier* pNext)
+{
+	// 次のポインタを設定する
+	m_pNext = pNext;
+}
+
+//============================
+// 前のポインタの設定処理
+//============================
+CSoldier* CSoldier::GetPrev(void) const
+{
+	// 前のポインタを返す
+	return m_pPrev;
+}
+
+//============================
+// 次のポインタの設定処理
+//============================
+CSoldier* CSoldier::GetNext(void) const
+{
+	// 次のポインタを返す
+	return m_pNext;
+}
+
 
 //===========================================
 // プレイヤーの初期化処理
@@ -126,6 +175,17 @@ void CSoldier::Uninit(void)
 
 	// 終了処理
 	CCharacter::Uninit();
+
+	if (CSoldierManager::Get() != nullptr)
+	{ // マネージャーが存在していた場合
+
+		// リスト構造の引き抜き処理
+		CSoldierManager::Get()->Pull(this);
+	}
+
+	// リスト構造関係のポインタを NULL にする
+	m_pPrev = nullptr;
+	m_pNext = nullptr;
 }
 
 //===========================================

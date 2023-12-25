@@ -212,6 +212,7 @@
     <ClCompile Include="snowball.cpp" />
     <ClCompile Include="snowball_manager.cpp" />
     <ClCompile Include="soldier.cpp" />
+    <ClCompile Include="soldier_manager.cpp" />
     <ClCompile Include="sound.cpp" />
     <ClCompile Include="speech_message.cpp" />
     <ClCompile Include="stun.cpp" />
@@ -283,6 +284,7 @@
     <ClInclude Include="snowball.h" />
     <ClInclude Include="snowball_manager.h" />
     <ClInclude Include="soldier.h" />
+    <ClInclude Include="soldier_manager.h" />
     <ClInclude Include="sound.h" />
     <ClInclude Include="speech_message.h" />
     <ClInclude Include="stun.h" />
