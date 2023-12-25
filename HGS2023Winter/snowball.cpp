@@ -137,6 +137,8 @@ void CSnowBall::Update(void)
 
 	// à íuÇê›íËÇ∑ÇÈ
 	SetPos(pos);
+
+	Colision();
 }
 
 //=====================================
